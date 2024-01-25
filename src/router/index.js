@@ -33,9 +33,15 @@ const router = createRouter({
         },
         // 赛事详情
         {
-            path:'/GameInfo',
+            path:'/GameInfo/:id',
             name:'gameinfo',
             component:() => import('../views/GameInfo/index.vue')
+        },
+        // 资讯详情
+        {
+            path:'/Informationinfo',
+            name:'Informationinfo',
+            component:() => import('../views/Informationinfo/index.vue')
         }
     ]
 })

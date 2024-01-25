@@ -1,14 +1,15 @@
 <template>
     <div class="Tab_box">
-        <div class="item_box" :class="index ===  Index ? 'item_box_ok':''" @click="HandelItem(index,item.url)"  v-for="(item, index) in ItemArrList" :key="index">
+        <div class="item_box" :class="item.url ===  route.path ? 'item_box_ok':''" @click="HandelItem(index,item.url)"  v-for="(item, index) in ItemArrList" :key="index">
             {{ item.title }}
         </div>
     </div>
 </template>
 <script setup>
 import { ref } from 'vue';
-import { useRouter } from 'vue-router';
+import { useRouter,useRoute } from 'vue-router';
 const router = useRouter()
+const route = useRoute()
 const ItemArrList = [
     {title:'赛事',url:'/'},
     {title:'体育资讯',url:'/Information'},

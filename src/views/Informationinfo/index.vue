@@ -20,12 +20,17 @@
                 雷速体育:{{ Informationinfo.Informationinfo.createdAt }}
             </div>
             <!-- 图片 -->
-            <div class="image_box" v-if="Informationinfo.Informationinfo.content.desc_imgs" v-for="(item, index) in Informationinfo.Informationinfo.content.desc_imgs" :key="index">
-                <van-image   fit="cover"  :src="item" />
-            </div>
+
             <!-- 内容 -->
-            <div class="text_box">
+            <!-- <div class="text_box">
                 {{ Informationinfo.Informationinfo.content.desc }}
+            </div> -->
+            <div v-for="(item, index) in DescText" :key="index">
+                <div class="image_box" v-if="item.type"  :key="index">
+                    <van-image   fit="cover"  :src="item.msg" />
+                </div>
+                <!-- <img v-if="item.type" class="img_box" :src="item.msg" /> -->
+                <p v-else class="text_box">{{ item.msg }}</p>
             </div>
         </div>
     </div>
@@ -37,7 +42,38 @@ const Informationinfo = useInformationinfo()
 // vue-route
 import { useRouter } from 'vue-router';
 const router = useRouter()
+import { ref, onMounted, reactive } from 'vue'
 
+const DescText = reactive([])
+onMounted(() => {
+    let text = Informationinfo.Informationinfo.content.desc.split('.')
+    DescText.push(...computionText(text, Informationinfo.Informationinfo.content.desc_imgs))
+})
+const computionText = (a1, a2) => {
+    let result = [];
+    // 如果 a2 只有一个元素，则在 a1 的四分之一处插入
+    if (a2.length === 1) {
+        let quarterIndex = Math.round(a1.length / 4);
+        for (let i = 0; i < a1.length; i++) {
+            if (i === quarterIndex) {
+                result.push({ type: true, msg: a2[0] });
+            }
+            result.push({ type: false, msg: a1[i] });
+        }
+    } else {
+        // 否则均匀分布 a2 元素
+        let interval = Math.round((a1.length + 1) / (a2.length + 1));
+        let i = 0, j = 0;
+        while (i < a1.length || j < a2.length) {
+            if ((result.length + 1) % interval === 0 && j < a2.length) {
+                result.push({ type: true, msg: a2[j++] });
+            } else if (i < a1.length) {
+                result.push({ type: false, msg: a1[i++] });
+            }
+        }
+    }
+    return result;
+}
 
 
 
@@ -49,6 +85,7 @@ const onClickLeft = () => {
 </script>
 <style lang="scss" scoped>
 .container {
+    padding-bottom: 10px;
     width: 100vw;
     min-height: 100vh;
     background-color: #111;
@@ -69,7 +106,7 @@ const onClickLeft = () => {
             word-break: break-all;
             font-size: 16px;
             text-align: left;
-            line-height: 18px;
+            line-height: 20px;
         }
 
         .time_box {
@@ -82,9 +119,10 @@ const onClickLeft = () => {
 
         .image_box {
             margin-top: 5px;
-            width: 100%;           
+            width: 100%;
         }
-        .text_box{
+
+        .text_box {
             width: 100%;
             word-wrap: break-word;
             word-break: break-all;

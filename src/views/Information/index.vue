@@ -11,10 +11,6 @@
                     <img :src="item.content.cover" alt="">
                 </div>
             </div>
-            <!-- 广告位 -->
-            <!-- <div class="advertisement_box">
-                <img src="" alt="广告" />
-            </div> -->
         </div>
     </div>
 </template>

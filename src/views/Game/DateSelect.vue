@@ -5,10 +5,10 @@
         <!-- center -->
         <div class="center_box">
             <div class="Select_box_box">
-                <div class="select_item_box" v-for="i in 7" :key="i">
-                    <div class="Date_text">10/24</div>
+                <div class="select_item_box" v-for="(item,index) in DateArrlist " :key="index" @click="GetSelectDate(item,index)">
+                    <div class="Date_text">{{item}}</div>
                     <!-- 选中 -->
-                    <div  :class="i === 1 ? 'Date_ok':'Date_no'"></div>
+                    <div  :class="index === Index ? 'Date_ok':'Date_no'"></div>
                 </div>
             </div>
         </div>
@@ -17,12 +17,48 @@
     </div>
 </template>
 <script setup>
+import { onMounted,ref } from 'vue'
+const DateArrlist = ref([])
+const Index = ref(0)
+onMounted(() => {
+    DateArrlist.value = getOneWeekDates()
+})
+
+// 获取一周时间
+const getOneWeekDates = () => {
+  const today = new Date();
+  const oneWeekDates = [];
+  for (let i = 0; i < 7; i++) {
+    const currentDate = new Date(today.getTime() + i * 24 * 60 * 60 * 1000);
+    const month = (currentDate.getMonth() + 1).toString().padStart(2, '0');
+    const day = currentDate.getDate().toString().padStart(2, '0');
+    const formattedDate = `${month}/${day}`;
+    oneWeekDates.push(formattedDate);
+  }
+
+  return oneWeekDates;
+}
+
+
 defineProps({
     Show:{
         type:Boolean,
         default:true
     }
 })
+const getFormattedDate = (day) => {
+  const currentDate = new Date();
+  const currentYear = currentDate.getFullYear();
+  // 拼接日期
+  const customDate = `${currentYear}-${day.replace('/', '-')}`;
+  return customDate;
+}
+const emit = defineEmits('GameData')
+// 选择日期
+const GetSelectDate =(item,index) => {
+    Index.value = index
+    emit('GameData',getFormattedDate(item))
+}
 </script>
 <style lang="scss" scoped>
 .DateSelect_box {

@@ -1,12 +1,12 @@
 <template>
     <!-- 资讯详情 -->
     <div class="container">
-        <van-nav-bar left-arrow @click-left="onClickLeft">
+        <van-nav-bar left-arrow @click-left="onClickLeft" :fixed="true">
             <template #left>
                 <van-icon name="arrow-left" size="18" color="#fff" />
             </template>
             <template #title>
-                <span style="color: #fff;">雷速体育</span>
+                <span style="color: #fff;">资讯详情</span>
             </template>
         </van-nav-bar>
         <!-- 内容 -->
@@ -17,19 +17,12 @@
             </div>
             <!-- 时间 -->
             <div class="time_box">
-                雷速体育:{{ Informationinfo.Informationinfo.createdAt }}
+                资讯详情:{{ Informationinfo.Informationinfo.createdAt }}
             </div>
-            <!-- 图片 -->
-
-            <!-- 内容 -->
-            <!-- <div class="text_box">
-                {{ Informationinfo.Informationinfo.content.desc }}
-            </div> -->
             <div v-for="(item, index) in DescText" :key="index">
                 <div class="image_box" v-if="item.type"  :key="index">
                     <van-image   fit="cover"  :src="item.msg" />
                 </div>
-                <!-- <img v-if="item.type" class="img_box" :src="item.msg" /> -->
                 <p v-else class="text_box">{{ item.msg }}</p>
             </div>
         </div>
@@ -42,7 +35,7 @@ const Informationinfo = useInformationinfo()
 // vue-route
 import { useRouter } from 'vue-router';
 const router = useRouter()
-import { ref, onMounted, reactive } from 'vue'
+import { onMounted, reactive } from 'vue'
 
 const DescText = reactive([])
 onMounted(() => {
@@ -85,10 +78,11 @@ const onClickLeft = () => {
 </script>
 <style lang="scss" scoped>
 .container {
+    padding-top: 50px;
     padding-bottom: 10px;
     width: 100vw;
     min-height: 100vh;
-    background-color: #111;
+    background-color: #ffffff;
 
     ::v-deep(.van-nav-bar__content) {
         background-color: #111111;
@@ -98,20 +92,21 @@ const onClickLeft = () => {
         margin: 0 auto;
         margin-top: 10px;
         width: 98%;
-        color: #fff;
+        color: #1f1f1f;
 
         .title_box {
             width: 100%;
             word-wrap: break-word;
             word-break: break-all;
-            font-size: 16px;
+            font-size: 18px;
             text-align: left;
             line-height: 20px;
+            font-weight: 500;
         }
 
         .time_box {
-            margin-top: 10px;
-            font-size: 12px;
+            margin: 10px 0px;
+            font-size: 14px;
             width: 100%;
             text-align: left;
             color: #555454;

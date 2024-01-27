@@ -1,6 +1,6 @@
 <template>
   <div class="Game_box">
-    <DateSelect></DateSelect>
+    <DateSelect @GameData="GetGameData"></DateSelect>
     <!-- 联系弹窗 -->
     <div class="contact_box">联系</div>
     <!-- 列表选项 -->
@@ -70,17 +70,34 @@ const router = useRouter()
 // 接口
 import { GameData } from '../../api/Game'
 const ItemArrList = ref([]);
+// // 日期
+// const DateValue = ref()
+// 获取当前日期
+const getCurrentDay = () => {
+  const currentDate = new Date();
 
+// 获取年、月、日
+const year = currentDate.getFullYear();
+const month = (currentDate.getMonth() + 1).toString().padStart(2, '0'); // 月份从0开始，需要加1
+const day = currentDate.getDate().toString().padStart(2, '0');
+
+// 拼接日期
+const formattedDate = `${year}-${month}-${day}`;
+GetGameData(formattedDate)
+}
 // 获取赛事数据
-const GetGameData = () => {
-  GameData().then(res => {
+const GetGameData = (date) => {
+  GameData({date:date}).then(res => {
     ItemArrList.value = res.data.resultSet
   }).catch(err => {
     console.log(err)
   })
 }
+
+
 onMounted(() => {
-  GetGameData()
+  getCurrentDay()
+  
 })
 // 跳转到赛事详情
 const HandelPath = (id) => {

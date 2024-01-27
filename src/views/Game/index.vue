@@ -2,11 +2,14 @@
   <div class="Game_box">
     <DateSelect @GameData="GetGameData"></DateSelect>
     <!-- 联系弹窗 -->
-    <div class="contact_box">联系</div>
+    <div class="contact_box" v-if="UserInfoStore.userinfo.windowPictureUrl">
+      <a :href="UserInfoStore.userinfo.windowUrl" target="_blank"><img :src="UserInfoStore.userinfo.windowPictureUrl" alt=""></a>
+      
+    </div>
     <!-- 列表选项 -->
     <div class="item_box" v-for="(item,index) in ItemArrList" :key="index" @click="HandelPath(item.id)">
       <!-- 标题 -->
-      <div class="item_title_box">
+      <div class="item_title_box" >
         <!-- 国旗 -->
         <div class="flag_box">
           <img src="#" alt="" />
@@ -15,7 +18,7 @@
         <div class="item_title_text_box">{{ item.content.trialName }}</div>
       </div>
       <!-- 赛事内容 -->
-      <div class="Game_conent_box">
+      <div class="Game_conent_box" >
         <!-- left -->
         <div class="left_box">
           <!-- 开始时间 -->
@@ -54,13 +57,29 @@
       </div>
 
       <!-- 广告位 -->
-      <!-- <div v-if="i % 3 == 0" class="advertisement_box">
-        <img src="" alt="广告" />
-      </div> -->
+      <div class="advertisement_box" v-if="index === 3">
+        <a :href="UserInfoStore.userinfo.phoneAdGoalUrl" target="_blank">
+          <img :src="UserInfoStore.userinfo.phoneAdPictureUrl"  />
+        </a>
+      </div>
+    </div>
+
+
+
+    <!-- 按钮 -->
+    <!-- facebook -->
+    <div class="F_box" v-if="UserInfoStore.userinfo.facebookStatus"  :style="{'background': UserInfoStore.userinfo.facebookColour }">
+      <a :href="UserInfoStore.userinfo.facebookGoalUrl">{{ UserInfoStore.userinfo.facebookText }}</a>
+    </div>
+    <!-- line -->
+    <div class="l_box" v-if="UserInfoStore.userinfo.lineStatus"  :style="{'background': UserInfoStore.userinfo.lineColour }">
+      <a :href="UserInfoStore.userinfo.lineGoalUrl">{{ UserInfoStore.userinfo.lineText }}</a>
     </div>
   </div>
 </template>
 <script setup>
+import useUserInfo from '../../stores/modules/userinfo'
+const UserInfoStore = useUserInfo()
 import { ref, onMounted } from "vue";
 // 组件
 import DateSelect from './DateSelect.vue'
@@ -89,6 +108,12 @@ GetGameData(formattedDate)
 const GetGameData = (date) => {
   GameData({date:date}).then(res => {
     ItemArrList.value = res.data.resultSet
+    // const Number = Math.floor(Math.random() * res.data.resultSet.length - 1)
+    // ItemArrList.value.splice(Number, 0, {
+    //   src:UserInfoStore.userinfo.phoneAdPictureUrl,
+    //   url:UserInfoStore.userinfo.phoneAdGoalUrl,
+    //   type:0,
+    // });
   }).catch(err => {
     console.log(err)
   })
@@ -276,5 +301,27 @@ const HandelPath = (id) => {
     position: fixed;
     background-color: #f2f2f2;
     line-height: 80px;
+    img{
+      width: 100%;
+      height: 100%;
+    }
   }
-}</style>
+
+
+  .F_box,.l_box{
+    position: fixed;
+    padding: 0 10px;
+    height: 28px;
+    line-height: 28px;
+    right: 20px;
+    bottom: 80px;
+    font-size: 14px;
+  }
+  .l_box{
+    bottom: 40px;
+  }
+}
+
+
+
+</style>

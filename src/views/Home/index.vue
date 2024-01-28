@@ -5,7 +5,7 @@
             <template #NavBarLogo>
                 <div class="logo_box">
                     <div class="logo_image_box" v-if="UserInfoStore.userinfo.logoUrl">
-                        <img :src="UserInfoStore.userinfo.logoUrl" alt="">
+                        <img :src="'data:'+UserInfoStore.userinfo.logoUrl" alt="">
                     </div>
                     {{ UserInfoStore.userinfo.websiteName }}
                 </div>
@@ -40,6 +40,9 @@ const GetUserInfo = () => {
 onMounted(() => {
     GetUserInfo()
 })
+
+
+
 </script>
 <style lang="scss" scoped>
     .container{

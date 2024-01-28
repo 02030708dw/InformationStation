@@ -3,7 +3,7 @@
     <DateSelect @GameData="GetGameData"></DateSelect>
     <!-- 联系弹窗 -->
     <div class="contact_box" v-if="UserInfoStore.userinfo.windowPictureUrl">
-      <a :href="UserInfoStore.userinfo.windowUrl" target="_blank"><img :src="UserInfoStore.userinfo.windowPictureUrl" alt=""></a>
+      <a :href="UserInfoStore.userinfo.windowUrl" target="_blank"><img :src=" 'data:' + UserInfoStore.userinfo.windowPictureUrl" alt=""></a>
       
     </div>
     <!-- 列表选项 -->
@@ -57,9 +57,9 @@
       </div>
 
       <!-- 广告位 -->
-      <div class="advertisement_box" v-if="index === 3">
+      <div class="advertisement_box" v-if="index === 2">
         <a :href="UserInfoStore.userinfo.phoneAdGoalUrl" target="_blank">
-          <img :src="UserInfoStore.userinfo.phoneAdPictureUrl"  />
+          <img :src="'data:'+UserInfoStore.userinfo.phoneAdPictureUrl"  />
         </a>
       </div>
     </div>

@@ -7,25 +7,25 @@ const router = createRouter({
     routes: [
         // 首页
         {
-            path:'/',
+            path:'/:id',
             name:'home',
             component:Home,
             children:[
                 // 赛事
                 {
-                    path:'/',
+                    path:'/:id',
                     name: 'game',
                     component:Game
                 },
                 //体育资讯
                 {
-                    path:'Information',
+                    path:'/:id/Information',
                     name: 'information',
                     component: () => import('../views/Information/index.vue')
                 },
                 //赛事分析
                 {
-                    path:'Analysis',
+                    path:'/:id/Analysis',
                     name: 'analysis',
                     component: () => import('../views/Analysis/index.vue')
                 }

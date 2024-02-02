@@ -67,8 +67,6 @@
 
     </div>
 
-
-
     <!-- 按钮 -->
     <!-- facebook -->
     <div class="F_box" v-if="UserInfoStore.userinfo.facebookStatus"
@@ -83,16 +81,16 @@
   </div>
 </template>
 <script setup>
-import useUserInfo from '../../stores/modules/userinfo'
-const UserInfoStore = useUserInfo()
-import { ref, onMounted } from "vue";
+import useUserInfo from "../../stores/modules/userinfo";
+const UserInfoStore = useUserInfo();
+import { ref, onMounted, computed } from "vue";
 // 组件
-import DateSelect from './DateSelect.vue'
+import DateSelect from "./DateSelect.vue";
 // 路由
 import { useRouter } from "vue-router";
-const router = useRouter()
+const router = useRouter();
 // 接口
-import { GameData } from '../../api/Game'
+import { GameData } from "../../api/Game";
 const ItemArrList = ref([]);
 // // 日期
 // const DateValue = ref()
@@ -162,8 +160,30 @@ onMounted(() => {
 })
 // 跳转到赛事详情
 const HandelPath = (id) => {
-  router.push(`/GameInfo/${id}`)
+  router.push(`/GameInfo/${id}`);
+};
+
+// 计算广告插入位置
+function insertAdsIntoList(items, minInterval) {
+  let result = [];
+  let intervalCount = 0;
+  items.forEach((item, index) => {
+    result.push(item); // 将原始项添加到结果中
+    intervalCount++;
+    if (intervalCount >= minInterval) {
+      // 随机决定是否在此处插入广告
+      if (Math.random() < 0.7) {
+        result.push({ isAd: true }); // 插入广告
+        intervalCount = 0; // 重置间隔计数器
+      }
+    }
+  });
+  return result;
 }
+
+const displayList = computed(() => {
+  return insertAdsIntoList(ItemArrList.value, 0.5);
+});
 </script>
 <style lang="scss" scoped>
 .Game_box {
@@ -314,18 +334,18 @@ const HandelPath = (id) => {
         }
       }
     }
+  }
 
-    // 广告
-    .advertisement_box {
-      line-height: 90px;
-      width: 100vw;
-      height: 90px;
-      background: #f2f2f2;
+  // 广告
+  .advertisement_box {
+    line-height: 90px;
+    width: 100vw;
+    height: 90px;
+    background: #f2f2f2;
 
-      img {
-        width: 100%;
-        height: 100%;
-      }
+    img {
+      width: 100%;
+      height: 100%;
     }
   }
 
@@ -338,13 +358,11 @@ const HandelPath = (id) => {
     position: fixed;
     background-color: #f2f2f2;
     line-height: 80px;
-
     img {
       width: 100%;
       height: 100%;
     }
   }
-
 
   .F_box,
   .l_box {

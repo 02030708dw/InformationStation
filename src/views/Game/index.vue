@@ -3,187 +3,175 @@
     <DateSelect @GameData="GetGameData"></DateSelect>
     <!-- 联系弹窗 -->
     <div class="contact_box" v-if="UserInfoStore.userinfo.windowPictureUrl">
-      <a :href="UserInfoStore.userinfo.windowUrl" target="_blank"><img
-          :src="'data:' + UserInfoStore.userinfo.windowPictureUrl" alt=""></a>
-
+      <a :href="UserInfoStore.userinfo.windowUrl" target="_blank"
+        ><img :src="'data:' + UserInfoStore.userinfo.windowPictureUrl" alt=""
+      /></a>
     </div>
     <!-- 列表选项 -->
-    <div class="item_box" v-for="(item, index) in ItemArrList" :key="index" @click="HandelPath(item.id)">
-      <!-- 标题 -->
-      <div class="item_title_box">
-        <!-- 国旗 -->
-        <div class="flag_box">
-          <img :src="item.content.away_icon" alt="" />
-        </div>
-        <!-- 标题 -->
-        <div class="item_title_text_box">{{ item.content.trialName }}</div>
+    <div
+      class="item_box"
+      v-for="(item, index) in ItemArrList"
+      :key="index"
+    >
+      <!-- 广告 -->
+      <div v-if="item.isAd" class="advertisement_box">
+        <a :href="UserInfoStore.userinfo.phoneAdGoalUrl" target="_blank">
+          <img :src="'data:' + UserInfoStore.userinfo.phoneAdPictureUrl" />
+        </a>
       </div>
-      <!-- 赛事内容 -->
-      <div class="Game_conent_box">
-        <!-- left -->
-        <div class="left_box">
-          <!-- 开始时间 -->
-          <div class="StartTime_box">{{ item.content.startTime.slice(11, 16) }}</div>
-          <!-- 时长 -->
-          <div class="duration_box">36`</div>
+      <!-- 列表项内容 -->
+      <template v-else>
+        <div class="item_title_box">
+          <div class="flag_box">
+            <img
+              :src="'data:image/png;base64,' + item.content.eventsIcon"
+              alt=""
+            />
+          </div>
+          <div class="item_title_text_box">{{ item.content.trialName }}</div>
         </div>
-        <!-- center -->
-        <div class="center_box">
-          <!-- 赛事详情 -->
-          <div class="left_center_box">
-            <div class="left_center_item">
-              <!-- 图标 -->
-              <div class="ico_box">
-                <img :src="item.content.home_icon" alt="" />
-              </div>
-              <!-- name -->
-              <div class="name_box">{{ item.content.homeTeam }}</div>
+        <div class="Game_conent_box" @click="HandelPath(item.id)">
+          <div class="left_box">
+            <div class="StartTime_box">
+              {{ item.content.startTime.slice(11, 16) }}
             </div>
-            <div class="left_center_item">
-              <!-- 图标 -->
-              <div class="ico_box">
-                <img :src="item.content.away_icon" alt="" />
+            <div class="duration_box">36`</div>
+          </div>
+          <div class="center_box">
+            <div class="left_center_box">
+              <div class="left_center_item">
+                <div class="ico_box">
+                  <img
+                    :src="'data:image/png;base64,' + item.content.home_icon"
+                    alt=""
+                  />
+                </div>
+                <div class="name_box">{{ item.content.homeTeam }}</div>
               </div>
-              <div class="name_box">{{ item.content.awayTeam }}</div>
+              <div class="left_center_item">
+                <div class="ico_box">
+                  <img
+                    :src="'data:image/png;base64,' + item.content.away_icon"
+                    alt=""
+                  />
+                </div>
+                <div class="name_box">{{ item.content.awayTeam }}</div>
+              </div>
             </div>
           </div>
-          <!-- 播放 -->
-          <div class="right_center_box"></div>
+          <div class="right_box">
+            <div class="Number_box">
+              {{ item.content.score.slice(0, item.content.score.indexOf("-")) }}
+            </div>
+            <div class="Number_box">
+              {{
+                item.content.score.slice(item.content.score.indexOf("-") + 1)
+              }}
+            </div>
+          </div>
         </div>
-        <!-- right -->
-        <div class="right_box">
-          <div class="Number_box">{{ item.content.score.slice(0, item.content.score.indexOf('-')) }}</div>
-          <div class="Number_box">{{ item.content.score.slice(item.content.score.indexOf('-') + 1) }}</div>
-        </div>
-      </div>
-      <div v-if="UserInfoStore.userinfo.phoneAdGoalUrl">
-        <!-- 广告位 -->
-        <div class="advertisement_box" v-if="advertisementList.includes(index)">
-          <a :href="UserInfoStore.userinfo.phoneAdGoalUrl" target="_blank">
-            <img :src="'data:' + UserInfoStore.userinfo.phoneAdPictureUrl" />
-          </a>
-        </div>
-      </div>
+      </template>
 
+      <!-- 加载更多提示或加载中动画 -->
+      <div v-if="isLoading" class="loading">加载中...</div>
     </div>
 
     <!-- 按钮 -->
     <!-- facebook -->
-    <div class="F_box" v-if="UserInfoStore.userinfo.facebookStatus"
-      :style="{ 'background': UserInfoStore.userinfo.facebookColour }">
-      <a :href="UserInfoStore.userinfo.facebookGoalUrl">{{ UserInfoStore.userinfo.facebookText }}</a>
+    <div
+      class="F_box"
+      v-if="UserInfoStore.userinfo.facebookStatus"
+      :style="{ background: UserInfoStore.userinfo.facebookColour }"
+    >
+      <a :href="UserInfoStore.userinfo.facebookGoalUrl">{{
+        UserInfoStore.userinfo.facebookText
+      }}</a>
     </div>
     <!-- line -->
-    <div class="l_box" v-if="UserInfoStore.userinfo.lineStatus"
-      :style="{ 'background': UserInfoStore.userinfo.lineColour }">
-      <a :href="UserInfoStore.userinfo.lineGoalUrl">{{ UserInfoStore.userinfo.lineText }}</a>
+    <div
+      class="l_box"
+      v-if="UserInfoStore.userinfo.lineStatus"
+      :style="{ background: UserInfoStore.userinfo.lineColour }"
+    >
+      <a :href="UserInfoStore.userinfo.lineGoalUrl">{{
+        UserInfoStore.userinfo.lineText
+      }}</a>
     </div>
   </div>
 </template>
 <script setup>
+import { ref, onMounted, computed, watch, onUnmounted } from "vue";
 import useUserInfo from "../../stores/modules/userinfo";
-const UserInfoStore = useUserInfo();
-import { ref, onMounted, computed } from "vue";
-// 组件
-import DateSelect from "./DateSelect.vue";
-// 路由
-import { useRouter } from "vue-router";
-const router = useRouter();
-// 接口
-import { GameData } from "../../api/Game";
-const ItemArrList = ref([]);
-// // 日期
-// const DateValue = ref()
+import DateSelect from "./DateSelect.vue"; // 组件
+import { useRouter } from "vue-router"; // 路由
+import { GameData } from "../../api/Game"; // 接口
+
+const UserInfoStore = useUserInfo(); // 用户信息
+const router = useRouter(); // 路由
+const ItemArrList = ref([]); // 数据
+const isLoading = ref(false); //加载
+const pageNo = ref(1); //当前页
+const pageSize = ref(10); //每页显示条数
+const total = ref(0); //总条数
+
 // 获取当前日期
 const getCurrentDay = () => {
   const currentDate = new Date();
 
   // 获取年、月、日
   const year = currentDate.getFullYear();
-  const month = (currentDate.getMonth() + 1).toString().padStart(2, '0'); // 月份从0开始，需要加1
-  const day = currentDate.getDate().toString().padStart(2, '0');
+  const month = (currentDate.getMonth() + 1).toString().padStart(2, "0"); // 月份从0开始，需要加1
+  const day = currentDate.getDate().toString().padStart(2, "0");
 
   // 拼接日期
   const formattedDate = `${year}-${month}-${day}`;
-  GetGameData(formattedDate)
-}
+  GetGameData(formattedDate);
+};
 // 获取赛事数据
 const GetGameData = (date) => {
-  GameData({ date: date }).then(res => {
-    ItemArrList.value = res.data.resultSet
+  GameData({ date: date })
+    .then((res) => {
+      const items = res.data.resultSet;
+      // 根据items的长度计算广告数量，每3个项插入一个广告
+      const adCount = Math.floor(items.length / 5);
+      const adPositions = calculateAdPositions(items.length, adCount);
 
-    // 生成随机数
-    generateRandomArray(res.data.resultSet.length)
-    // console.log(advertisementList.value)
-  }).catch(err => {
-    console.log(err)
-  })
-}
-// 广告位置
-const advertisementList = ref()
+      // 根据计算出的位置插入广告标识
+      adPositions.forEach((pos, index) => {
+        // 由于插入广告会改变数组长度，位置需要适当调整
+        items.splice(pos + index * 3, 0, { isAd: true }); // 调整插入逻辑以适应每3个项一个广告的规则
+      });
 
-// function generateRandomArray(Length) {
-//   const maxLength = Length;
-//   const arrayLength = Math.floor(Math.random() * (maxLength + 1)); // 随机生成数组长度
+      ItemArrList.value = items;
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+};
 
-//   const uniqueNumbers = new Set();
-
-//   while (uniqueNumbers.size < arrayLength) {
-//     const randomNumber = Math.floor(Math.random() * 4); // 生成 0 到 3 之间的随机整数
-//     uniqueNumbers.add(randomNumber);
-//   }
-
-//   // 将 Set 转换为数组
-//   const randomArray = Array.from(uniqueNumbers);
-//   advertisementList.value = randomArray
-// }
-function generateRandomArray(Length) {
-  const maxLength = 3;
-  const uniqueNumbers = new Set();
-
-  // 随机生成数组长度，且不能大于 maxLength
-  const arrayLength = Math.floor(Math.random() * (maxLength + 1));
-
-  while (uniqueNumbers.size < arrayLength) {
-    const randomNumber = Math.floor(Math.random() * 4) + 1; // 生成 1 到 4 之间的随机整数
-    uniqueNumbers.add(randomNumber);
+//计算广告位置
+const calculateAdPositions =(length, count)=> {
+  let positions = [];
+  for (let i = 1; i <= count; i++) {
+    // 确保广告尽可能均匀分布，同时引入小的随机偏移来保持随机性
+    let pos = Math.floor(i * 3 - 3 + Math.random() * 3);
+    positions.push(pos);
   }
-
-  // 将 Set 转换为数组
-  const randomArray = Array.from(uniqueNumbers);
-  advertisementList.value = randomArray
-  return randomArray;
+  return positions;
 }
-onMounted(() => {
-  getCurrentDay()
 
-})
 // 跳转到赛事详情
 const HandelPath = (id) => {
   router.push(`/GameInfo/${id}`);
 };
 
-// 计算广告插入位置
-function insertAdsIntoList(items, minInterval) {
-  let result = [];
-  let intervalCount = 0;
-  items.forEach((item, index) => {
-    result.push(item); // 将原始项添加到结果中
-    intervalCount++;
-    if (intervalCount >= minInterval) {
-      // 随机决定是否在此处插入广告
-      if (Math.random() < 0.7) {
-        result.push({ isAd: true }); // 插入广告
-        intervalCount = 0; // 重置间隔计数器
-      }
-    }
-  });
-  return result;
-}
+//
 
-const displayList = computed(() => {
-  return insertAdsIntoList(ItemArrList.value, 0.5);
+// 初始化
+onMounted(() => {
+  getCurrentDay();
 });
+
 </script>
 <style lang="scss" scoped>
 .Game_box {
@@ -378,4 +366,5 @@ const displayList = computed(() => {
   .l_box {
     bottom: 40px;
   }
-}</style>
+}
+</style>

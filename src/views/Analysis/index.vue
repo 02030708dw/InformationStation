@@ -1,126 +1,124 @@
 <template>
     <div class="Analysis_box">
-        <div class="Analysis_item_box">
-            <!-- 信息 -->
-            <div class="info_box">
-                <!-- 头像 -->
-                <div class="avatar_box">
-                    <img src="" alt="">
-                </div>
-                <!-- 信息 -->
-                <div class="info_text">
-                    <!-- name -->
-                    <div class="name_box">张三</div>
-                    <!-- 标签 -->
-                    <div class="lable_box_one">
-                        90天13连红
+
+        <van-list v-model:loading="loading" :finished="finished" finished-text="没有更多了" @load="onLoad" :offset="100">
+            <van-cell v-for="item in ListData" :key="item">
+                <template #default>
+                    <div class="Analysis_item_box" @click="HandelInfo(item.id)">
+                        <div class="Analysis_Text_box">
+                            {{ item.content.details[0].title }}
+                        </div>
+                        <div class="Analysis_image_bx">
+                            <img :src="item.content.conv_img">
+                        </div>
                     </div>
-                    <div class="lable_box_tow">
-                       近15中10
-                    </div>
-                </div>
-            </div>
-            <!-- 内容 -->
-            <div class="conent_box">
-                *************************************************************************************
-            </div>
-        </div>
+                </template>
+            </van-cell>
+        </van-list>
+
+
+
         <!-- 广告 -->
-        <div  class="advertisement_box">
+        <!-- <div  class="advertisement_box">
             <img src="" alt="广告" />
-          </div>
+          </div> -->
     </div>
 </template>
-<script>
-export default {
-    data() {
-        return {
-
-        }
-    }
+<script setup>
+import { ref, onMounted } from 'vue'
+import { AnalysisData, AnalysisInfo } from '../../api/Analysis'
+// 列表数据
+var ListData = ref([]);
+// 总条数
+const total = ref()
+// 页码
+const pageNo = ref(0)
+import { useRouter } from "vue-router";
+const router = useRouter();
+import useAnalysisInfo from "../../stores/modules/AnalysisInfo";
+const AnalysisInfoS = useAnalysisInfo();
+// 跳转到资讯详情 
+const HandelInfo = (id) => {
+    // 获取资讯详情
+    AnalysisInfo({id:id}).then(res => {
+        console.log(res.data.resultSet)
+        AnalysisInfoS.UpdataAnalysisInfo(res.data.resultSet)
+        // 跳转到资讯详情
+        router.push('/AnalysisInfo')
+    }).catch(err => {
+        console.log(err)
+    })
 }
+
+
+
+// 获取赛事分析列表
+const GetAnalysisDataLisit = () => {
+    AnalysisData({ pageNo: pageNo.value, pageSize: 10 }).then(res => {
+        loading.value = false
+        ListData.value = [...ListData.value, ...res.data.resultSet.data]
+        total.value = res.data.resultSet.total
+    }).catch(err => {
+        console.log(err);
+    })
+}
+
+
+const finished = ref(false)
+const loading = ref(false)
+
+const onLoad = () => {
+    if (ListData.value.length >= total.value) {
+        finished.value = true
+        return
+    }
+    pageNo.value++
+    GetAnalysisDataLisit()
+
+}
+
+
+
 </script>
 <style lang="scss" scoped>
 .Analysis_box {
     width: 100vw;
 
     .Analysis_item_box {
+        
         width: 100vw;
         margin-top: 15px;
-        .info_box {
-            width: 100vw;
-            display: flex;
-            align-items: center;
-
-            // 头像
-            .avatar_box {
-                margin-left: 10px;
-                border-radius: 50%;
-                width: 30px;
-                height: 30px;
-                img{
-                    width: 100%;
-                    height: 100%;
-                    border-radius: 50%;
-                }
-            }
-            .info_text{
-                margin-left: 8px;
-                display: flex;
-                align-items: center;
-                .name_box{
-                    color: #111;
-                    font-weight: 600;
-                    font-size: 15px;
-                }
-                .lable_box_one{
-                    border-radius: 5px;
-                    padding: 2px;
-                    margin-left: 8px;
-                    
-                    display: flex;
-                    align-items: center;
-                    justify-content: center;
-                    border: 1px solid rgb(210, 110, 110);
-                    font-size: 10px;
-                    color: rgb(210, 110, 110);
-                    background-color: rgba(210, 110, 110,0.3);
-                }
-                .lable_box_tow{
-                    border-radius: 5px;
-                    padding: 2px;
-                    margin-left: 8px;
-                    
-                    display: flex;
-                    align-items: center;
-                    justify-content: center;
-                    border: 1px solid rgb(115, 115, 47);
-                    font-size: 10px;
-                    color: rgb(115, 115, 47);
-                    background-color: rgba(115, 115, 47,0.3);
-                }
-            }
-        }
-        .conent_box{
-            word-wrap: break-word;
-	        word-break: break-all;
-            width: 355px;
-            margin-top: 5px;
+        display: flex;
+        justify-content: space-between;
+        .Analysis_Text_box{
+            width: 250px;
             text-align: left;
-            padding:0px 10px;
-            font-size: 15px;
-            font-weight: 550;
         }
+        .Analysis_image_bx{
+            width: 180px;
+            height: 80px;
+           
+          
+            img{
+                width: 100%;
+                height: 100%;
+            }
+        
+        }
+        
     }
+
     .advertisement_box {
         margin-top: 10px;
         line-height: 90px;
         width: 100vw;
         height: 90px;
         background: #f2f2f2;
+
         img {
-          width: 100%;
-          height: 100%;
+            width: 100%;
+            height: 100%;
         }
-      }
-}</style>
+    }
+}
+</style>

@@ -65,7 +65,7 @@ var ListData = ref([]);
 // 总条数
 const total = ref()
 // 页码
-const pageNo = ref(0)
+const pageNo = ref(1)
 // 请求资讯数据
 const GetInformationData =  () => {
    InformationData({ pageNo: pageNo.value, pageSize: 10 })

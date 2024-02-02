@@ -3,26 +3,27 @@
     <DateSelect @GameData="GetGameData"></DateSelect>
     <!-- 联系弹窗 -->
     <div class="contact_box" v-if="UserInfoStore.userinfo.windowPictureUrl">
-      <a :href="UserInfoStore.userinfo.windowUrl" target="_blank"><img :src=" 'data:' + UserInfoStore.userinfo.windowPictureUrl" alt=""></a>
-      
+      <a :href="UserInfoStore.userinfo.windowUrl" target="_blank"><img
+          :src="'data:' + UserInfoStore.userinfo.windowPictureUrl" alt=""></a>
+
     </div>
     <!-- 列表选项 -->
-    <div class="item_box" v-for="(item,index) in ItemArrList" :key="index" @click="HandelPath(item.id)">
+    <div class="item_box" v-for="(item, index) in ItemArrList" :key="index" @click="HandelPath(item.id)">
       <!-- 标题 -->
-      <div class="item_title_box" >
+      <div class="item_title_box">
         <!-- 国旗 -->
         <div class="flag_box">
-          <img src="#" alt="" />
+          <img :src="item.content.away_icon" alt="" />
         </div>
         <!-- 标题 -->
         <div class="item_title_text_box">{{ item.content.trialName }}</div>
       </div>
       <!-- 赛事内容 -->
-      <div class="Game_conent_box" >
+      <div class="Game_conent_box">
         <!-- left -->
         <div class="left_box">
           <!-- 开始时间 -->
-          <div class="StartTime_box">{{item.content.startTime.slice(11,16)}}</div>
+          <div class="StartTime_box">{{ item.content.startTime.slice(11, 16) }}</div>
           <!-- 时长 -->
           <div class="duration_box">36`</div>
         </div>
@@ -33,17 +34,17 @@
             <div class="left_center_item">
               <!-- 图标 -->
               <div class="ico_box">
-                <img src="../../assets/image/Home/play.png" alt="" />
+                <img :src="item.content.home_icon" alt="" />
               </div>
               <!-- name -->
-              <div class="name_box">{{item.content.homeTeam}}</div>
+              <div class="name_box">{{ item.content.homeTeam }}</div>
             </div>
             <div class="left_center_item">
               <!-- 图标 -->
               <div class="ico_box">
-                <img src="../../assets/image/Home/play.png" alt="" />
+                <img :src="item.content.away_icon" alt="" />
               </div>
-              <div class="name_box">{{item.content.awayTeam}}</div>
+              <div class="name_box">{{ item.content.awayTeam }}</div>
             </div>
           </div>
           <!-- 播放 -->
@@ -51,28 +52,32 @@
         </div>
         <!-- right -->
         <div class="right_box">
-          <div class="Number_box">{{item.content.score.slice(0,item.content.score.indexOf('-')) }}</div>
-          <div class="Number_box">{{item.content.score.slice(item.content.score.indexOf('-')+1) }}</div>
+          <div class="Number_box">{{ item.content.score.slice(0, item.content.score.indexOf('-')) }}</div>
+          <div class="Number_box">{{ item.content.score.slice(item.content.score.indexOf('-') + 1) }}</div>
+        </div>
+      </div>
+      <div v-if="UserInfoStore.userinfo.phoneAdGoalUrl">
+        <!-- 广告位 -->
+        <div class="advertisement_box" v-if="advertisementList.includes(index)">
+          <a :href="UserInfoStore.userinfo.phoneAdGoalUrl" target="_blank">
+            <img :src="'data:' + UserInfoStore.userinfo.phoneAdPictureUrl" />
+          </a>
         </div>
       </div>
 
-      <!-- 广告位 -->
-      <div class="advertisement_box" v-if="index === 2">
-        <a :href="UserInfoStore.userinfo.phoneAdGoalUrl" target="_blank">
-          <img :src="'data:'+UserInfoStore.userinfo.phoneAdPictureUrl"  />
-        </a>
-      </div>
     </div>
 
 
 
     <!-- 按钮 -->
     <!-- facebook -->
-    <div class="F_box" v-if="UserInfoStore.userinfo.facebookStatus"  :style="{'background': UserInfoStore.userinfo.facebookColour }">
+    <div class="F_box" v-if="UserInfoStore.userinfo.facebookStatus"
+      :style="{ 'background': UserInfoStore.userinfo.facebookColour }">
       <a :href="UserInfoStore.userinfo.facebookGoalUrl">{{ UserInfoStore.userinfo.facebookText }}</a>
     </div>
     <!-- line -->
-    <div class="l_box" v-if="UserInfoStore.userinfo.lineStatus"  :style="{'background': UserInfoStore.userinfo.lineColour }">
+    <div class="l_box" v-if="UserInfoStore.userinfo.lineStatus"
+      :style="{ 'background': UserInfoStore.userinfo.lineColour }">
       <a :href="UserInfoStore.userinfo.lineGoalUrl">{{ UserInfoStore.userinfo.lineText }}</a>
     </div>
   </div>
@@ -95,34 +100,65 @@ const ItemArrList = ref([]);
 const getCurrentDay = () => {
   const currentDate = new Date();
 
-// 获取年、月、日
-const year = currentDate.getFullYear();
-const month = (currentDate.getMonth() + 1).toString().padStart(2, '0'); // 月份从0开始，需要加1
-const day = currentDate.getDate().toString().padStart(2, '0');
+  // 获取年、月、日
+  const year = currentDate.getFullYear();
+  const month = (currentDate.getMonth() + 1).toString().padStart(2, '0'); // 月份从0开始，需要加1
+  const day = currentDate.getDate().toString().padStart(2, '0');
 
-// 拼接日期
-const formattedDate = `${year}-${month}-${day}`;
-GetGameData(formattedDate)
+  // 拼接日期
+  const formattedDate = `${year}-${month}-${day}`;
+  GetGameData(formattedDate)
 }
 // 获取赛事数据
 const GetGameData = (date) => {
-  GameData({date:date}).then(res => {
+  GameData({ date: date }).then(res => {
     ItemArrList.value = res.data.resultSet
-    // const Number = Math.floor(Math.random() * res.data.resultSet.length - 1)
-    // ItemArrList.value.splice(Number, 0, {
-    //   src:UserInfoStore.userinfo.phoneAdPictureUrl,
-    //   url:UserInfoStore.userinfo.phoneAdGoalUrl,
-    //   type:0,
-    // });
+
+    // 生成随机数
+    generateRandomArray(res.data.resultSet.length)
+    // console.log(advertisementList.value)
   }).catch(err => {
     console.log(err)
   })
 }
+// 广告位置
+const advertisementList = ref()
 
+// function generateRandomArray(Length) {
+//   const maxLength = Length;
+//   const arrayLength = Math.floor(Math.random() * (maxLength + 1)); // 随机生成数组长度
 
+//   const uniqueNumbers = new Set();
+
+//   while (uniqueNumbers.size < arrayLength) {
+//     const randomNumber = Math.floor(Math.random() * 4); // 生成 0 到 3 之间的随机整数
+//     uniqueNumbers.add(randomNumber);
+//   }
+
+//   // 将 Set 转换为数组
+//   const randomArray = Array.from(uniqueNumbers);
+//   advertisementList.value = randomArray
+// }
+function generateRandomArray(Length) {
+  const maxLength = 3;
+  const uniqueNumbers = new Set();
+
+  // 随机生成数组长度，且不能大于 maxLength
+  const arrayLength = Math.floor(Math.random() * (maxLength + 1));
+
+  while (uniqueNumbers.size < arrayLength) {
+    const randomNumber = Math.floor(Math.random() * 4) + 1; // 生成 1 到 4 之间的随机整数
+    uniqueNumbers.add(randomNumber);
+  }
+
+  // 将 Set 转换为数组
+  const randomArray = Array.from(uniqueNumbers);
+  advertisementList.value = randomArray
+  return randomArray;
+}
 onMounted(() => {
   getCurrentDay()
-  
+
 })
 // 跳转到赛事详情
 const HandelPath = (id) => {
@@ -133,6 +169,7 @@ const HandelPath = (id) => {
 .Game_box {
   width: 100vw;
   padding-bottom: 20px;
+
   .item_box {
     width: 100vw;
 
@@ -301,14 +338,16 @@ const HandelPath = (id) => {
     position: fixed;
     background-color: #f2f2f2;
     line-height: 80px;
-    img{
+
+    img {
       width: 100%;
       height: 100%;
     }
   }
 
 
-  .F_box,.l_box{
+  .F_box,
+  .l_box {
     position: fixed;
     padding: 0 10px;
     height: 28px;
@@ -317,11 +356,8 @@ const HandelPath = (id) => {
     bottom: 80px;
     font-size: 14px;
   }
-  .l_box{
+
+  .l_box {
     bottom: 40px;
   }
-}
-
-
-
-</style>
+}</style>

@@ -38,8 +38,6 @@ const getOneWeekDates = () => {
 
   return oneWeekDates;
 }
-
-
 defineProps({
     Show:{
         type:Boolean,
@@ -68,7 +66,7 @@ const GetSelectDate =(item,index) => {
     align-items: center;
     justify-content: space-between;
     background-color: #ffffff;
-
+    position: fixed;
     .left_box {
         width: 40px;
         height: 30px;

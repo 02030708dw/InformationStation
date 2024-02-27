@@ -79,12 +79,12 @@
     </div>
     <!-- 按钮 -->
     <!-- facebook -->
-    <div class="F_box" :style="{ background: UserInfoStore.userinfo.facebookColour }" v-if="UserInfoStore.userinfo.facebookStatus">
+    <div class="F_box" :style="{ background: UserInfoStore.userinfo.facebookColour }" v-if="UserInfoStore.userinfo.facebookStatus" >
     
       <div class="ico">
-        <img src="../../assets/image/Home/facebook.png" alt="">
+        <img src="../../assets/image/Home/facebook.png">
       </div>
-      <a :href="UserInfoStore.userinfo.facebookGoalUrl">
+      <a :href="UserInfoStore.userinfo.facebookGoalUrl" >
         {{UserInfoStore.userinfo.facebookText}}
     
     </a>
@@ -99,7 +99,7 @@
     <div class="ico">
       <img src="../../assets/image/Home/line.png" alt="">
     </div>
-      <a :href="UserInfoStore.userinfo.lineGoalUrl">{{
+      <a :href="UserInfoStore.userinfo.lineGoalUrl" >{{
         UserInfoStore.userinfo.lineText
       }}</a>
     </div>
@@ -188,19 +188,13 @@ const scrollEventFn = (e) =>{
         pageNo.value ++
         GetGameData(datevalue.value)
       }
-     
     }
 }
-
-
-
-
 // 初始化
 onMounted(() => {
   getCurrentDay();
 });
-
-      
+  
 
 
 </script>

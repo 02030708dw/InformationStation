@@ -131,7 +131,7 @@ const getCurrentDay = () => {
 const GetGameData = (date) => {
   GameData({ date: date })
     .then((res) => {
-      const items = res.data.resultSet;
+      const items = res.data.resultSet.data;
       // 根据items的长度计算广告数量，每3个项插入一个广告
       const adCount = Math.floor(items.length / 5);
       const adPositions = calculateAdPositions(items.length, adCount);

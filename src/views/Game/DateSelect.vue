@@ -67,6 +67,7 @@ const GetSelectDate =(item,index) => {
     justify-content: space-between;
     background-color: #ffffff;
     position: fixed;
+    top: 80px;
     .left_box {
         width: 40px;
         height: 30px;

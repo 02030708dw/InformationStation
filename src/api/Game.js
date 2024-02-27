@@ -2,11 +2,11 @@ import request from '../util/request'
 
 
 // 赛事分页列表
-export function GameData ({date}) {
+export function GameData ({date,pageNo,pageSize}) {
     return request({
         url:'/materialGame/getLiveSportList',
         method: "get",
-        params: {date}
+        params: {date,pageNo,pageSize}
     })
 }
 

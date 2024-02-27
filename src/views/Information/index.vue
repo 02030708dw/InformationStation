@@ -32,22 +32,7 @@
       </van-cell>
     </van-list>
 
-    <!-- <div
-      class="item_box"
-      v-for="(item, index) in ListData"
-      :key="index"
-      @click="HandelInformationinfo(item)"
-    >
-     
-      <div class="Information_item_box">
-        <div class="Information_Text">
-          {{ item.content.title }}
-        </div>
-        <div class="Information_image">
-          <img :src="item.content.cover" alt="" />
-        </div>
-      </div>
-    </div> -->
+    
   </div>
 </template>
 <script setup>

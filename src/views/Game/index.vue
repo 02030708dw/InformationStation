@@ -1,5 +1,5 @@
 <template>
-  <div class="Game_box">
+  <div class="Game_box"   @scroll="scrollEventFn">
     <DateSelect @GameData="GetGameData"></DateSelect>
     <!-- 联系弹窗 -->
     <div class="contact_box" v-if="UserInfoStore.userinfo.windowPictureUrl">
@@ -10,8 +10,10 @@
     <!-- 列表选项 -->
     <div
       class="item_box"
+     
       v-for="(item, index) in ItemArrList"
       :key="index"
+      
     >
       <!-- 广告 -->
       <div v-if="item.isAd" class="advertisement_box">
@@ -75,7 +77,6 @@
       <!-- 加载更多提示或加载中动画 -->
       <div v-if="isLoading" class="loading">加载中...</div>
     </div>
-
     <!-- 按钮 -->
     <!-- facebook -->
     <div
@@ -100,7 +101,7 @@
   </div>
 </template>
 <script setup>
-import { ref, onMounted, computed, watch, onUnmounted } from "vue";
+import { ref, onMounted } from "vue";
 import useUserInfo from "../../stores/modules/userinfo";
 import DateSelect from "./DateSelect.vue"; // 组件
 import { useRouter } from "vue-router"; // 路由
@@ -113,7 +114,7 @@ const isLoading = ref(false); //加载
 const pageNo = ref(1); //当前页
 const pageSize = ref(10); //每页显示条数
 const total = ref(0); //总条数
-
+const datevalue = ref('') //日期
 // 获取当前日期
 const getCurrentDay = () => {
   const currentDate = new Date();
@@ -125,12 +126,22 @@ const getCurrentDay = () => {
 
   // 拼接日期
   const formattedDate = `${year}-${month}-${day}`;
+  datevalue.value = formattedDate
   GetGameData(formattedDate);
 };
 // 获取赛事数据
 const GetGameData = (date) => {
-  GameData({ date: date })
+  
+  
+  if(datevalue.value != date){
+    pageNo.value = 1
+    pageSize.value = 10
+    ItemArrList.value = []
+    datevalue.value = date
+  }  
+  GameData({ date: date ,pageNo:pageNo.value,pageSize:pageSize.value})
     .then((res) => {
+      total.value = res.data.resultSet.total
       const items = res.data.resultSet.data;
       // 根据items的长度计算广告数量，每3个项插入一个广告
       const adCount = Math.floor(items.length / 5);
@@ -141,8 +152,8 @@ const GetGameData = (date) => {
         // 由于插入广告会改变数组长度，位置需要适当调整
         items.splice(pos + index * 3, 0, { isAd: true }); // 调整插入逻辑以适应每3个项一个广告的规则
       });
-
-      ItemArrList.value = items;
+     
+      ItemArrList.value =[...ItemArrList.value,...items] ;
     })
     .catch((err) => {
       console.log(err);
@@ -164,23 +175,41 @@ const calculateAdPositions =(length, count)=> {
 const HandelPath = (id) => {
   router.push(`/GameInfo/${id}`);
 };
+const scrollEventFn = (e) =>{
+    if (e.srcElement.scrollTop + e.srcElement.clientHeight > e.srcElement.scrollHeight - 50) {//-50距离底部50px是触发以下内容
+      if(ItemArrList.value.length >= total.value){
+        return
+      }else{
+        pageNo.value ++
+        GetGameData(datevalue.value)
+      }
+     
+    }
+}
 
-//
+
+
 
 // 初始化
 onMounted(() => {
   getCurrentDay();
 });
 
+      
+
+
 </script>
 <style lang="scss" scoped>
 .Game_box {
   width: 100vw;
-  padding-bottom: 20px;
-
+  height: 100vh;
+  padding-bottom: 100px;
+  padding-top: 30px;
+  overflow-y: scroll;
   .item_box {
+   
     width: 100vw;
-
+  
     // 标题
     .item_title_box {
       width: 100vw;

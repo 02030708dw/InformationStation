@@ -79,14 +79,15 @@
     </div>
     <!-- 按钮 -->
     <!-- facebook -->
-    <div
-      class="F_box"
-      v-if="UserInfoStore.userinfo.facebookStatus"
-      :style="{ background: UserInfoStore.userinfo.facebookColour }"
-    >
-      <a :href="UserInfoStore.userinfo.facebookGoalUrl">{{
-        UserInfoStore.userinfo.facebookText
-      }}</a>
+    <div class="F_box" :style="{ background: UserInfoStore.userinfo.facebookColour }" v-if="UserInfoStore.userinfo.facebookStatus">
+    
+      <div class="ico">
+        <img src="../../assets/image/Home/facebook.png" alt="">
+      </div>
+      <a :href="UserInfoStore.userinfo.facebookGoalUrl">
+        {{UserInfoStore.userinfo.facebookText}}
+    
+    </a>
     </div>
     <!-- line -->
     <div
@@ -94,6 +95,10 @@
       v-if="UserInfoStore.userinfo.lineStatus"
       :style="{ background: UserInfoStore.userinfo.lineColour }"
     >
+   
+    <div class="ico">
+      <img src="../../assets/image/Home/line.png" alt="">
+    </div>
       <a :href="UserInfoStore.userinfo.lineGoalUrl">{{
         UserInfoStore.userinfo.lineText
       }}</a>
@@ -390,7 +395,21 @@ onMounted(() => {
     right: 20px;
     bottom: 80px;
     font-size: 14px;
+  
+    display: flex;
+    align-items: center;
+    .ico{
+      margin-right: 2px;
+      width: 25px;
+      height: 25px;
+      
+      img{
+        width: 100%;
+        height: 100%;
+      }
+    }
   }
+ 
 
   .l_box {
     bottom: 40px;

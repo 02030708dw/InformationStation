@@ -13,7 +13,6 @@
     </NavBar>
     <!-- tab选项卡 -->
     <Tab></Tab>
-
     <!-- 内容 赛事  体育资讯 赛事分析 -->
     <router-view></router-view>
   </div>

@@ -10,10 +10,8 @@
     <!-- 列表选项 -->
     <div
       class="item_box"
-     
       v-for="(item, index) in ItemArrList"
       :key="index"
-      
     >
       <!-- 广告 -->
       <div v-if="item.isAd" class="advertisement_box">
@@ -73,10 +71,10 @@
           </div>
         </div>
       </template>
-
       <!-- 加载更多提示或加载中动画 -->
-      <div v-if="isLoading" class="loading">加载中...</div>
+      <div v-if="isLoading" class="loading" >加载中...</div>
     </div>
+    <div class="loading" v-if="ItemArrList.length >= total && total != 0">没有更多了...</div>
     <!-- 按钮 -->
     <!-- facebook -->
     <div class="F_box" :style="{ background: UserInfoStore.userinfo.facebookColour }" v-if="UserInfoStore.userinfo.facebookStatus" >
@@ -181,7 +179,10 @@ const HandelPath = (id) => {
   router.push(`/GameInfo/${id}`);
 };
 const scrollEventFn = (e) =>{
-    if (e.srcElement.scrollTop + e.srcElement.clientHeight > e.srcElement.scrollHeight - 50) {//-50距离底部50px是触发以下内容
+  //e.srcElement.scrollTop: 滚动条距离页面顶部距离
+	//e.srcElement.clientHeight: 滚动页面高度
+	//e.srcElement.scrollHeight: 滚动条高度
+    if (e.srcElement.scrollTop + e.srcElement.clientHeight > e.srcElement.scrollHeight - 10) {//-50距离底部50px是触发以下内容
       if(ItemArrList.value.length >= total.value){
         return
       }else{

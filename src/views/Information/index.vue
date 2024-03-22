@@ -13,26 +13,17 @@
         @click="HandelInformationinfo(item)"
       >
         <template #default>
-          <div
-            class="item_box"
-            v-for="(item, index) in ListData"
-            :key="index"
-            @click="HandelInformationinfo(item)"
-          ></div>
-          <div class="Information_item_box">
-            <div class="Information_Text">
+          <div class="item-box">
+            <div class="Information-Text">
               {{ item.content.title }}
             </div>
-            <!-- 图片 -->
-            <div class="Information_image">
-              <img :src="item.content.cover" alt="" />
+            <div class="Information-image">
+              <img :src="item.content.cover" />
             </div>
           </div>
         </template>
       </van-cell>
     </van-list>
-
-    
   </div>
 </template>
 <script setup>
@@ -48,33 +39,31 @@ const router = useRouter();
 // 列表数据
 var ListData = ref([]);
 // 总条数
-const total = ref()
+const total = ref();
 // 页码
-const pageNo = ref(1)
+const pageNo = ref(1);
 // 请求资讯数据
-const GetInformationData =  () => {
-   InformationData({ pageNo: pageNo.value, pageSize: 10 })
+const GetInformationData = () => {
+  InformationData({ pageNo: pageNo.value, pageSize: 10 })
     .then((res) => {
-        loading.value = false
-      ListData.value = [... ListData.value,...res.data.resultSet.data]
-      total.value = res.data.resultSet.total
+      loading.value = false;
+      ListData.value = [...ListData.value, ...res.data.resultSet.data];
+      total.value = res.data.resultSet.total;
     })
     .catch((err) => {
       console.log(err);
     });
 };
-const finished = ref(false)
-const loading = ref(false)
+const finished = ref(false);
+const loading = ref(false);
 const onLoad = () => {
-    if(ListData.value.length >= total.value){
-        finished.value = true
-        return
-    }
-    pageNo.value ++
-    GetInformationData()
-   
-}
-
+  if (ListData.value.length >= total.value) {
+    finished.value = true;
+    return;
+  }
+  pageNo.value++;
+  GetInformationData();
+};
 
 // 跳转到资讯详情
 const HandelInformationinfo = (item) => {
@@ -85,60 +74,23 @@ const HandelInformationinfo = (item) => {
 };
 // 初始化数据
 onMounted(() => {
-//   GetInformationData();
+  //   GetInformationData();
 });
-
-
 </script>
 <style lang="scss" scoped>
 .Information_box {
   padding-top: 10px;
   width: 100vw;
 
-  .item_box {
-    width: 100vw;
-  }
-
-  .Information_item_box {
-    height: 80px;
-    width: 100vw;
-    text-align: left;
-    display: flex;
-    //justify-content: space-between;
-
-    .Information_Text {
-      margin-left: 10px;
-      word-wrap: break-word;
-      word-break: break-all;
-      width: 200px;
-
-      margin-right: 10px;
-      font-size: 14px;
-      height: 70px;
+  .item-box {
+    width: 100%;
+    .Information-Text {
+      text-align: start;
     }
-
-    .Information_image {
-      margin-left: 10px;
-      width: 100px;
-      height: 70px;
-
+    .Information-image {
       img {
         width: 100%;
-        height: 100%;
       }
-    }
-  }
-
-  // 广告
-  .advertisement_box {
-    line-height: 90px;
-    width: 100vw;
-    height: 90px;
-    background: #f2f2f2;
-
-    img {
-      width: 100%;
-      height: 100%;
     }
   }
 }

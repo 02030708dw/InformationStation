@@ -1,3 +1,3 @@
 <template>
-    赛事详情
+    开奖
 </template>

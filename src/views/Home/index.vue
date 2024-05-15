@@ -1,28 +1,23 @@
 <template>
   <div class="home">
     <NavBar/>
+    <TabBar :list="TabBarList"/>
     <router-view></router-view>
-    <ul class="tab-bar">
-      <li>首页</li>
-      <li>开奖</li>
-      <li>体育</li>
-      <li>分析</li>
-    </ul>
   </div>
 </template>
 <script setup>
 import NavBar from "@/components/NavBar/index.vue";
-
+import TabBar from "./TabBar.vue"
+import {ref,reactive} from 'vue'
+const TabBarList=reactive([
+  {label:'赛事',name:'Match'},
+  {label:'开奖',name:'Draw'},
+  {label:'体育',name:'Sports'},
+  {label:'分析',name:'Analysis'},
+])
 </script>
 <style lang="scss" scoped>
 .home{
   padding-top: 50px;
-  .tab-bar{
-  display: flex;
-  li{
-    flex: 1;
-  }
 }
-}
-
 </style>

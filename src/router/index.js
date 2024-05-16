@@ -5,14 +5,14 @@ const router = createRouter({
     routes: [
         // 首页
         {
-            path:'/',
+            path:'/:id',
             name:'Home',
             component:()=>import('@/views/Home/index.vue'),
             // redirect: '/:id/Match',
             children:[
                 // 赛事
                 {
-                    path:':/Match',
+                    path:'/:id',
                     name: 'Match',
                     component:()=>import('@/views/Match/index.vue')
                 },
@@ -33,6 +33,11 @@ const router = createRouter({
                 }
             ]
         },
+        {
+            path:'/MatchDetail',
+            name:'MatchDetail',
+            component:()=>import('@/views/MatchDetail/index.vue')
+        }
     ]
 })
 export default router

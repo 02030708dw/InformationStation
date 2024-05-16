@@ -6,6 +6,7 @@
   "scripts": {
     "dev": "vite",
     "dev:prod": "vite --mode=production --host",
+    "dev:zmy": "vite --mode=zmy --host",
     "build": "vite build",
     "preview": "vite preview"
   },

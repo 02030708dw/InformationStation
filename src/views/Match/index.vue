@@ -5,6 +5,7 @@
       finished-text="没有更多了" @load="onLoad">
       <GodCard :data="item" v-for="item in GodArticleList.data" @change-title="changeTitle"/>
     </van-list>
+    <van-loading size="44" v-else/>
   </div>
 </template>
 <script setup>

@@ -37,4 +37,4 @@ const active=ref(props.list[0].name)
         color: #fff;
     }
 }
-</style>
+</style>  

@@ -25,6 +25,7 @@
                 </div>
             </template>
         </div>
+        <DemoGame/>
     </div>
 </template>
 <script setup>
@@ -32,6 +33,7 @@ import { computed } from 'vue'
 import failImg from "@/assets/fail.png"
 import { showImagePreview } from 'vant';
 import {useRouter} from 'vue-router'
+import DemoGame from './DemoGame.vue';
 const router =useRouter()
 const data = computed(() => JSON.parse(sessionStorage.getItem('MatchDetail')))
 const changeImg = (startPosition) => {
@@ -60,7 +62,7 @@ function errorImg(e) {
     background-color: #1C1C1C;
     padding: 10px;
     padding-top: 56px;
-    height: 100%;
+    min-height: 100%;
 
     .god-info {
         height: 50px;

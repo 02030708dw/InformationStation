@@ -1,6 +1,6 @@
 <template>
     <!-- 导航栏 -->
-    <div class="Navbar_box" :style="{'background': NavBarType === 0 ? NavBarColor:`url(${NavBarBackground})`}">
+    <div class="Navbar_box">
         <!-- logo -->
         <slot name="NavBarLogo"></slot>
     </div>
@@ -35,5 +35,7 @@ defineProps({
         background-size: 100% 100%;
         display: flex;
         align-items: center;
+        border: 1px solid #000;
+        background-color: #fff;
     }
 </style>

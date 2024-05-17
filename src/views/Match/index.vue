@@ -6,6 +6,7 @@
       <GodCard :data="item" v-for="item in GodArticleList.data" @change-title="changeTitle"/>
     </van-list>
     <van-loading size="44" v-else/>
+    <Advertising />
   </div>
 </template>
 <script setup>
@@ -13,7 +14,9 @@ import { ref, onMounted, watch,reactive } from 'vue'
 import { getGameGodList, getGameGodArticle } from '@/api/request.js'
 import GameGodTab from './GameGodTab.vue'
 import GodCard from './GodCard.vue'
+import Advertising from './Advertising.vue'
 import {useRouter} from 'vue-router'
+
 const router=useRouter()
 const GodList = ref([])//大神列表数据
 const activeGod = ref('')//当前选中的大神
@@ -50,7 +53,6 @@ watch(activeGod,async () => {
   })
   GodArticleList.value = res.resultSet
 })
-
 onMounted(async () => {
   let res = await getGameGodList()
   console.log(res.resultSet)

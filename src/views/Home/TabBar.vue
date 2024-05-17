@@ -14,8 +14,10 @@ const router=useRouter()
 const props = defineProps({
     list: { type: Array }
 })
+const emits=defineEmits(['change'])
 const change=(item)=>{
     active.value=item.name
+    emits('change',item)
     router.push({name:item.name})
 }
 const active=ref(props.list[0].name)

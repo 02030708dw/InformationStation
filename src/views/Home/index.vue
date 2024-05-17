@@ -1,7 +1,7 @@
 <template>
   <div class="home">
     <NavBar />
-    <TabBar :list="TabBarList" />
+    <TabBar :list="TabBarList"/>
       <router-view v-slot="{ Component }">
         <keep-alive :max="2">
           <component :is="Component" />
@@ -15,11 +15,10 @@ import { useRoute } from 'vue-router'
 import NavBar from "@/components/NavBar/index.vue";
 import TabBar from "@/views/Home/TabBar.vue"
 import Loading from "@/components/Loading/index.vue"
-import { storeToRefs } from 'pinia';
 import { getUserInfo } from '@/api/request.js'
 import { useUserInfo } from '@/stores/modules/userinfo.js'
 import {loadingStore} from "@/stores/modules/loadingStore.js"
-const {loadingState} =storeToRefs(loadingStore())
+
 const { setUserInfo } = useUserInfo()
 const route = useRoute()
 const TabBarList = reactive([
@@ -32,7 +31,7 @@ onMounted(async () => {
   const id = route.params.id
   let res = await getUserInfo(id)
   setUserInfo(res.resultSet)
-  loadingState.value=true
+  loadingStore().loadingState=true
 })
 
 </script>

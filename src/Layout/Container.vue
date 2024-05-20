@@ -3,7 +3,7 @@
         <div class="header" ref="header" >
             <slot name="header" />
         </div>
-        <div class="content" :style="{paddingTop}">
+        <div class="content" :style="{height:`calc(100vh - ${paddingTop})`}">
             <slot />
         </div>
     </div>
@@ -27,15 +27,15 @@ onUnmounted(() => {
 </script>
 <style scoped lang="scss">
 .layout {
-    min-height: 100vh;
+    height: 100vh;
     .header {
         width: 100%;
-        position: fixed;
+        // position: fixed;
         z-index: 2;
     }
     .content{
         background-color: #000;
-        min-height: 100vh;
+        overflow: scroll;
     }
 }
 </style>

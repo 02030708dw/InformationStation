@@ -20,7 +20,9 @@ const active=defineModel('modelValue')
     display: flex;
     align-items: center;
     background-color: #fff;
-    position: fixed;
+    position: sticky;
+    top: 0;
+    height: 30px;
     .item{
         text-wrap: nowrap;
         text-align: center;

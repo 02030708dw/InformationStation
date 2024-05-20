@@ -1,17 +1,18 @@
 <template>
+    <div class="home">
   <Container>
     <template #header>
       <NavBar />
       <TabBar :list="TabBarList" />
     </template>
-    <div class="home">
       <router-view v-slot="{ Component }">
         <keep-alive :max="2">
           <component :is="Component" />
         </keep-alive>
       </router-view>
-    </div>
   </Container>
+</div>
+
 </template>
 <script setup>
 import { ref, reactive, onMounted } from 'vue'
@@ -41,7 +42,7 @@ onMounted(async () => {
 
 </script>
 <style lang="scss" scoped>
-.home {
+.home{
   min-height: 100%;
 }
 </style>

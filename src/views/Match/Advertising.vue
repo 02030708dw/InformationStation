@@ -12,7 +12,7 @@
 .advertising{
     position: fixed;
     left: 0;
-    top: 30vh;
+    top: 200px;
     width: 80px;
     background-color: #fff;
     div{

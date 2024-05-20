@@ -34,7 +34,8 @@ onUnmounted(() => {
     }
     .content{
         background-color: #000;
-        overflow: scroll;
+        overflow-y:auto;
+        overflow-x: hidden;
     }
 }
 </style>

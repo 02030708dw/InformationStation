@@ -17,26 +17,23 @@ const active=defineModel('modelValue')
 .game-god-tab {
     width: 100%;
     display: flex;
-    align-items: center;
     background-color: #fff;
     position: sticky;
     top: 0;
     height: 30px;
     .item{
         font-size: 14px;
-        height: 30px;
+        line-height: 30px;
+        text-align: center;
         text-wrap: nowrap;
         flex: 1;
         border-radius: 4px;
         background-color: #fff;
         border: 1px solid #000;
-        display: flex;
-        align-items: center;
-        justify-content: center;
     }
     .active{
         color: aliceblue;
         background-color: cornflowerblue;
-    }
+    } 
 }
 </style>

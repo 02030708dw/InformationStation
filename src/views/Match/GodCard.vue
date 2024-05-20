@@ -57,7 +57,7 @@ function errorImg(e){
 .god-card {
     background-color: #1C1C1C;
     padding: 10px;
-
+    overflow: hidden;
     .god-info {
         height: 50px;
         display: flex;
@@ -97,6 +97,7 @@ function errorImg(e){
         padding-top: 10px;
         color: #fff;
         font-size: 14px;
+        overflow: hidden;
     }
 
         .img-box {

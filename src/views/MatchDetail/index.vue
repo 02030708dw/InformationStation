@@ -1,6 +1,6 @@
 <template>
     <div class="god-card">
-        <van-nav-bar title="标题" left-text="返回" left-arrow @click-left="onClickLeft" :fixed="true"/>
+        <van-nav-bar title="标题" left-text="返回" left-arrow @click-left="onClickLeft" :fixed="true" />
         <div class="god-info">
             <div style="height: 100%;">
                 <img src="https://th.bing.com/th/id/OIP.m--751RSKkOTO8ZxoEK4WQAAAA?rs=1&pid=ImgDetMain" class="headimg">
@@ -25,24 +25,24 @@
                 </div>
             </template>
         </div>
-        <DemoGame/>
+        <DemoGame />
     </div>
 </template>
 <script setup>
-import { computed } from 'vue'
+import { onActivated,ref } from 'vue'
 import failImg from "@/assets/fail.png"
 import { showImagePreview } from 'vant';
-import {useRouter} from 'vue-router'
+import { useRouter } from 'vue-router'
 import DemoGame from './DemoGame.vue';
-const router =useRouter()
-const data = computed(() => JSON.parse(sessionStorage.getItem('MatchDetail')))
+const router = useRouter()
+const data = ref({})
 const changeImg = (startPosition) => {
     showImagePreview({
         images: formatImg(data.value.pictureUrl),
         startPosition
     });
 }
-const onClickLeft=()=>{
+const onClickLeft = () => {
     router.back()
 }
 function formatImg(str) {
@@ -52,12 +52,18 @@ function errorImg(e) {
     e.target.src = failImg
     e.target.style.objectFit = 'none'
 }
+onActivated(() => {
+    data.value = JSON.parse(sessionStorage.getItem('MatchDetail'))
+    scrollTo({
+        top: 0,
+    });
+})
 </script>
 <style lang="scss" scoped>
 .god-card {
-    --van-nav-bar-background:#000;
-    --van-border-color:#000;
-    --van-nav-bar-title-text-color:#fff;
+    --van-nav-bar-background: #000;
+    --van-border-color: #000;
+    --van-nav-bar-title-text-color: #fff;
 
     background-color: #1C1C1C;
     padding: 10px;

@@ -30,7 +30,6 @@ onUnmounted(() => {
     height: 100vh;
     .header {
         width: 100%;
-        // position: fixed;
         z-index: 2;
     }
     .content{

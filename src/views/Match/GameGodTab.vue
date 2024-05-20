@@ -16,7 +16,6 @@ const active=defineModel('modelValue')
 <style lang="scss" scoped>
 .game-god-tab {
     width: 100%;
-    font-size: 14px;
     display: flex;
     align-items: center;
     background-color: #fff;
@@ -24,13 +23,16 @@ const active=defineModel('modelValue')
     top: 0;
     height: 30px;
     .item{
+        font-size: 14px;
+        height: 30px;
         text-wrap: nowrap;
-        text-align: center;
-        line-height: 30px;
         flex: 1;
         border-radius: 4px;
         background-color: #fff;
         border: 1px solid #000;
+        display: flex;
+        align-items: center;
+        justify-content: center;
     }
     .active{
         color: aliceblue;

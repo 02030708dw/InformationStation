@@ -26,12 +26,8 @@ defineProps({
 </script>
 <style lang="scss" scoped>
     .Navbar_box{
-        z-index: 9999;
-        width: 100vw;
+        width: 100%;
         height: 50px;
-        position: fixed;
-        top: 0px;
-        left: 0px;
         background-size: 100% 100%;
         display: flex;
         align-items: center;

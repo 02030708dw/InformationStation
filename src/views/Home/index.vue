@@ -1,23 +1,28 @@
 <template>
-  <div class="home">
-    <NavBar />
-    <TabBar :list="TabBarList"/>
+  <Container>
+    <template #header>
+      <NavBar />
+      <TabBar :list="TabBarList" />
+    </template>
+    <div class="home">
       <router-view v-slot="{ Component }">
         <keep-alive :max="2">
           <component :is="Component" />
         </keep-alive>
       </router-view>
-  </div>
+    </div>
+  </Container>
 </template>
 <script setup>
 import { ref, reactive, onMounted } from 'vue'
 import { useRoute } from 'vue-router'
+import Container from "@/Layout/Container.vue"
 import NavBar from "@/components/NavBar/index.vue";
 import TabBar from "@/views/Home/TabBar.vue"
 import Loading from "@/components/Loading/index.vue"
 import { getUserInfo } from '@/api/request.js'
 import { useUserInfo } from '@/stores/modules/userinfo.js'
-import {loadingStore} from "@/stores/modules/loadingStore.js"
+import { loadingStore } from "@/stores/modules/loadingStore.js"
 
 const { setUserInfo } = useUserInfo()
 const route = useRoute()
@@ -31,14 +36,12 @@ onMounted(async () => {
   const id = route.params.id
   let res = await getUserInfo(id)
   setUserInfo(res.resultSet)
-  loadingStore().loadingState=true
+  loadingStore().loadingState = true
 })
 
 </script>
 <style lang="scss" scoped>
 .home {
-  padding-top: 50px;
-  background-color: #000;
   min-height: 100%;
 }
 </style>

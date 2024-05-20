@@ -62,7 +62,9 @@ onMounted(async () => {
 </script>
 <style lang="scss" scoped>
 .match {
+  position: relative;
   .card-content {
+    padding-top: 30px;
     display: flex;
     flex-direction: column;
     gap: 20px;

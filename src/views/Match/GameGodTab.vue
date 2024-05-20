@@ -15,10 +15,12 @@ const active=defineModel('modelValue')
 </script>
 <style lang="scss" scoped>
 .game-god-tab {
+    width: 100%;
     font-size: 14px;
     display: flex;
     align-items: center;
     background-color: #fff;
+    position: fixed;
     .item{
         text-wrap: nowrap;
         text-align: center;

@@ -9,8 +9,9 @@
 </template>
 <script setup>
 import {ref} from 'vue'
-import {useRouter} from 'vue-router'
+import {useRouter,useRoute} from 'vue-router'
 const router=useRouter()
+const route=useRoute()
 const props = defineProps({
     list: { type: Array }
 })
@@ -20,7 +21,13 @@ const change=(item)=>{
     emits('change',item)
     router.push({name:item.name})
 }
-const active=ref(props.list[0].name)
+const active=defineModel('modelValue')
+// const TabBarList = reactive([
+//   { label: '赛事', name: 'Match' },
+//   { label: '开奖', name: 'Draw' },
+//   { label: '体育', name: 'Sports' },
+//   { label: '分析', name: 'Analysis' },
+// ])
 </script>
 <style lang="scss" scoped>
 .tab-bar {

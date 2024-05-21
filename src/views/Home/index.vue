@@ -3,7 +3,7 @@
   <Container>
     <template #header>
       <NavBar />
-      <TabBar :list="TabBarList" />
+      <TabBar :list="TabBarList" v-model="active"/>
     </template>
       <router-view v-slot="{ Component }">
         <keep-alive :max="2">
@@ -27,6 +27,7 @@ import { loadingStore } from "@/stores/modules/loadingStore.js"
 
 const { setUserInfo } = useUserInfo()
 const route = useRoute()
+const active=ref(route.name)
 const TabBarList = reactive([
   { label: '赛事', name: 'Match' },
   { label: '开奖', name: 'Draw' },

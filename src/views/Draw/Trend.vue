@@ -18,7 +18,7 @@
 
 </template>
 <script setup>
-import { ref, onMounted,watch } from 'vue'
+import { ref, onMounted,watch,onActivated } from 'vue'
 const props = defineProps(['data'])
 const trendBox = ref(null)
 const tableGrid = ref(null)
@@ -40,11 +40,11 @@ onMounted(()=>{
     active.value='sizeList'
     createGrid()
 })
-
+onActivated(()=>trendBox.value.scrollLeft = trendBox.value.clientWidth)
 
 function createGrid() {
     tableGrid.value.innerHTML = ''
-    const minColumns = 14;
+    const minColumns = 15;
     const minRows = 6;  // 最小行数
     let maxRows = 0;
     let maxCols = 0;

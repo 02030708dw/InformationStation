@@ -43,8 +43,9 @@ onMounted(()=>{
 
 
 function createGrid() {
-    tableGrid.value.innerHTML=''
+    tableGrid.value.innerHTML = ''
     const minColumns = 14;
+    const minRows = 6;  // 最小行数
     let maxRows = 0;
     let maxCols = 0;
     props.data[active.value].forEach((item) => {
@@ -53,6 +54,8 @@ function createGrid() {
         if (x > maxRows) maxRows = x;
         if (y > maxCols) maxCols = y;
     });
+    // 确保 maxCols 至少为 minRows
+    maxCols = Math.max(maxCols, minRows);
     const totalColumns = Math.max(minColumns, maxRows) + 1;
     for (let i = 0; i < maxCols; i++) {
         const row = tableGrid.value.insertRow();
@@ -66,11 +69,12 @@ function createGrid() {
         const rowIndex = maxCols - 1 - y;
         const colIndex = x + (totalColumns - maxRows - 1);
         const cell = tableGrid.value.rows[rowIndex].cells[colIndex];
-            cell.className = item.nums;
-            cell.setAttribute("data-content", item.nums);
+        cell.className = item.nums;
+        cell.setAttribute("data-content", item.nums);
     });
     trendBox.value.scrollLeft = trendBox.value.clientWidth
 }
+
 </script>
 <style lang="scss" >
 .trend{

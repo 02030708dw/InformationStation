@@ -8,4 +8,4 @@ export const getGameGodArticle=(data)=>post(`/material/collect/new/client/page`,
 
 export const getGameInfo=()=>get(`/material/listAll`,{gw:true})
 
-// export const getGameTrend()=>get()
+export const getGameTrend=(str,data)=>post(`/material/get${str}Trend`,data,{gw:true})//获取走势图str=Ph|Th|Vnd

@@ -34,12 +34,12 @@ const TabBarList = reactive([
   { label: '体育', name: 'Sports' },
   { label: '分析', name: 'Analysis' },
 ])
-onMounted(async () => {
-  const id = route.params.id
-  let res = await getUserInfo(id)
-  setUserInfo(res.resultSet)
-  loadingStore().loadingState = true
-})
+// onMounted(async () => {
+//   const id = route.params.id
+//   let res = await getUserInfo(id)
+//   setUserInfo(res.resultSet)
+//   loadingStore().loadingState = true
+// })
 
 </script>
 <style lang="scss" scoped>

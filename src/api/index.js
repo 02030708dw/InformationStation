@@ -8,6 +8,11 @@ const request = axios.create({
 // 添加请求拦截器
 request.interceptors.request.use(function (config) {
     // 在发送请求之前做些什么
+    let gwRequestFlag=config.params?.gw//是否为gw请求
+    if(gwRequestFlag){
+      config.baseURL=import.meta.env.VITE_GW_BASE_API
+    }
+    console.log(config)
     return config;
   }, function (error) {
     // 对请求错误做些什么

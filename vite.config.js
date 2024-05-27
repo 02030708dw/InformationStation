@@ -16,9 +16,22 @@ export default defineConfig({
     client: {
       overlay: false,
     },
-    // 启动自动打开页面
-    open: true,
+    open: false,//运行项目是否自动打开
   },
+  // proxy: {
+  //   '/api1': {
+  //     // 后台地址
+  //     target: 'http://127.0.0.1:8990/',
+  //     changeOrigin: true,
+  //     rewrite: path => path.replace(/^\/api1/, '')
+  //   },
+  //   '/api2': {
+  //     // 后台地址
+  //     target: 'http://127.0.0.1:8956/',
+  //     changeOrigin: true,
+  //     rewrite: path => path.replace(/^\/api2/, '')
+  //   }
+  // },
   // 适配方案
   css: {
     postcss: {

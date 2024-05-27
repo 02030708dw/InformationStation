@@ -107,7 +107,7 @@ function createGrid() {
     overflow-x: auto;
     scrollbar-width: none;
 }
-.table-container::-webkit-scrollbar {
+.trendBox::-webkit-scrollbar {
     display: none;
 }
 table {

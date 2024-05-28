@@ -10,37 +10,59 @@
             </li>
         </ul>
 
-        <div class="trendBox" ref="trendBox">
+        <div class="trendBox" ref="trendBox" v-if="TrendFlagAry.includes(active)">
             <table ref="tableGrid"></table>
         </div>
+
+        <ul class="num-box" v-else>
+            <li class="num-item animate"></li>
+            <li v-for="(item,index) in data[active]" class="num-item">
+                {{ item.nums }}
+            </li>
+            <li class="num-item" v-for="item in 19-data[active].length"></li>
+        </ul>
     </div>
 
 
 </template>
 <script setup>
-import { ref, onMounted,watch,onActivated } from 'vue'
-const props = defineProps(['data'])
+import { ref, onMounted,watch,onActivated,onBeforeMount,nextTick } from 'vue'
+const props = defineProps({
+    data:{required:true}
+})
+const TrendFlagAry=['sizeList','singleAndDoubleList']
 const trendBox = ref(null)
 const tableGrid = ref(null)
 const active=ref()
 const mapKeyObj={
     specialList:'SP',
-    eightList:'eight',
+    eightList:'Eight',
     sizeList:'B/S',
-    singleAndDoubleList:'E/O'
+    singleAndDoubleList:'E/O',
+    endList:'End',
+    headList:'Head'
+
 }
 const changeSelect=(item)=>{
     active.value=item
-    createGrid()
+    if(TrendFlagAry.includes(item)) {
+        nextTick(()=>createGrid())
+        
+    } 
 }
 watch(props,()=>{
     createGrid()
+    console.log('监听到data发生改变')
+})
+onBeforeMount(()=>{
+    active.value='sizeList'
 })
 onMounted(()=>{
-    active.value='sizeList'
-    createGrid()
+    if(Object.keys(props.data).length) createGrid()
+}) 
+onActivated(()=>{
+    trendBox.value.scrollLeft = trendBox.value.clientWidth
 })
-onActivated(()=>trendBox.value.scrollLeft = trendBox.value.clientWidth)
 
 function createGrid() {
     tableGrid.value.innerHTML = ''
@@ -100,6 +122,40 @@ function createGrid() {
 .active{
     color: #fff;
     background-color: #F19C73;
+}
+.num-box{
+    width: 100%;
+    height: calc(23.04px * 5);//一列为5个,一个为23.04
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+    box-sizing: content-box;
+    border: 1px solid #ebae43;
+}
+.animate{
+    position: relative;
+}
+.animate::after{
+    color: #666;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    content: '...';
+    animation: dots 2s steps(4, end) infinite;
+}
+.num-item{
+    font-size: 16px;
+    text-align: center;
+    width: 25%;
+    line-height: 23.04px;
+    height: 23.04px;
+}
+.num-item:nth-child(odd){
+    background-color: #fef0e0;
+}
+.num-item:nth-child(even){
+    background-color: #fff;
 }
 .trendBox {
     border-radius: 4px;
@@ -161,5 +217,24 @@ td {
 .E::before{
     @extend .common-circle;
     background: red;
+}
+@keyframes dots {
+
+    0%,
+    100% {
+        content: '';
+    }
+
+    25% {
+        content: '.';
+    }
+
+    50% {
+        content: '..';
+    }
+
+    75% {
+        content: '...';
+    }
 }
 </style>

@@ -23,7 +23,9 @@
         </template>
 
         <template v-if="activeGame=='ph'">
-            
+            <div class="trend-box" v-for="(item,index) in TrendData[activeGame]">
+                <TrendPh :data="item" />
+            </div>
         </template>
 
     </div>
@@ -33,6 +35,7 @@ import { ref, computed, onBeforeMount,watch,reactive } from 'vue';
 import GameTab from './GameTab.vue';
 import items from "./vndCityData.js";//越南地区数据
 import Trend from "./Trend.vue";
+import TrendPh from './TrendPh.vue';
 import { getGameInfo,getGameTrend } from "@/api/request.js";
 const TrendInfo = reactive({})//有几个走势图的游戏
 const activeGame = ref('vnd')//当前选中的游戏
@@ -57,7 +60,7 @@ watch(activeGame, async (newvalue, oldvalue) => {
  
     else if (newvalue == 'ph') {
         let promises = TrendInfo[newvalue].map(async (item, index) => {
-            let res = await getTrend(newvalue, item);
+            let res = await getTrend(newvalue, {gameId:item.id,code:item.code});
             TrendData.ph[item.name] = removeFalseyValues(res);
         });
         await Promise.all(promises)

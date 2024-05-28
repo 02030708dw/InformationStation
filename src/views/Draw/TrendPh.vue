@@ -1,5 +1,5 @@
 <template>
-    <div class="game-trend">
+    <div class="trend">
         <ul class="select">
             <li v-for="item in Object.keys(data)" @click="changeSelect(item)" :class="{ active: active == item }"
                 class="select-item">
@@ -14,10 +14,14 @@
             <div class="trendBox" ref="TBParity">
                 <table ref="tableParity" class="table"></table>
             </div>
-            <div class="hint"><span class="red">Big</span> / <span class="yellow">Small</span> </div>
-            <div class="hint"><span class="red">Even</span> / <span class="yellow">Odd</span></div>
+
+            <div class="hint-box">
+                <div class="hint"><span class="red">Big</span> / <span class="yellow">Small</span> </div>
+                <div class="hint"><span class="red">Even</span> / <span class="yellow">Odd</span></div>
+
+            </div>
         </div>
-        <!-- <van-loading v-show="!Object.keys(data).length" /> -->
+
     </div>
 </template>
 
@@ -86,139 +90,42 @@ function createGrid() {
 
 }
 </script>
-<style lang="scss">
-.game-trend {
+<style scoped>
+.select {
+    /* flex-shrink: 0; */
+    width: 60px;
+}
+
+.trend-content {
+    /* flex-shrink: 0; */
+    width: 300px;
     display: flex;
-    padding: 5px;
+    /* gap: 10px; */
+    gap: 10px;
+    flex-wrap: wrap;
+}
 
-    .select {
-        display: flex;
-        flex-direction: column;
-        justify-content: space-between;
-        margin-right: 5px;
-        gap: 5px;
-        .select-item {
-            width: 53px;
-            flex: 1;
-            border-radius: 4px;
-            font-size: 14px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            border: 1px solid #ccc;
-        }
-
-        .active {
-            color: #fff;
-            background-color: #F19C73;
-        }
-    }
-
-
-
-    .trend-content {
-        display: flex;
-        flex-wrap: wrap;
-        min-height: 110.76px;
-        gap: 4px;
-
-        .trendBox {
-            border-radius: 4px;
-            overflow-x: auto;
-            scrollbar-width: none;
-            width: 150px;
-
-            // flex: 1;
-            table {
-                border-collapse: collapse;
-                background: #34373d;
-                min-width: max-content;
-            }
-
-            tbody {
-                width: max-content;
-            }
-
-            td {
-                font-size: 10px;
-                width: 18.75px;
-                height: 18.75px;
-                border: 1px solid white;
-                color: white;
-                position: relative;
-            }
-
-
-            .common-circle {
-                content: attr(data-content);
-                position: absolute;
-                border-radius: 50%;
-                inset: 0;
-                margin: auto;
-                width: 80%;
-                height: 80%;
-                z-index: 1;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-            }
-
-            .A::before {
-                @extend .common-circle;
-                background: #1173eb;
-            }
-
-            .S::before {
-                @extend .common-circle;
-                background: #ebae43;
-            }
-
-            .B::before {
-                @extend .common-circle;
-                background: red;
-            }
-
-            .O::before {
-                @extend .common-circle;
-                background: #ebae43;
-            }
-
-            .E::before {
-                @extend .common-circle;
-                background: red;
-            }
-        }
-
-        .hint {
-            width: 150px;
-            height: 25px;
-            line-height: 25px;
-            text-align: center;
-            border: 1px solid #aaa;
-            font-size: 16px;
-
-            .red {
-                color: red;
-            }
-
-            .yellow {
-                color: #ebae43;
-            }
-        }
-    }
-
-    .trendBox::-webkit-scrollbar {
-        display: none;
-    }
-
-    .van-loading {
-        width: 100%;
-        height: 141.41px;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        // border: 1px solid rgb(244, 208, 134);
-        padding-right: 60pxpx;
-    }
+.trendBox {
+    width: 145px;
+    /* flex-shrink: 0; */
+    /* flex: 1; */
+}
+.hint-box{
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+}
+.hint {
+    text-align: center;
+    width: 145px;
+    line-height: 25px;
+    font-size: 16px;
+    border: 1px solid #000;
+}
+.yellow{
+    color: #ebae43;
+}
+.red{
+    color: red;
 }
 </style>

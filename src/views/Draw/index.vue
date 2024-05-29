@@ -10,8 +10,9 @@
         v-if="activeGame=='vnd'&&Object.keys(TrendInfo).length"
         />
 
-        <template v-if="activeGame=='vnd'">
+        <template v-if="activeGame=='vnd'&&Object.keys(awardNum).length">
             <div class="trend-box" v-for="(item,index) in TrendData[activeGame]">
+                <GameAward :awardNum="awardNum" :timeRemaining="timeRemaining"/>
                 <Trend :data="item" />
             </div>
         </template>
@@ -33,17 +34,23 @@
 <script setup>
 import { ref, computed, onBeforeMount,watch,reactive } from 'vue';
 import GameTab from './GameTab.vue';
-import items from "./vndCityData.js";//越南地区数据
+import GameAward from "./GameAward.vue"
 import Trend from "./Trend.vue";
 import TrendPh from './TrendPh.vue';
-import { getGameInfo,getGameTrend } from "@/api/request.js";
+import items from "./vndCityData.js";//越南地区数据
+import {countdown} from "./getCountDown.js"
+import { getGameInfo,getGameTrend,getGameAward } from "@/api/request.js";
 const TrendInfo = reactive({})//有几个走势图的游戏
 const activeGame = ref('vnd')//当前选中的游戏
-const TrendData=reactive({})//渲染所需走势图数据
 
 const activeId = ref(1);//越南右侧选择的地区名
 const activeIndex = ref(0);//越南左侧选择的地区
 const activeVnd=computed(()=>items[activeIndex.value].children.find(item=>item.id==activeId.value))//越南右侧选择的数据
+
+const awardNum=reactive({})//奖期信息
+const timeRemaining=ref()//倒计时
+
+const TrendData=reactive({})//渲染所需走势图数据
 
 
 
@@ -77,6 +84,7 @@ watch(activeGame, async (newvalue, oldvalue) => {
 watch(activeVnd,async (newvalue)=>{
     if(!newvalue) return
     let res=await getTrend('vnd',newvalue)
+    TrendData.vnd={}
     TrendData.vnd[newvalue.code]=res
 })
 
@@ -88,8 +96,13 @@ onBeforeMount(async () => {
     Object.keys(TrendInfo).forEach(item=>{
         TrendData[item]={}
     }) 
-    var res=await getTrend(activeGame.value,activeVnd.value)
+    var res=await getTrend(activeGame.value,activeVnd.value)//初始请求越南走势图
     TrendData.vnd[activeVnd.value.code]=res
+
+    var res=await getGameAward({gameCode:activeVnd.value.code})
+    Object.assign(awardNum,res.resultSet.awardNum)
+    timeRemaining.value=countdown(awardNum.gameCode,awardNum.lastAwardPeriod)
+    console.log(awardNum)
 })
 
 
@@ -99,8 +112,6 @@ const getTrend=async (city,{code:gameCode,gameId})=>{
     let res=await getGameTrend(str,{gameCode,gameId})
     return res.resultSet
 }
-
-
 
 // 菲律宾走势图处理
 function removeFalseyValues(obj) {

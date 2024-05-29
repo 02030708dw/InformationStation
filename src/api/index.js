@@ -10,12 +10,12 @@ request.interceptors.request.use(function (config) {
     if(gwRequestFlag){
       config.baseURL=import.meta.env.VITE_GW_BASE_API
     }else{
-      const domain = new URL(config.baseURL).hostname; // 获取主机名部分 "php.44dog.cc"
+      const domain = new URL(window.location.origin).hostname; // 获取主机名部分 "php.44dog.cc"
       const subdomain = domain.split('.')[0]; // 获取 "php"
-      console.log(subdomain); 
-      config.headers['country'] = subdomain
+      ['php','vnd','thb','idn'].includes(subdomain)
+      ?config.headers['country'] = subdomain
+      :config.headers['country'] = 'thb'
     }
-    // console.log(config)
     return config;
   }, function (error) {
     return Promise.reject(error);

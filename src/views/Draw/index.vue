@@ -9,10 +9,13 @@
         height="3.84rem"
         v-if="activeGame=='vnd'&&Object.keys(TrendInfo).length"
         />
-
-        <template v-if="activeGame=='vnd'&&Object.keys(awardNum).length">
+        <!-- {{ Object.keys(awardNum).length }}
+        <pre style="font-size: 16px;">
+        {{   }}
+        </pre> -->
+        <template v-if="activeGame=='vnd'&&loadingFlag">
             <div class="trend-box" v-for="(item,index) in TrendData[activeGame]">
-                <GameAward :awardNum="awardNum" :timeRemaining="timeRemaining"/>
+                <GameAward :awardNum="awardNum[activeGame][index] " :timeRemaining="timeRemaining"/>
                 <Trend :data="item" />
             </div>
         </template>
@@ -52,31 +55,30 @@ const timeRemaining=ref()//倒计时
 
 const TrendData=reactive({})//渲染所需走势图数据
 
-
+const loadingFlag=ref(false)//记录是否加载完毕
 
 
 // 切换越南泰国菲律宾触发
 watch(activeGame, async (newvalue, oldvalue) => {
     if (newvalue == 'th') {
-        let promises = TrendInfo[newvalue].map(async (item, index) => {
-            let res = await getTrend(newvalue, {gameId:item.id,code:item.code});
-            TrendData.th[item.name]=res
-        });
-        await Promise.all(promises)
+        for (const item of TrendInfo[newvalue]) {
+            let res = await getTrend(newvalue, { gameId: item.id, code: item.code });
+            TrendData.th[item.name] = res;
+        }
     }
- 
+
     else if (newvalue == 'ph') {
-        let promises = TrendInfo[newvalue].map(async (item, index) => {
-            let res = await getTrend(newvalue, {gameId:item.id,code:item.code});
+        for (const item of TrendInfo[newvalue]) {
+            let res = await getTrend(newvalue, { gameId: item.id, code: item.code });
             TrendData.ph[item.name] = removeFalseyValues(res);
-        });
-        await Promise.all(promises)
+        }
     }
 
     else if (newvalue == 'vnd') {
-        let res=await getTrend(activeGame.value,activeVnd.value)
-        TrendData.vnd[activeVnd.value.code]=res
+        let res = await getTrend(activeGame.value, activeVnd.value)
+        TrendData.vnd[activeVnd.value.code] = res
     }
+
     console.log(TrendData)
 })
 
@@ -91,18 +93,25 @@ watch(activeVnd,async (newvalue)=>{
 
 
 onBeforeMount(async () => {
-    var res = await getGameInfo()//获取有哪些游戏Tab数据
+    //获取有哪些游戏Tab数据=============
+    var res = await getGameInfo()
     Object.assign(TrendInfo,res.resultSet)
     Object.keys(TrendInfo).forEach(item=>{
         TrendData[item]={}
+        awardNum[item]={}
     }) 
+
+    // 获取走势图================
     var res=await getTrend(activeGame.value,activeVnd.value)//初始请求越南走势图
     TrendData.vnd[activeVnd.value.code]=res
 
+    // 获取倒计时===================
     var res=await getGameAward({gameCode:activeVnd.value.code})
-    Object.assign(awardNum,res.resultSet.awardNum)
-    timeRemaining.value=countdown(awardNum.gameCode,awardNum.lastAwardPeriod)
-    console.log(awardNum)
+    awardNum.vnd[activeVnd.value.code]=res.resultSet.awardNum
+    timeRemaining.value=countdown(activeVnd.value.code,awardNum.vnd[activeVnd.value.code].lastAwardPeriod)
+
+    // 数据获取完毕加载完毕为true
+    loadingFlag.value=true
 })
 
 
@@ -113,7 +122,7 @@ const getTrend=async (city,{code:gameCode,gameId})=>{
     return res.resultSet
 }
 
-// 菲律宾走势图处理
+// 菲律宾走势图数据处理
 function removeFalseyValues(obj) {
     let data = Object.fromEntries(
         Object.entries(obj).filter(([key, value]) => value)

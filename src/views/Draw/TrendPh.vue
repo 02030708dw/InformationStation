@@ -50,7 +50,6 @@ onMounted(() => {
     createGrid()
 })
 function createGrid() {
-    console.log(props.data)
     table.forEach(item => item.value.innerHTML = '')
     Object.values(activeData.value).forEach((value, index) => {
         const minColumns = 7;

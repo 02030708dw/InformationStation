@@ -61,13 +61,29 @@ function VndAccording(date,code){
   let difference = Math.abs(date1 - date2) / 1000; // 毫秒转换为秒，并取绝对值
   return difference
   }
+
+  //泰国官彩
+  function ThAccording(date){
+    let awardTime=date.slice(0,8)//截取日期
+    let year = awardTime.substring(0, 4);
+    let month = awardTime.substring(4, 6);
+    let day = awardTime.substring(6, 8);
+    let formattedDate = year + "/" + month + "/" + day;
+    awardTime=formattedDate+' 17:00:00'
+    let date1 = new Date(awardTime);
+    let date2 = new Date(getTimeNow(4));
+    let difference = Math.abs(date1 - date2) / 1000; // 毫秒转换为秒，并取绝对值
+    return difference
+  }
+
 const vndCodeAry=()=>vndData.map(item=>item.children).flat(Infinity).map(i=>i.code)//越南所有地区
 const CountdownObj = {
     oneminute: ["phOneMinute_2d","phOneMinute_3d","phOneMinute_4d","phOneMinute_6d"],//使用1分的code
     PhAccording:["ph_2d","ph_3d","ph_4d","ph_6d"],//使用官彩的code
-    VndAccording:vndCodeAry()//所有越南的code
+    VndAccording:vndCodeAry(),//所有越南的code
+    ThAccording:["TH"]
   };
-const funObj={oneminute,PhAccording,VndAccording}
+const funObj={oneminute,PhAccording,VndAccording,ThAccording}
 function countdown(code,date) {
   let i;
   for (let v in CountdownObj) if (CountdownObj[v].includes(code)) i = v;

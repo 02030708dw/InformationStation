@@ -15,23 +15,28 @@
         </pre> -->
         <template v-if="activeGame=='vnd'&&loadingFlag">
             <div class="trend-box" v-for="(item,index) in TrendData[activeGame]">
-                <GameAward :awardNum="awardNum[activeGame][index] " :timeRemaining="timeRemaining"/>
+                <GameAward :awardNum="awardNum[activeGame][index] " :timeRemaining="timeRemaining[activeGame][index]"/>
                 <Trend :data="item" />
             </div>
         </template>
 
-        <template v-if="activeGame=='th'">
+        <template v-else-if="activeGame=='th'&&loadingFlag">
             <div class="trend-box" v-for="(item,index) in TrendData[activeGame]">
+                <GameAward :awardNum="awardNum[activeGame][index] " :timeRemaining="timeRemaining[activeGame][index]"/>
                 <Trend :data="item" />
             </div>
         </template>
 
-        <template v-if="activeGame=='ph'">
+        <template v-else-if="activeGame=='ph'&&loadingFlag">
             <div class="trend-box" v-for="(item,index) in TrendData[activeGame]">
+                <GameAward :awardNum="awardNum[activeGame][index] " :timeRemaining="timeRemaining[activeGame][index]"/>
                 <TrendPh :data="item" />
             </div>
         </template>
 
+        <template v-if="Object.keys(TrendInfo).length&&!loadingFlag">
+            <van-loading size="44"/>
+        </template>
     </div>
 </template>
 <script setup>
@@ -51,43 +56,67 @@ const activeIndex = ref(0);//越南左侧选择的地区
 const activeVnd=computed(()=>items[activeIndex.value].children.find(item=>item.id==activeId.value))//越南右侧选择的数据
 
 const awardNum=reactive({})//奖期信息
-const timeRemaining=ref()//倒计时
-
-const TrendData=reactive({})//渲染所需走势图数据
+const timeRemaining=reactive({})//倒计时信息
+const TrendData=reactive({})//走势图信息
 
 const loadingFlag=ref(false)//记录是否加载完毕
 
 
 // 切换越南泰国菲律宾触发
 watch(activeGame, async (newvalue, oldvalue) => {
+    loadingFlag.value=false
     if (newvalue == 'th') {
         for (const item of TrendInfo[newvalue]) {
-            let res = await getTrend(newvalue, { gameId: item.id, code: item.code });
-            TrendData.th[item.name] = res;
+            let resA = await getGameAward({gameCode:item.code})
+            let resT = await getTrend(newvalue, { gameId: item.id, code: item.code });
+            awardNum.th[item.name] = resA.resultSet.awardNum
+            TrendData.th[item.name] = resT;
+            timeRemaining.th[item.name]=countdown(item.code,resA.resultSet.awardNum.lastAwardPeriod)
         }
     }
 
     else if (newvalue == 'ph') {
         for (const item of TrendInfo[newvalue]) {
-            let res = await getTrend(newvalue, { gameId: item.id, code: item.code });
-            TrendData.ph[item.name] = removeFalseyValues(res);
+            let resA = await getGameAward({gameCode:item.code})
+            let resT = await getTrend(newvalue, { gameId: item.id, code: item.code });
+            awardNum.ph[item.name] = resA.resultSet.awardNum
+            TrendData.ph[item.name] = removeFalseyValues(resT);
+            timeRemaining.ph[item.name]=countdown(item.code,resA.resultSet.awardNum.lastAwardPeriod)
+            timeRemaining.ph[item.name]=''//为了使每个倒计时保持一致
+        }
+        // 使每个倒计时都为最后一个
+        let lastCode=TrendInfo['ph'][TrendInfo['ph'].length-1].code
+        let lastAward=awardNum['ph'][Object.keys(awardNum['ph'])[Object.keys(awardNum['ph']).length-1]].lastAwardPeriod
+        for(let i in timeRemaining.ph){
+            timeRemaining.ph[i]=countdown(lastCode,lastAward)
         }
     }
 
     else if (newvalue == 'vnd') {
-        let res = await getTrend(activeGame.value, activeVnd.value)
-        TrendData.vnd[activeVnd.value.code] = res
+        // 越南切换需单独监听
+        // let res = await getTrend(activeGame.value, activeVnd.value)
+        // TrendData.vnd[activeVnd.value.code] = res
     }
-
+    loadingFlag.value=true
+    console.log(timeRemaining)
     console.log(TrendData)
+    console.log(awardNum)
 })
 
 // 切换越南地区触发
 watch(activeVnd,async (newvalue)=>{
     if(!newvalue) return
-    let res=await getTrend('vnd',newvalue)
+    loadingFlag.value=false
+
+    var res=await getTrend('vnd',newvalue)//初始化越南走势图
     TrendData.vnd={}
     TrendData.vnd[newvalue.code]=res
+
+    var res=await getGameAward({gameCode:activeVnd.value.code})//初始化请求越南奖期
+    awardNum.vnd[activeVnd.value.code]=res.resultSet.awardNum
+    timeRemaining.vnd[activeVnd.value.code]=countdown(activeVnd.value.code,awardNum.vnd[activeVnd.value.code].lastAwardPeriod)
+
+    loadingFlag.value=true
 })
 
 
@@ -99,6 +128,7 @@ onBeforeMount(async () => {
     Object.keys(TrendInfo).forEach(item=>{
         TrendData[item]={}
         awardNum[item]={}
+        timeRemaining[item]={}
     }) 
 
     // 获取走势图================
@@ -106,9 +136,9 @@ onBeforeMount(async () => {
     TrendData.vnd[activeVnd.value.code]=res
 
     // 获取倒计时===================
-    var res=await getGameAward({gameCode:activeVnd.value.code})
+    var res=await getGameAward({gameCode:activeVnd.value.code})//初始化请求越南走势图
     awardNum.vnd[activeVnd.value.code]=res.resultSet.awardNum
-    timeRemaining.value=countdown(activeVnd.value.code,awardNum.vnd[activeVnd.value.code].lastAwardPeriod)
+    timeRemaining.vnd[activeVnd.value.code]=countdown(activeVnd.value.code,awardNum.vnd[activeVnd.value.code].lastAwardPeriod)
 
     // 数据获取完毕加载完毕为true
     loadingFlag.value=true

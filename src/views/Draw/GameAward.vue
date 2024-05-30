@@ -11,6 +11,7 @@
 <script setup>
 import {ref,computed,watch} from 'vue'
 const props=defineProps(['awardNum','timeRemaining'])
+const emits=defineEmits(['timeOut'])
 const countDownTime = ref('00:00')//显示的倒计时
 const countTime = ref('')//后端开奖秒数
 const localTime = ref('')//本地剩余秒数

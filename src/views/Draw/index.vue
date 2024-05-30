@@ -15,21 +15,21 @@
         </pre> -->
         <template v-if="activeGame=='vnd'&&loadingFlag">
             <div class="trend-box" v-for="(item,index) in TrendData[activeGame]">
-                <GameAward :awardNum="awardNum[activeGame][index] " :timeRemaining="timeRemaining[activeGame][index]"/>
+                <GameAward :awardNum="awardNum[activeGame][index] " :timeRemaining="timeRemaining[activeGame][index]" @timeOut="timeOut"/>
                 <Trend :data="item" />
             </div>
         </template>
 
         <template v-else-if="activeGame=='th'&&loadingFlag">
             <div class="trend-box" v-for="(item,index) in TrendData[activeGame]">
-                <GameAward :awardNum="awardNum[activeGame][index] " :timeRemaining="timeRemaining[activeGame][index]"/>
+                <GameAward :awardNum="awardNum[activeGame][index] " :timeRemaining="timeRemaining[activeGame][index]" @timeOut="timeOut"/>
                 <Trend :data="item" />
             </div>
         </template>
 
         <template v-else-if="activeGame=='ph'&&loadingFlag">
             <div class="trend-box" v-for="(item,index) in TrendData[activeGame]">
-                <GameAward :awardNum="awardNum[activeGame][index] " :timeRemaining="timeRemaining[activeGame][index]"/>
+                <GameAward :awardNum="awardNum[activeGame][index] " :timeRemaining="timeRemaining[activeGame][index]" @timeOut="timeOut"/>
                 <TrendPh :data="item" />
             </div>
         </template>
@@ -62,45 +62,80 @@ const TrendData=reactive({})//走势图信息
 const loadingFlag=ref(false)//记录是否加载完毕
 
 
+//请求越南的方法
+const getVnd = async () => {
+    var resA=await getGameAward({gameCode:activeVnd.value.code})
+    var resT = await getTrend(activeGame.value, activeVnd.value)
+    awardNum.vnd[activeVnd.value.code]=resA.resultSet.awardNum
+    TrendData.vnd[activeVnd.value.code] = resT
+    timeRemaining.vnd[activeVnd.value.code]=countdown(activeVnd.value.code,awardNum.vnd[activeVnd.value.code].lastAwardPeriod)
+}
+const getTh = async (newvalue) => {
+    for (const item of TrendInfo[newvalue]) {
+        let resA = await getGameAward({ gameCode: item.code })
+        let resT = await getTrend(newvalue, { gameId: item.id, code: item.code });
+        awardNum.th[item.name] = resA.resultSet.awardNum
+        TrendData.th[item.name] = resT;
+        timeRemaining.th[item.name] = countdown(item.code, resA.resultSet.awardNum.lastAwardPeriod)
+    }
+}
+// const getPh = async (newvalue) => {
+//     for (const item of TrendInfo[newvalue]) {
+//         let resA = await getGameAward({ gameCode: item.code })
+//         let resT = await getTrend(newvalue, { gameId: item.id, code: item.code });
+//         awardNum.ph[item.name] = resA.resultSet.awardNum
+//         TrendData.ph[item.name] = removeFalseyValues(resT);
+//         timeRemaining.ph[item.name] = countdown(item.code, resA.resultSet.awardNum.lastAwardPeriod)
+//         timeRemaining.ph[item.name] = ''//为了使每个倒计时保持一致
+//     }
+//     // 使每个倒计时都为最后一个
+//     let lastCode = TrendInfo['ph'][TrendInfo['ph'].length - 1].code
+//     let lastAward = awardNum['ph'][Object.keys(awardNum['ph'])[Object.keys(awardNum['ph']).length - 1]].lastAwardPeriod
+//     for (let i in timeRemaining.ph) {
+//         timeRemaining.ph[i] = countdown(lastCode, lastAward)
+//     }
+// }
+const getPh = async (newvalue) => {
+    // 定义空数据,请求完毕后再赋值
+    const tempAwardNum = {};
+    const tempTrendData = {};
+    const tempTimeRemaining = {};
+
+    for (const item of TrendInfo[newvalue]) {
+        let resA = await getGameAward({ gameCode: item.code });
+        let resT = await getTrend(newvalue, { gameId: item.id, code: item.code });
+        tempAwardNum[item.name] = resA.resultSet.awardNum;
+        tempTrendData[item.name] = removeFalseyValues(resT);
+        tempTimeRemaining[item.name] = countdown(item.code, resA.resultSet.awardNum.lastAwardPeriod);
+        tempTimeRemaining[item.name] = ''; // 为了使每个倒计时保持一致
+    }
+
+    // 使每个倒计时都为最后一个
+    const lastCode = TrendInfo['ph'][TrendInfo['ph'].length - 1].code;
+    const lastAward = tempAwardNum[Object.keys(tempAwardNum)[Object.keys(tempAwardNum).length - 1]].lastAwardPeriod;
+    for (let i in tempTimeRemaining) {
+        tempTimeRemaining[i] = countdown(lastCode, lastAward);
+    }
+
+    // 赋值给正式的变量
+    awardNum.ph = tempAwardNum;
+    TrendData.ph = tempTrendData;
+    timeRemaining.ph = tempTimeRemaining;
+}
+const getInfofun = {
+    th: getTh,
+    ph: getPh,
+    vnd: getVnd
+}
+
 // 切换越南泰国菲律宾触发
-watch(activeGame, async (newvalue, oldvalue) => {
+watch(activeGame, async (newvalue) => {
     loadingFlag.value=false
-    if (newvalue == 'th') {
-        for (const item of TrendInfo[newvalue]) {
-            let resA = await getGameAward({gameCode:item.code})
-            let resT = await getTrend(newvalue, { gameId: item.id, code: item.code });
-            awardNum.th[item.name] = resA.resultSet.awardNum
-            TrendData.th[item.name] = resT;
-            timeRemaining.th[item.name]=countdown(item.code,resA.resultSet.awardNum.lastAwardPeriod)
-        }
-    }
-
-    else if (newvalue == 'ph') {
-        for (const item of TrendInfo[newvalue]) {
-            let resA = await getGameAward({gameCode:item.code})
-            let resT = await getTrend(newvalue, { gameId: item.id, code: item.code });
-            awardNum.ph[item.name] = resA.resultSet.awardNum
-            TrendData.ph[item.name] = removeFalseyValues(resT);
-            timeRemaining.ph[item.name]=countdown(item.code,resA.resultSet.awardNum.lastAwardPeriod)
-            timeRemaining.ph[item.name]=''//为了使每个倒计时保持一致
-        }
-        // 使每个倒计时都为最后一个
-        let lastCode=TrendInfo['ph'][TrendInfo['ph'].length-1].code
-        let lastAward=awardNum['ph'][Object.keys(awardNum['ph'])[Object.keys(awardNum['ph']).length-1]].lastAwardPeriod
-        for(let i in timeRemaining.ph){
-            timeRemaining.ph[i]=countdown(lastCode,lastAward)
-        }
-    }
-
-    else if (newvalue == 'vnd') {
-        // 越南切换需单独监听
-        // let res = await getTrend(activeGame.value, activeVnd.value)
-        // TrendData.vnd[activeVnd.value.code] = res
-    }
+    await getInfofun[newvalue](newvalue)
     loadingFlag.value=true
-    console.log(timeRemaining)
-    console.log(TrendData)
-    console.log(awardNum)
+    // console.log(timeRemaining)
+    // console.log(TrendData)
+    // console.log(awardNum)
 })
 
 // 切换越南地区触发
@@ -119,6 +154,19 @@ watch(activeVnd,async (newvalue)=>{
     loadingFlag.value=true
 })
 
+
+
+let flagNum=0
+const timeOut = (code) => {
+    let act = Object.values(TrendInfo).find(item=>item.find(i => i.code == code))
+    let sum = act.length == 36 ? 1 : act.length
+    flagNum++
+    if (sum == flagNum) {
+        setTimeout(()=>{flagNum = 0},10000)//10秒只能请求一次
+        const act = Object.keys(TrendInfo).find(key => TrendInfo[key].some(v => v.code === code));
+        getInfofun[act](act)
+    }
+}
 
 
 onBeforeMount(async () => {

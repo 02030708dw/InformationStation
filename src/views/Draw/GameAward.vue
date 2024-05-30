@@ -27,7 +27,7 @@ watch(computed(() => props.awardNum), (newvalue) => {
         countDownTime.value = formatTime(localTime.value)
         if (localTime.value <= 0 || countTime.value <= 0) {
             countDownTime.value = '开奖中'
-            emits('timeOut')
+            emits('timeOut',props.awardNum.gameCode)
         }
     }, 1000)
 },{immediate:true})

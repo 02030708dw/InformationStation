@@ -17,8 +17,9 @@ request.interceptors.request.use(function (config) {
       config.baseURL=import.meta.env.VITE_GW_BASE_API
     }else{
       const domain = window.location.hostname;
+      console.log(domain,'主机名')
       const subdomain = Object.entries(DomainNames).find(([key, value]) => domain === value)?.[0];
-      console.log(subdomain)
+      console.log(subdomain,'地区')
       config.headers['country'] = subdomain
       // const subdomain = domain.split('.')[0]; // 获取 "php"
       // ['php','vnd','thb','idn'].includes(subdomain)

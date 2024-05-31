@@ -6,7 +6,7 @@ const request = axios.create({
 })
 const DomainNames = {
   TH: "thb.44dog.com",
-  IDN: "idn.44dog.com",
+  INA: "idn.44dog.com",
   VND: "vnd.44dog.com",
   PH: "php.44dog.com",
   // TH: "localhost",

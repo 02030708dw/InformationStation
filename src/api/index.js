@@ -9,7 +9,7 @@ const DomainNames = {
   IDN: "idn.44dog.com",
   VND: "vnd.44dog.com",
   PH: "php.44dog.com",
-  TH: "localhost",
+  // TH: "localhost",
 };
 request.interceptors.request.use(function (config) {
     let gwRequestFlag=config.params?.gw//是否为gw请求
@@ -19,9 +19,10 @@ request.interceptors.request.use(function (config) {
       const domain = window.location.hostname;
       console.log(domain,'主机名')
       const subdomain = Object.keys(DomainNames).find(key => {
-        console.log(DomainNames[key]+'=='+domain,DomainNames[key] === domain)
+        // console.log(key)
+        // console.log(DomainNames[key]+'=='+domain,DomainNames[key] === domain)
        return DomainNames[key] === domain
-      });
+      })||'TH'
       console.log(subdomain,'地区') 
       config.headers['country'] = subdomain
       // const subdomain = domain.split('.')[0]; // 获取 "php"

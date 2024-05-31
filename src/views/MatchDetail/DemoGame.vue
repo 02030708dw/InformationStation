@@ -210,7 +210,7 @@ function countCommonNumbers(array1, array2) {
             background-color: #fff;
             display: grid;
             grid-template-columns: repeat(5, 1fr);
-            justify-items: center;
+            // justify-items: center;
 
             .item-num {
                 text-align: center;

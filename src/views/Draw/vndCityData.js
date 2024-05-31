@@ -1,4 +1,4 @@
-import { UUID } from "@/util/UUID";
+import { UUID } from "@/util/uuid.js";
 const items = [
   {
     id: UUID(),

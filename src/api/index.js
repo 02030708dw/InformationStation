@@ -18,8 +18,8 @@ request.interceptors.request.use(function (config) {
     }else{
       const domain = window.location.hostname;
       console.log(domain,'主机名')
-      const subdomain = Object.entries(DomainNames).find(([key, value]) => domain === value)?.[0];
-      console.log(subdomain,'地区')
+      const subdomain = Object.keys(DomainNames).find(key => DomainNames[key] === domain);
+      console.log(subdomain,'地区') 
       config.headers['country'] = subdomain
       // const subdomain = domain.split('.')[0]; // 获取 "php"
       // ['php','vnd','thb','idn'].includes(subdomain)

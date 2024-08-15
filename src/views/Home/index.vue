@@ -1,49 +1,23 @@
 <template>
     <div class="home">
-  <Container>
-    <template #header>
-      <NavBar />
-      <TabBar :list="TabBarList" v-model="active"/>
-    </template>
-      <router-view v-slot="{ Component }">
-        <keep-alive :max="2">
-          <component :is="Component" />
-        </keep-alive>
-      </router-view>
-  </Container>
-</div>
-
+        <FreePlay></FreePlay>
+        <Tirbo></Tirbo>
+        <Trend></Trend>
+        <InforMation></InforMation>
+        <Saham></Saham>
+    </div>
 </template>
 <script setup>
-import { ref, reactive, onMounted } from 'vue'
-import { useRoute } from 'vue-router'
-import Container from "@/Layout/Container.vue"
-import NavBar from "@/components/NavBar/index.vue";
-import TabBar from "@/views/Home/TabBar.vue"
-import Loading from "@/components/Loading/index.vue"
-import { getUserInfo } from '@/api/request.js'
-import { useUserInfo } from '@/stores/modules/userinfo.js'
-import { loadingStore } from "@/stores/modules/loadingStore.js"
-
-const { setUserInfo } = useUserInfo()
-const route = useRoute()
-const active=ref(route.name)
-const TabBarList = reactive([
-  { label: '赛事', name: 'Match' },
-  { label: '开奖', name: 'Draw' },
-  { label: '体育', name: 'Sports' },
-  { label: '分析', name: 'Analysis' },
-])
-// onMounted(async () => {
-//   const id = route.params.id
-//   let res = await getUserInfo(id)
-//   setUserInfo(res.resultSet)
-//   loadingStore().loadingState = true
-// })
-
+import FreePlay from "./components/FreePlay.vue"
+import Tirbo from './components/Tirbo.vue';
+import Trend from './components/Trend.vue';
+import InforMation from './components/InforMation.vue';
+import Saham from './components/Saham.vue';
 </script>
-<style lang="scss" scoped>
+<style scoped lang="scss">
 .home{
-  min-height: 100%;
+    display: flex;
+    flex-direction:column;
+    gap: 10px;
 }
 </style>

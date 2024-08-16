@@ -15,6 +15,7 @@ const routes = [
         name: "Information",
         component: () => import("@/views/Information/index.vue"),
       },
+
       {
         path: "Trend",
         name: "Trend",
@@ -26,6 +27,11 @@ const routes = [
         component: () => import("@/views/Draw/index.vue"),
       }
     ],
+  },
+  {
+    path: "/InfoDetail",
+    name: "InfoDetail",
+    component: () => import("@/views/Information/InfoDetail.vue"),
   },
 ];
 export default routes;

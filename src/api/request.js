@@ -13,7 +13,7 @@ const DomainNames = {
 request.interceptors.request.use(
   function (config) {
     const domain = window.location.hostname;
-    const subdomain = Object.keys(DomainNames).find((key) => DomainNames[key] === domain) || "PH";
+    const subdomain = Object.keys(DomainNames).find((key) => DomainNames[key] === domain) || "TH";
     config.headers["country"] = subdomain;
     return config;
   },

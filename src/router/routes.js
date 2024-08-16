@@ -1,12 +1,12 @@
 const routes = [
   {
-    path: "/:id",
+    path: "/",
     name: "index",
     component: () => import("@/views/Index/index.vue"),
     redirect: { name: "Home" },
     children: [
       {
-        path: "/:id",
+        path: "/",
         name: "Home",
         component: () => import("@/views/Home/index.vue"),
       },
@@ -20,6 +20,11 @@ const routes = [
         name: "Trend",
         component: () => import("@/views/Trend/index.vue"),
       },
+      {
+        path:"Draw",
+        name:"Draw",
+        component: () => import("@/views/Draw/index.vue"),
+      }
     ],
   },
 ];

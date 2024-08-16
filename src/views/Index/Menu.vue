@@ -7,7 +7,8 @@
 const page=[
     {label:"Home",name:'Home'},
     {label:'Infomation',name:'Infomation'},
-    {label:'Trend',name:'Trend'}
+    {label:'Trend',name:'Trend'},
+    {label:'Draw',name:'Draw'}
 ]
 </script>
 <style scoped lang="scss">

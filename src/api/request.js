@@ -1,13 +1,36 @@
-import {get,post} from './index.js'
+import axios from "axios";
+const request = axios.create({
+  baseURL: import.meta.env.VITE_APP_BASE_API,
+  timeout: 30000,
+});
+const DomainNames = {
+  TH: "thb.44dog.com",
+  INA: "idn.44dog.com",
+  VND: "vnd.44dog.com",
+  PH: "php.44dog.com",
+  // TH: "localhost",
+};
+request.interceptors.request.use(
+  function (config) {
+    const domain = window.location.hostname;
+    const subdomain = Object.keys(DomainNames).find((key) => DomainNames[key] === domain) || "TH";
+    config.headers["country"] = subdomain;
+    return config;
+  },
+  function (error) {
+    return Promise.reject(error);
+  }
+);
 
-export const getUserInfo=(memberId)=>get(`/kioskSetting/getInfo/${memberId}`)//获取会员信息
+request.interceptors.response.use(
+  function (response) {
+    return response.data;
+  },
+  function (error) {
+    return Promise.reject(error);
+  }
+);
+const get = (url, params) => request.get(url, { params });
+const post = (url, data, params) => request.post(url, data, { params });
 
-export const getGameGodList=()=>get(`/material/collect/account/dropdownBox/client`)//获取大神列表
-
-export const getGameGodArticle=(data)=>post(`/material/collect/new/client/page`,data)//获取单个大神文章
-
-export const getGameInfo=()=>get(`/material/listAll`,{gw:true})//获取gw游戏
-
-export const getGameTrend=(str,data)=>post(`/material/get${str}Trend`,data,{gw:true})//获取走势图str=Ph|Th|Vnd
-
-export const getGameAward=(data)=>post(`/material/getAwardNum`,data,{gw:true})//获取奖期信息
+export { get, post };

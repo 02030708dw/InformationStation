@@ -16,6 +16,7 @@ import Saham from './components/Saham.vue';
 </script>
 <style scoped lang="scss">
 .home{
+    padding: 16px;
     display: flex;
     flex-direction:column;
     gap: 10px;

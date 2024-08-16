@@ -1,47 +1,27 @@
-import axios from 'axios'
+import { get,post } from './request.js'
+import { getG,postG } from './Grequest.js'
 
-const request = axios.create({
-    baseURL:import.meta.env.VITE_APP_BASE_API,
-    timeout:30000
-})
-const DomainNames = {
-  TH: "thb.44dog.com",
-  INA: "idn.44dog.com",
-  VND: "vnd.44dog.com",
-  PH: "php.44dog.com",
-  // TH: "localhost",
-};
-request.interceptors.request.use(function (config) {
-    let gwRequestFlag=config.params?.gw//是否为gw请求
-    if(gwRequestFlag){
-      config.baseURL=import.meta.env.VITE_GW_BASE_API
-    }else{
-      const domain = window.location.hostname;
-      console.log(domain,'主机名')
-      const subdomain = Object.keys(DomainNames).find(key => {
-        // console.log(key)
-        // console.log(DomainNames[key]+'=='+domain,DomainNames[key] === domain)
-       return DomainNames[key] === domain
-      })||'TH'
-      console.log(subdomain,'地区') 
-      config.headers['country'] = subdomain
-      // const subdomain = domain.split('.')[0]; // 获取 "php"
-      // ['php','vnd','thb','idn'].includes(subdomain)
-      // ?config.headers['country'] = subdomain
-      // :config.headers['country'] = 'thb'
-    }
-    return config;
-  }, function (error) {
-    return Promise.reject(error);
-  });
+export const getUserInfo=(memberId)=>get(`/kioskSetting/getInfo/${memberId}`)//获取会员信息
 
-request.interceptors.response.use(function (response) {
-    return response.data;
-  }, function (error) {
-    return Promise.reject(error);
-  });
-  const get = (url, params) => request.get(url, { params });
-  const post = (url, data,params) => request.post(url, data,{params});
-  const del = (url, params) => request.delete(url, { params });
-  
-  export { get, post, del };
+export const getGameGodList=()=>get(`/material/collect/account/dropdownBox/client`)//获取大神列表
+
+export const getGameGodArticle=(data)=>post(`/material/collect/new/client/page`,data)//获取单个大神文章
+
+// 资讯站
+// =========================================================================================================
+
+// =========================================================================================================
+// GW
+
+
+// export const getGameInfo=()=>getG(`/material/listAll`)//获取gw游戏 已弃用
+
+export const getGame=()=>getG(`/aia/game`)//获取地区与游戏
+
+export const getGameTrend=(data,str)=>postG(`/material/get${str}Trend`,data)//获取走势图str=Ph|Th|Vnd
+
+export const getGameAward=(data)=>postG(`/material/getAwardNum`,data)//获取奖期信息 
+
+export const getGamePlay=()=>getG(`/aia/gamePlay/trend`)// 获取所有玩法按类型
+
+export const getTime=()=>getG(`/api/time/baidu`)//获取时间用于定位越南地区

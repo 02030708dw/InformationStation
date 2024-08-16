@@ -1,6 +1,6 @@
 <template>
     <div class="saham">
-        <Title text="Saham" />
+        <Title text="Saham" @changeMore="$router.push({name:'Draw'})"/>
         <ul class="saham-list">
             <li class="saham-item" v-for="item in 4">
 

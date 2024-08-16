@@ -6,7 +6,7 @@
 <script setup>
 const page=[
     {label:"Home",name:'Home'},
-    {label:'Infomation',name:'Infomation'},
+    {label:'Information',name:'Information'},
     {label:'Trend',name:'Trend'},
     {label:'Draw',name:'Draw'}
 ]

@@ -187,12 +187,11 @@ const gameId = computed(() => {
     showTrend.value = false
 
     if (!GamePlayList.length||!activeKind.value) return
-    console.log(GamePlayList.length)
-    console.log(activeKind.value)
     // 计算出gameId 越南地区的和其他的
     if (Regional.includes(activeKind.value)) {
         return cityId.value
     } else {
+        console.log(GamePlayList,activeKind.value)
         return GamePlayList.find(item => item.gameName == activeKind.value).gameId
     }
 })
@@ -312,7 +311,6 @@ onBeforeMount(async () => {
     Object.assign(gameList, res1.resultSet)
 
     let res2 = await getGamePlay()
-    console.log(res2)
     Object.assign(GamePlayList, res2.resultSet)
 
     let { resultSet } = await getTime()

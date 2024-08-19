@@ -342,7 +342,7 @@ onBeforeMount(async () => {
 }
 .van-loading {
     width: 100%;
-    height: 282.82px;
+    height: 300px;
     display: flex;
     justify-content: center;
     align-items: center;

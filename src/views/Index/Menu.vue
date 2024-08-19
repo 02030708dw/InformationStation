@@ -23,6 +23,7 @@ const page=[
     position: sticky;
     top: 0;
     .menu-item{
+        cursor: pointer;
         line-height: 44px;
         color: #ffffff80;
     }

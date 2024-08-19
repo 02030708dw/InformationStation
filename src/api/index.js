@@ -25,3 +25,7 @@ export const getGameAward=(data)=>postG(`/material/getAwardNum`,data)//获取奖
 export const getGamePlay=()=>getG(`/aia/gamePlay/trend`)// 获取所有玩法按类型
 
 export const getTime=()=>getG(`/api/time/baidu`)//获取时间用于定位越南地区
+
+export const getGameDraw=()=>postG(`/aia/shortTicket`)//获取部分开奖号码
+
+export const getLongDraw=()=>postG(`aia/longTicket`)//获取全部开奖号码

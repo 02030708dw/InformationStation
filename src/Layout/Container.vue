@@ -1,4 +1,4 @@
-<template>
+<!-- <template>
     <div class="layout">
         <div class="header" ref="header" >
             <slot name="header" />
@@ -38,4 +38,4 @@ onUnmounted(() => {
         overflow-x: hidden;
     }
 }
-</style>
+</style> -->

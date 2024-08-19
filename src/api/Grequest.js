@@ -7,7 +7,6 @@ const request = axios.create({
 request.interceptors.request.use(
   function (config) {
     config.headers['Currency']='THB'
-    console.log(config)
     return config;
   },
   function (error) {

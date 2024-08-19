@@ -56,7 +56,9 @@ onBeforeMount(async ()=>{
         gap: 20px;
     }
     .van-loading{
+        height: 300px;
         display: flex;
+        align-items: center;
         justify-content: center;
     }
 }

@@ -1,33 +1,53 @@
 <template>
     <div class="saham">
-        <Title text="Saham" @changeMore="$router.push({name:'Draw'})"/>
+        <Title text="Saham" @changeMore="$router.push({ name: 'Draw' })" />
         <ul class="saham-list">
-            <li class="saham-item" v-for="item in 4">
 
-                <div class="left">
-                    <img class="left-img" src="https://images.b1511258.com:42666/VD/SEA/B1/H5/V2/Stock-2.png">
-                    <p>vndTPHCM</p>
-                </div>
+            <template v-if="data.length">
+                <li class="saham-item" v-for="item in data">
+                    <div class="left">
+                        <img class="left-img" src="https://images.b1511258.com:42666/VD/SEA/B1/H5/V2/Stock-2.png">
+                        <p>{{ item.gameCode }}</p>
+                    </div>
 
-                <div class="right">
+                    <div class="right">
 
-                    <p class="time">
-                        <span class="date">20240815-0000</span>
-                        <span class="countdown">00:00:00</span>
-                    </p>
+                        <BonusPeriod :awardNum="item"></BonusPeriod>
 
-                    <p class="num">
-                        <span class="icon">S</span>
-                        <span class="draw">234432</span>
-                    </p>
-                </div>
+                        <p class="num">
+                            <span class="icon">S</span>
+                            <span class="draw">{{ item['0'] }}</span>
+                        </p>
+                    </div>
+                </li>
+            </template>
 
-            </li>
+            <template v-for="item in 4" v-else>
+                <van-skeleton title avatar :row="3" />
+            </template>
         </ul>
     </div>
 </template>
 <script setup>
+import { ref, reactive, onBeforeMount, onUnmounted } from 'vue'
+import { getLongDraw } from "@/api/index.js"
 import Title from "./Title.vue"
+import BonusPeriod from "@/components/BonusPeriod.vue"
+const data = reactive([])
+const getDraw = async () => {
+    let { resultSet } = await getLongDraw()
+    Object.assign(data, resultSet.slice(0, 4).map(item => item.awardNum))
+}
+
+let intervalT
+onBeforeMount(() => {
+    getDraw()
+    intervalT = setInterval(getDraw, 60 * 60 * 1000)
+})
+
+onUnmounted(() => {
+    clearInterval(intervalT)
+})
 </script>
 <style lang="scss" scoped>
 .saham {
@@ -44,6 +64,7 @@ import Title from "./Title.vue"
             display: flex;
 
             .left {
+                font-size: 14px;
                 width: 50%;
                 height: 100%;
                 display: flex;
@@ -61,24 +82,6 @@ import Title from "./Title.vue"
                 display: flex;
                 flex-direction: column;
                 justify-content: space-between;
-                .time {
-                    font-size: 12px;
-                    height: 23px;
-                    border-radius: 23px;
-                    display: flex;
-                    align-items: center;
-                    padding: 0 5px;
-                    justify-content: space-between;
-                    background-color: #e1f2ff;
-
-                    .date {
-                        color: #895967;
-                    }
-
-                    .countdown {
-                        color: #348def;
-                    }
-                }
 
                 .num {
                     height: 23px;

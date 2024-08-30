@@ -1,6 +1,6 @@
 <template>
   <div class="forecast_box">
-    <div class="title">选择模板</div>
+    <Title text="Template" :showRight="false"></Title>
     <ul class="template">
       <li
         v-for="item in gameList"
@@ -14,17 +14,17 @@
       </li>
     </ul>
 
-    <div class="title">编辑文本</div>
+    <Title text="Edit the title" :showRight="false"></Title>
     <div class="input-group">
-      <label>标题：</label>
+      <label>Title：</label>
       <input type="text" v-model="title" @input="debouncedDrawImage" />
     </div>
     <div class="input-group">
-      <label>奖期：</label>
+      <label>Period of award：</label>
       <input type="text" v-model="issue" @input="debouncedDrawImage" />
     </div>
 
-    <div class="title">编辑预测号码</div>
+    <Title text="Edit prediction number" :showRight="false"></Title>
     <div
       v-for="(field, index) in predictionFields"
       :key="index"
@@ -46,13 +46,11 @@
       </button>
     </div>
 
-    <div class="title btn">
-      <span>预览</span>
-      <div>
-        <button style="padding: 5px" @click="randomizeFields">随机</button>
-        <button style="padding: 5px" @click="clearAll">清空</button>
-        <button style="padding: 5px" @click="downloadImage">下载</button>
-      </div>
+    <Title text="Preview" :showRight="false"></Title>
+    <div class="btn">
+      <button style="padding: 5px" @click="randomizeFields">random</button>
+      <button style="padding: 5px" @click="clearAll">empty</button>
+      <button style="padding: 5px" @click="downloadImage">download</button>
     </div>
 
     <canvas
@@ -65,8 +63,10 @@
 </template>
 
 <script setup>
-import { ref, reactive, onMounted } from "vue";
 import { debounce } from "lodash"; // 引入 lodash 的防抖函数
+import { ref, reactive, onMounted } from "vue";
+import Title from "@/components/Title.vue";
+import { getPhAward } from "@/api/index.js";
 
 const imageCanvas = ref(null);
 const selectedImage = ref(null);
@@ -75,6 +75,7 @@ const selectedTemplateId = ref(null);
 // 编辑文本的默认值
 const title = ref("");
 const issue = ref("");
+const lottery = ref([]);
 
 // 初始化预测号码输入框
 const predictionFields = reactive([{ text: "" }]);
@@ -89,7 +90,22 @@ onMounted(() => {
   drawImageOnCanvas();
 });
 
+const getLottery = (item) => {
+  // 清空之前的值
+  lottery.value = [];
+  getPhAward(item).then((res) => {
+    res.resultSet.forEach((i) => {
+      lottery.value.push(i.awardNum.num.replace(/,/g, "-"));
+    });
+  });
+
+  // 重新绘制模板图片，使用防抖方法
+  debouncedDrawImage();
+};
+
 const selectTemplate = (item) => {
+  getLottery(item);
+
   selectedTemplateId.value = item.id;
   selectedImage.value = getImage(item.image);
 
@@ -107,9 +123,6 @@ const selectTemplate = (item) => {
   } else {
     maxDigits.value = 6;
   }
-
-  // 重新绘制模板图片，使用防抖方法
-  debouncedDrawImage();
 };
 
 const drawImageOnCanvas = () => {
@@ -133,6 +146,9 @@ const drawImageOnCanvas = () => {
 
     // 绘制预测号码的网格
     drawPredictionGrid(ctx);
+
+    // 绘制 lottery 信息在右下角
+    drawLotteryInfo(ctx, canvas);
   };
 };
 
@@ -215,6 +231,52 @@ const drawPredictionGrid = (ctx) => {
   });
 };
 
+const drawLotteryInfo = (ctx, canvas) => {
+  let fontSize;
+  let lineHeight;
+  let xOffset;
+  let yOffset;
+
+  // 根据模板选择字体大小和行间距
+  switch (selectedTemplateId.value) {
+    case 1:
+    case 2:
+      fontSize = 40; // 增加字体大小
+      lineHeight = 50; // 增加行间距
+      xOffset = 170;
+      yOffset = 340;
+      break;
+    case 3:
+      fontSize = 50;
+      lineHeight = 25;
+      xOffset = 165;
+      yOffset = 250;
+      break;
+    case 4:
+      fontSize = 33;
+      lineHeight = 50;
+      xOffset = 160;
+      yOffset = 260;
+      break;
+    default:
+      fontSize = 50;
+      lineHeight = 25;
+      xOffset = 170;
+      yOffset = 250;
+      break;
+  }
+  ctx.font = `bold ${fontSize}px Arial`;
+  ctx.fillStyle = "red";
+  ctx.textAlign = "center";
+  const x = canvas.width - xOffset / 2 - 10;
+  const y = canvas.height - yOffset / 2 + 20;
+
+  // 绘制每一行的 lottery 信息
+  lottery.value.forEach((lotteryText, index) => {
+    ctx.fillText(lotteryText, x, y + index * lineHeight);
+  });
+};
+
 const addPredictionField = () => {
   if (
     (selectedTemplateId.value === 1 && predictionFields.length < 2) ||
@@ -289,11 +351,16 @@ const generateRandomNumber = (length) => {
     .padStart(length, "0");
 };
 
+const generateRandomName = () => {
+  const randomString = Math.random().toString(36).substring(2, 10); // 生成一个随机的字符串
+  return `naki_${randomString}.png`; // 返回拼接后的文件名
+};
+
 const downloadImage = () => {
   const canvas = imageCanvas.value;
   const downloadLink = document.createElement("a");
   downloadLink.href = canvas.toDataURL("image/png");
-  downloadLink.download = "edited_image.png";
+  downloadLink.download = generateRandomName();
   downloadLink.click();
 };
 
@@ -302,10 +369,10 @@ const getImage = (i) => {
 };
 
 const gameList = reactive([
-  { id: 1, image: "2D", code: "ph_2d" },
-  { id: 2, image: "3D", code: "ph_3d" },
-  { id: 3, image: "4D", code: "ph_4d" },
-  { id: 4, image: "6D", code: "ph_6d" },
+  { id: 1, image: "2D", code: "ph_2d", gameId: 60 },
+  { id: 2, image: "3D", code: "ph_3d", gameId: 61 },
+  { id: 3, image: "4D", code: "ph_4d", gameId: 62 },
+  { id: 4, image: "6D", code: "ph_6d", gameId: 63 },
 ]);
 </script>
 
@@ -368,7 +435,12 @@ const gameList = reactive([
   .btn {
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    justify-content: end;
+    padding: 10px;
+
+    button {
+      margin-left: 10px;
+    }
   }
 }
 </style>

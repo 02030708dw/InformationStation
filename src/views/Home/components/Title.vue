@@ -31,7 +31,7 @@ const emits=defineEmits(['changeMore'])
         .left-icon {
             width: 4px;
             height: 16px;
-            background-color: #0256FF;
+            background-color: #f7931e;
             border-radius: 0 16px 16px 0;
         }
     }

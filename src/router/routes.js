@@ -25,6 +25,11 @@ const routes = [
         path:"Draw",
         name:"Draw",
         component: () => import("@/views/Draw/index.vue"),
+      },
+      {
+        path:"Forecast",
+        name:"Forecast",
+        component: () => import("@/views/Forecast/index.vue"),
       }
     ],
   },

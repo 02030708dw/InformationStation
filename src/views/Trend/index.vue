@@ -264,15 +264,30 @@ watch(gameId, (newvalue) => {
     if (!newvalue) return
     updataActiveFirst(2);
 
-    nextTick(async () => {
-        const obj = { gameCode: gameCode.value, gameId: gameId.value }
-        let res1 = await getGameTrend(obj, urlObj[activeCountry.value])
-        trendData.value = filterEmptyValues(res1.resultSet)
+    // nextTick(async () => {
+    //     const obj = { gameCode: gameCode.value, gameId: gameId.value }
 
-        let res2 = await getGameAward(obj)
-        awardNum.value = res2.resultSet.awardNum
-        showTrend.value = true
-    })
+    //     let res1 = await getGameTrend(obj, urlObj[activeCountry.value])
+    //     trendData.value = filterEmptyValues(res1.resultSet)
+
+    //     let res2 = await getGameAward(obj)
+    //     awardNum.value = res2.resultSet.awardNum
+
+
+    //     showTrend.value = true
+    // })
+
+    nextTick(async () => {
+        const obj = { gameCode: gameCode.value, gameId: gameId.value };
+        const [res1, res2] = await Promise.all([
+        getGameTrend(obj, urlObj[activeCountry.value]),
+        getGameAward(obj),
+        ]);
+        trendData.value = filterEmptyValues(res1.resultSet);
+        awardNum.value = res2.resultSet.awardNum;
+        showTrend.value = true;
+    });
+
 })
 
 

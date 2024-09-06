@@ -15,8 +15,7 @@
             </li>
         </ul>
         <ul class="trend-num">
-            <li class="num-item" v-for="item in data.trendRespList">{{ item.nums }}</li>
-            <li class="num-item" v-for="item in 30 - data.trendRespList.length" style="color: transparent;">{{ data.trendRespList[0].nums }}</li>
+            <li class="num-item" v-for="item in data.trendRespList.slice(0,30)">{{ item.nums }}</li>
         </ul>
     </div>
 

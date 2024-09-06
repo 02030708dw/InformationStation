@@ -15,6 +15,7 @@
         {{ index }}
       </li>
     </ul>
+
     <ul class="trend-num">
       <li class="num-item" v-for="(item, i) in truncatedTrendList" :key="i">
         {{ item.nums }}
@@ -22,7 +23,7 @@
       <li class="num-item loading">
         <span class="dot-anim">.</span>
       </li>
-      <li class="num-item"></li>
+      <li class="num-item" v-for="item in  29-data.trendRespList.slice(-28).length" ></li>
     </ul>
   </div>
 </template>
@@ -34,6 +35,7 @@ const emits = defineEmits(["changeChart"]);
 const truncatedTrendList = computed(() => {
   return props.data.trendRespList.slice(-28);
 });
+console.log(props.data)
 </script>
 <style lang="scss" scoped>
 .title-trend {
@@ -86,6 +88,7 @@ const truncatedTrendList = computed(() => {
     text-align: center;
     height: 20%;
     line-height: 26px;
+    min-width: 20px;
   }
 
   .num-item:nth-child(2n) {
@@ -96,6 +99,28 @@ const truncatedTrendList = computed(() => {
   .num-item:nth-child(2n-1) {
     color: #333;
     background-color: #d6deed;
+  }
+
+  .loading {
+    font-size: 14px;
+    font-weight: bold;
+  }
+
+  .dot-anim::after {
+    content: "";
+    animation: dots 1s steps(3, end) infinite;
+  }
+
+  @keyframes dots {
+    0% {
+      content: ".";
+    }
+    50% {
+      content: "..";
+    }
+    100% {
+      content: "";
+    }
   }
 }
 </style>

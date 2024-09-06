@@ -1,5 +1,5 @@
 <template>
-    <div class="trend">
+    <div class="trend-Page">
 
 
         <template v-if="showTab">
@@ -60,7 +60,7 @@
         </template>
 
 
-        <van-Loading v-else />
+        <van-Loading v-else/>
 
 
     </div>
@@ -132,7 +132,7 @@ const corresponding = {
         ph_4d_two_play1: ['twoSizeList', 'twoSingleAndDoubleList'],
         ph_4d_one_play1: ['oneSizeList', 'oneSingleAndDoubleList']
     },
-    ph_6d: {
+    ph_6d: { 
         ph_6d_four_play1: ['fourSizeList', 'fourSingleAndDoubleList'],
         ph_6d_three_play1: ['threeSizeList', 'threeSingleAndDoubleList'],
         ph_6d_two_play1: ['twoSizeList', 'twoSingleAndDoubleList'],
@@ -191,7 +191,6 @@ const gameId = computed(() => {
     if (Regional.includes(activeKind.value)) {
         return cityId.value
     } else {
-        console.log(GamePlayList,activeKind.value)
         return GamePlayList.find(item => item.gameName == activeKind.value).gameId
     }
 })
@@ -263,20 +262,6 @@ watch(activeMethod, () => {
 watch(gameId, (newvalue) => {
     if (!newvalue) return
     updataActiveFirst(2);
-
-    // nextTick(async () => {
-    //     const obj = { gameCode: gameCode.value, gameId: gameId.value }
-
-    //     let res1 = await getGameTrend(obj, urlObj[activeCountry.value])
-    //     trendData.value = filterEmptyValues(res1.resultSet)
-
-    //     let res2 = await getGameAward(obj)
-    //     awardNum.value = res2.resultSet.awardNum
-
-
-    //     showTrend.value = true
-    // })
-
     nextTick(async () => {
         const obj = { gameCode: gameCode.value, gameId: gameId.value };
         const [res1, res2] = await Promise.all([
@@ -348,14 +333,14 @@ onBeforeMount(async () => {
 })
 </script>
 <style lang="scss" scoped>
-.trend{
-    min-height: calc(100vh - 100px);
+.trend-Page{
     user-select: none;
-    background-color: #f6f8fe;
+    // background-color: #f6f8fe;
     padding-top: 10px;
     padding-bottom: 20px;
 }
 .van-loading {
+    background-color: #d7d7d7;
     width: 100%;
     height: 300px;
     display: flex;

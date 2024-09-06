@@ -13,7 +13,6 @@ import Menu from './Menu.vue';
 .page-main{
   height: 100%;
   .router-view{
-    height: calc(100% - 44px);
     overflow: auto;
   }
 }

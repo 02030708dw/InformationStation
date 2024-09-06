@@ -28,6 +28,7 @@ const page = [
   font-size: 14px;
   gap: 20px;
   padding: 0 16px;
+  z-index: 999;
   position: sticky;
   top: 0;
 

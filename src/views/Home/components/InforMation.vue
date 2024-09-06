@@ -11,7 +11,7 @@
                     </div>
 
                     <div class="right" v-if="item.pictureUrl">
-                        <img class="img" :src="formatImg(item.pictureUrl)[0]">
+                        <img class="img" :src="getImageUrls(item.pictureUrl)[0]">
                     </div>
                 </li>
             </template>
@@ -45,8 +45,11 @@ onBeforeMount(async () => {
 
 
 
-function formatImg(str) {
-    return str.replace(/\s|\[|\]/g, "").split(",")
+// function formatImg(str) {
+//     return str.replace(/\s|\[|\]/g, "").split(",")
+// }
+const getImageUrls =(pictureUrl)=> {
+  return pictureUrl.split(',').map(url => 'https://static.44dog.cc/' + url.trim());
 }
 </script>
 <style scoped lang="scss">

@@ -1,27 +1,30 @@
 <template>
   <div class="trend">
     <Title text="Trend" @changeMore="$router.push({ name: 'Trend' })" />
+    <div class="trend-title">{{ matchingLottery.gameCode }}</div>
     <div class="trendbox" ref="trend">
       <table ref="table" class="table"></table>
     </div>
   </div>
 </template>
 <script setup>
-import { ref, onMounted, nextTick } from "vue";
+import { ref,reactive, onMounted, nextTick } from "vue";
 import Title from "./Title.vue";
+import { getGameTrend } from "@/api/index.js"
+import { getRegion } from "@/util/getRegion.js"; // 引入获取地区信息的函数
+const region = getRegion();
 const table = ref(null);
 const trend = ref(null);
 onMounted(() => {
-  resetCoordinates();
-  createGrid();
+  getTrend()
 });
-function createGrid() {
+function createGrid(Data) {
   table.value.innerHTML = "";
   const minColumns = 20;
   const minRows = 6; // 最小行数
   let maxRows = 0;
   let maxCols = 0;
-  trendData.forEach((item) => {
+  Data.forEach((item) => {
     const x = item.xy[0];
     const y = Math.abs(item.xy[1]);
     if (x > maxRows) maxRows = x;
@@ -36,7 +39,7 @@ function createGrid() {
       row.insertCell().classList.add("empty");
     }
   }
-  trendData.forEach((item) => {
+  Data.forEach((item) => {
     const x = item.xy[0] - 1;
     const y = maxCols + item.xy[1];
     const rowIndex = maxCols - 1 - y;
@@ -49,8 +52,8 @@ function createGrid() {
     trend.value.scrollLeft = trend.value.scrollWidth;
   });
 }
-function resetCoordinates() {
-  trendData.forEach((entry) => {
+function resetCoordinates(Data) {
+  Data.forEach((entry) => {
     // Generate random x between 1 and 14 (inclusive)
     const newX = Math.floor(Math.random() * 14) + 1;
     // Generate random y between -1 and -6 (inclusive)
@@ -58,196 +61,66 @@ function resetCoordinates() {
     entry.xy = [newX, newY];
   });
 }
+const AreaOfFire = [{ TH: "Th" }, { VND: "Vnd" }, { INA: "My" }, { PH: "Ph" }];
 
-const trendData = [
+const foundArea = AreaOfFire.find((area) => area[region.country]);
+
+// 获取对应的值
+const areaValue = foundArea ? foundArea[region.country] : null;
+
+const trendData = ref([]);
+
+const areaLottery = reactive([
   {
-    awardPeriod: "20240719-188",
-    nums: "45",
-    xy: [1, -1],
-    colour: "S",
-  },
+    gameCode: "vndOneMinute",
+    gameId: "44",
+    country: "Vnd",
+    lottery: "eightSingleAndDoubleList",
+  }, //越南1分彩2D头
   {
-    awardPeriod: "20240719-189",
-    nums: "51",
-    xy: [2, -1],
-    colour: "B",
-  },
+    gameCode: "thOneMinute",
+    gameId: "73",
+    country: "Th",
+    lottery: "head2SingleAndDoubleList",
+  }, //泰国1分彩
   {
-    awardPeriod: "20240719-190",
-    nums: "74",
-    xy: [2, -2],
-    colour: "B",
-  },
+    gameCode: "phOneMinute_2d",
+    gameId: "47",
+    country: "Ph",
+    lottery: "twoSizeList",
+  }, //菲律宾1分彩2D
   {
-    awardPeriod: "20240719-191",
-    nums: "88",
-    xy: [2, -3],
-    colour: "B",
-  },
-  {
-    awardPeriod: "20240719-192",
-    nums: "17",
-    xy: [3, -1],
-    colour: "S",
-  },
-  {
-    awardPeriod: "20240719-193",
-    nums: "99",
-    xy: [4, -1],
-    colour: "B",
-  },
-  {
-    awardPeriod: "20240719-194",
-    nums: "91",
-    xy: [4, -2],
-    colour: "B",
-  },
-  {
-    awardPeriod: "20240719-195",
-    nums: "85",
-    xy: [4, -3],
-    colour: "B",
-  },
-  {
-    awardPeriod: "20240719-196",
-    nums: "88",
-    xy: [4, -4],
-    colour: "B",
-  },
-  {
-    awardPeriod: "20240719-197",
-    nums: "01",
-    xy: [5, -1],
-    colour: "S",
-  },
-  {
-    awardPeriod: "20240719-198",
-    nums: "24",
-    xy: [5, -2],
-    colour: "S",
-  },
-  {
-    awardPeriod: "20240719-199",
-    nums: "59",
-    xy: [6, -1],
-    colour: "B",
-  },
-  {
-    awardPeriod: "20240719-200",
-    nums: "50",
-    xy: [6, -2],
-    colour: "B",
-  },
-  {
-    awardPeriod: "20240719-201",
-    nums: "87",
-    xy: [6, -3],
-    colour: "B",
-  },
-  {
-    awardPeriod: "20240719-202",
-    nums: "52",
-    xy: [6, -4],
-    colour: "B",
-  },
-  {
-    awardPeriod: "20240719-203",
-    nums: "46",
-    xy: [7, -1],
-    colour: "S",
-  },
-  {
-    awardPeriod: "20240719-204",
-    nums: "26",
-    xy: [7, -2],
-    colour: "S",
-  },
-  {
-    awardPeriod: "20240719-205",
-    nums: "11",
-    xy: [7, -3],
-    colour: "S",
-  },
-  {
-    awardPeriod: "20240719-206",
-    nums: "89",
-    xy: [8, -1],
-    colour: "B",
-  },
-  {
-    awardPeriod: "20240719-207",
-    nums: "87",
-    xy: [8, -2],
-    colour: "B",
-  },
-  {
-    awardPeriod: "20240719-208",
-    nums: "62",
-    xy: [8, -3],
-    colour: "B",
-  },
-  {
-    awardPeriod: "20240719-209",
-    nums: "30",
-    xy: [9, -1],
-    colour: "S",
-  },
-  {
-    awardPeriod: "20240719-210",
-    nums: "75",
-    xy: [10, -1],
-    colour: "B",
-  },
-  {
-    awardPeriod: "20240719-211",
-    nums: "54",
-    xy: [10, -2],
-    colour: "B",
-  },
-  {
-    awardPeriod: "20240719-212",
-    nums: "24",
-    xy: [11, -1],
-    colour: "S",
-  },
-  {
-    awardPeriod: "20240719-213",
-    nums: "82",
-    xy: [12, -1],
-    colour: "B",
-  },
-  {
-    awardPeriod: "20240719-214",
-    nums: "46",
-    xy: [13, -1],
-    colour: "S",
-  },
-  {
-    awardPeriod: "20240719-215",
-    nums: "15",
-    xy: [13, -2],
-    colour: "S",
-  },
-  {
-    awardPeriod: "20240719-216",
-    nums: "66",
-    xy: [14, -1],
-    colour: "B",
-  },
-  {
-    awardPeriod: "20240719-217",
-    nums: "52",
-    xy: [14, -2],
-    colour: "B",
-  },
-];
+    gameCode: "myOneMinute",
+    gameId: "80",
+    country: "My",
+    lottery: "twoSizeList",
+  }, //印尼1分彩
+]);
+const matchingLottery = areaLottery.find((item) => item.country === areaValue);
+async function getTrend() {
+  // 获取走势图
+  const data = {
+    gameCode: matchingLottery.gameCode,
+    gameId: matchingLottery.gameId,
+  };
+  const lottery = matchingLottery.lottery;
+  const res = await getGameTrend(data, areaValue);
+  trendData.value = res.resultSet[lottery].trendRespList;
+  await nextTick();
+  createGrid(trendData.value);
+  resetCoordinates(trendData.value);
+}
 </script>
 <style lang="scss">
 .trend {
-    background-color: #333333;
-    color:#fff;
-    border-radius: 7px;
-    padding: 5px;
+  background-color: #333333;
+  color: #fff;
+  border-radius: 7px;
+  padding: 5px;
+  .trend-title{
+    font-size: 12px;
+    margin-bottom: 5px;
+  }
   .trendbox {
     border-left: 1px solid #ededed;
     border-right: 1px solid #ededed;

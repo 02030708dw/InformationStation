@@ -51,6 +51,10 @@ function formatImg(str) {
 </script>
 <style scoped lang="scss">
 .infor-mation {
+    background-color: #333333;
+    color:#fff;
+    border-radius: 7px;
+    padding: 5px;
     .info-list {
         display: flex;
         flex-direction: column;

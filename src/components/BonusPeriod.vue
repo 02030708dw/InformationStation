@@ -57,15 +57,15 @@ function formatTime(seconds) {
     align-items: center;
     border-radius: 24px;
     padding: 0 5px;
-    background-color: #e1f2ff;
+    background-color: #e6e5d9;
     font-size: 11px;
 
     .date {
-        color: #895967;
+        color: #bc6f16;
     }
 
     .countdown {
-        color: #348def;
+        color: #f7931e;
     }
 }
 </style>

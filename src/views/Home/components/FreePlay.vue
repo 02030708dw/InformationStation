@@ -13,6 +13,10 @@ import Title from './Title.vue';
 </script>
 <style lang="scss">
 .free-play {
+    background-color: #333;
+    color: #fff;
+    border-radius: 7px;
+    padding: 5px;
 
     // height: 100px;
     .play {

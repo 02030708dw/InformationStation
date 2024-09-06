@@ -29,3 +29,5 @@ export const getTime=()=>getG(`/api/time/baidu`)//获取时间用于定位越南
 export const getGameDraw=()=>postG(`/aia/shortTicket`)//获取部分开奖号码
 
 export const getLongDraw=()=>postG(`aia/longTicket`)//获取全部开奖号码
+
+export const getPhAward=(data)=>getG(`/material/getAwardNum/ph?gameCode=${data.code}&gameId=${data.gameId}`)//获取菲律宾往期奖期信息

@@ -4,14 +4,17 @@
       <div class="left-icon"></div>
       <span>{{ text }}</span>
     </div>
-    <div class="right" @click="emits('changeMore')">
+    <div class="right" v-if="showRight" @click="emits('changeMore')">
       <span>more</span>
       <van-icon name="arrow" />
     </div>
   </div>
 </template>
 <script setup>
-const props = defineProps(["text"]);
+const props = defineProps({
+  text: String,
+  showRight: Boolean,
+});
 const emits = defineEmits(["changeMore"]);
 </script>
 <style lang="scss" scoped>

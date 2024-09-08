@@ -54,23 +54,20 @@ onMounted(() => initEvent(ul.value))
 </script>
 <style lang="scss" scoped>
 .circle-tab {
-    padding: 5px;
     height: 40px;
     display: flex;
     align-items: center;
     overflow-y: hidden;
     overflow-x: auto;
     scrollbar-width: none;
-    /* Firefox */
     -ms-overflow-style: none;
-    /* IE 10+ */
 
     .tab-item {
         white-space: nowrap;
-        margin: 0 5px;
+        margin: 0 5px 0 0;
         height: 30px;
         background-color: #e8efff;
-        border-radius: 10px;
+        border-radius: 5px;
         padding: 0 15px;
         display: flex;
         align-items: center;
@@ -83,7 +80,7 @@ onMounted(() => initEvent(ul.value))
     }
 
     .active {
-        background-color: #0256ff;
+        background-color: #FF9500;
         color: #fff;
     }
 

@@ -39,15 +39,12 @@ console.log(props.data)
 </script>
 <style lang="scss" scoped>
 .title-trend {
-  padding-left: 10px;
-  color: #000;
+  color: #fff;
   height: 30px;
   line-height: 30px;
-  margin-top: 10px;
   font-size: 16px;
 }
 .box-num {
-  padding: 0 10px;
   display: flex;
 }
 .chartbox {

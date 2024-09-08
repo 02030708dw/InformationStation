@@ -1,4 +1,4 @@
-<template>
+<!-- <template>
     <ul class="tab-bar">
         <li v-for="item in list" class="tab-bar-item" 
         :class="{active:active==item.name}" 
@@ -46,4 +46,4 @@ const active=defineModel('modelValue')
         color: #fff;
     }
 }
-</style>  
+</style>   -->

@@ -3,9 +3,8 @@
 </template>
 
 <style lang="scss">
+$themebgColor: #3498db;
 * {
-  padding: 0;
-  margin: 0;
   font-family: NotoSans-Regular, -apple-system, BlinkMacSystemFont, Roboto,
     Helvetica Neue, Helvetica, Tahoma, Arial, PingFang SC, Microsoft YaHei,
     sans-serif;

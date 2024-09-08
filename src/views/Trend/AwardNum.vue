@@ -63,11 +63,11 @@ const showVnd = ref(false)//是否显示越南开奖号码
     .title {
         height: 40px;
         font-size: 16px;
-        color: #000;
+        color: #fff;
         display: flex;
         justify-content: space-between;
         align-items: center;
-        padding-left: 5px;
+        // padding-left: 5px;
         padding-right: 150px;
 
         & span:nth-child(2) {
@@ -83,7 +83,6 @@ const showVnd = ref(false)//是否显示越南开奖号码
         height: 25px;
 
         gap: 20px;
-        padding: 0 5px;
 
         .award-item {
             flex: 1;
@@ -102,7 +101,6 @@ const showVnd = ref(false)//是否显示越南开奖号码
         }
     }
     .award2{
-        padding: 0 5px;
         color: #000;
         font-size: 16px;
         display: flex;

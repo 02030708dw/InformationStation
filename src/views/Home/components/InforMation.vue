@@ -45,16 +45,14 @@ onBeforeMount(async () => {
 
 
 
-// function formatImg(str) {
-//     return str.replace(/\s|\[|\]/g, "").split(",")
-// }
+
 const getImageUrls =(pictureUrl)=> {
   return pictureUrl.split(',').map(url => 'https://static.44dog.cc/' + url.trim());
 }
 </script>
 <style scoped lang="scss">
 .infor-mation {
-    background-color: #333333;
+    background-color: $themebgColor;
     color:#fff;
     border-radius: 7px;
     padding: 5px;

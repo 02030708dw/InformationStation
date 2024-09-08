@@ -113,7 +113,7 @@ async function getTrend() {
 </script>
 <style lang="scss">
 .trend {
-  background-color: #333333;
+  background-color: $themebgColor;
   color: #fff;
   border-radius: 7px;
   padding: 5px;

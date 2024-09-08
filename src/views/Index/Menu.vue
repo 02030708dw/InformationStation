@@ -21,8 +21,7 @@ const page = [
 </script>
 <style scoped lang="scss">
 .menu {
-//   height: 44px;
-  background-color: #333333;
+  background-color: $themebgColor;
   display: flex;
   align-items: center;
   font-size: 14px;
@@ -31,9 +30,7 @@ const page = [
   z-index: 999;
   position: sticky;
   top: 0;
-
   ::before {
-    // height: 20px;
     background-color: #484848;
   }
 

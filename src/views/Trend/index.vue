@@ -2,7 +2,7 @@
     <div class="trend-Page">
 
 
-        <template v-if="showTab">
+        <div class="card" v-if="showTab">
             <CircleTab :list="gameList.filter(item => item.countryName != 'Mini-Game')" viewField="countryName"
                 bindField="countryName" v-model="activeCountry" />
 
@@ -21,42 +21,44 @@
             <SquareTab :list="GamePlayList.find(item => item.gameName == mapactiveKind)
                 ?.gamePlayAndTypeListRespList.find(i => i.gamePlayTypeCode == activeType)
                 .gamePlayList" viewField="gamePlayName" bindField="gamePlayCode" v-model="activeMethod" />
-
-        </template>
+        </div>
 
 
 
 
 
         <template v-if="showTrend">
+            <div class="card">
+                <AwardNum 
+                :awardNum="awardNum" 
+                :countryName="activeCountry" 
+                :name="mapactiveKind" />
+            </div>
 
-            <AwardNum 
-            :awardNum="awardNum" 
-            :countryName="activeCountry" 
-            :name="mapactiveKind" />
+            <div class="card">
+                <TrendNum 
+                :data="
+                 corresponding[activeType][activeMethod].length == 2
+                 ? trendData[corresponding[activeType][activeMethod][0]]
+                 : trendData[corresponding[activeType][activeMethod][digitNum][0]]
+                 " 
+                 :digitData="corresponding[activeType][activeMethod]" :info="{ name: 'nums', type: activeType, method: activeMethod }"
+                 :active="digitNum" @changeChart="(v) => digitNum = v" />
+            </div>
 
-            <TrendNum 
-            :data="
-            corresponding[activeType][activeMethod].length == 2
-             ? trendData[corresponding[activeType][activeMethod][0]]
-             : trendData[corresponding[activeType][activeMethod][digitNum][0]]
-             " 
-             :digitData="corresponding[activeType][activeMethod]" :info="{ name: 'nums', type: activeType, method: activeMethod }"
-             :active="digitNum" @changeChart="(v) => digitNum = v" />
+                <GameTrend 
+                v-for="(info, index) in infoAry" 
+                :key="index" 
+                :data="
+                 corresponding[activeType][activeMethod].length == 2
+                 ? trendData[corresponding[activeType][activeMethod][index]]
+                 : trendData[corresponding[activeType][activeMethod][index == 0 ? digitSize : digitOE][index]]
+                 " 
+                 :info="{ name: info, type: activeType, method: activeMethod }" :digitData="corresponding[activeType][activeMethod]"
+                 @digitSize="(v) => digitSize = v" 
+                 @digitOE="(v) => digitOE = v" 
+                 :active="digitAry[index].value" />
 
-
-            <GameTrend 
-            v-for="(info, index) in infoAry" 
-            :key="index" 
-            :data="
-            corresponding[activeType][activeMethod].length == 2
-            ? trendData[corresponding[activeType][activeMethod][index]]
-            : trendData[corresponding[activeType][activeMethod][index == 0 ? digitSize : digitOE][index]]
-            " 
-            :info="{ name: info, type: activeType, method: activeMethod }" :digitData="corresponding[activeType][activeMethod]"
-            @digitSize="(v) => digitSize = v" 
-            @digitOE="(v) => digitOE = v" 
-            :active="digitAry[index].value" />
         </template>
 
 
@@ -333,14 +335,21 @@ onBeforeMount(async () => {
 })
 </script>
 <style lang="scss" scoped>
-.trend-Page{
-    user-select: none;
-    // background-color: #f6f8fe;
-    padding-top: 10px;
+.trend-Page {
     padding-bottom: 20px;
+
+    .card {
+        box-sizing: border-box;
+        padding: 10px;
+        width: 343px;
+        margin: 10px auto;
+        background-color: $themebgColor;
+        border-radius: 7px;
+    }
 }
+
 .van-loading {
-    background-color: #d7d7d7;
+    background-color: #000;
     width: 100%;
     height: 300px;
     display: flex;

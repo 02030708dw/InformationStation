@@ -89,6 +89,7 @@ function mapByWeek(data) {
   overflow: auto;
   scrollbar-width: none;
   -ms-overflow-style: none;
+
   &::-webkit-scrollbar {
     display: none;
   }
@@ -97,6 +98,7 @@ function mapByWeek(data) {
     background-color: #fff;
     flex-shrink: 0;
     width: 33.33%;
+
     .item {
       color: #000;
       text-align: center;
@@ -114,9 +116,18 @@ function mapByWeek(data) {
       border-top: none;
       border-bottom: none;
     }
+
     .active {
       background-color: #FFE594;
     }
+  }
+
+  .week-item:first-child>.week {
+    border-left: 1px solid #000;
+  }
+
+  .week-item:last-child>.week {
+    border-right: 1px solid #000;
   }
 
 }

@@ -7,19 +7,19 @@
 // Domain and Currency Mappings
 const DomainMappings = {
     TH: {
-      domain: ["dorathb.mvkbnb.com", "dorabettest.mvkbnb.com", "www.dorathb.com","localhost","www.44dog.com"],
+      domain: ["thb.44dog.com","www.44dog.com","localhost",],
       currency: "THB"
     },
     INA: {
-      domain: ["doraidn.mvkbnb.com", "www.doraidr.com",],
+      domain: ["idn.44dog.com"],
       currency: "IDR"
     },
     VND: {
-      domain: ["doravnd.mvkbnb.com", "www.doravnd.com",],
+      domain: ["vnd.44dog.com"],
       currency: "VND"
     },
     PH: {
-      domain: ["doraphp.mvkbnb.com", "www.doraphp.com",],
+      domain: ["php.44dog.com"],
       currency: "PHP"
     },
   };

@@ -7,7 +7,7 @@
 // Domain and Currency Mappings
 const DomainMappings = {
     TH: {
-      domain: ["dorathb.mvkbnb.com", "dorabettest.mvkbnb.com", "www.dorathb.com","localhost","http://192.168.124.26:5173"],
+      domain: ["dorathb.mvkbnb.com", "dorabettest.mvkbnb.com", "www.dorathb.com","localhost","www.44dog.com"],
       currency: "THB"
     },
     INA: {

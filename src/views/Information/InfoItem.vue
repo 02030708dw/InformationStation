@@ -31,7 +31,7 @@
             <van-icon name="good-job-o" size="18" v-if="data.status" />
             <van-icon name="good-job" class="dz" color="#ed6d4a" v-else size="18" /><span>{{ 'Like' }}</span>
           </div>
-          <div class="message" @click="changeTitle">
+          <div class="message" @click="changeTitle(data)">
             <van-icon name="chat-o" size="18" /><span>{{ 'Comment' }}</span>
           </div>
         </div>

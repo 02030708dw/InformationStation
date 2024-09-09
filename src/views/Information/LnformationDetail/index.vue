@@ -97,6 +97,7 @@
 <script setup>
 import { nextTick, ref } from 'vue';
 import Keyboard from './Keyboard.vue';
+defineOptions({name:"LnformationDetail"})
 const commentsRef=ref(null)
 const showSmile = ref(false);
 const status = ref(true);
@@ -194,14 +195,8 @@ const getImageUrls = (pictureUrl) => {
 }
 
 .LnformationDetail {
+  height: 100%;
   padding-bottom: 60px;
-  position: fixed;
-  top: 0;
-  left: 0;
-  bottom: 0;
-  right: 0;
-  z-index: 1001;
-  max-width: 375px;
   background: #eff2f9;
   overflow: auto;
   scrollbar-width: none;

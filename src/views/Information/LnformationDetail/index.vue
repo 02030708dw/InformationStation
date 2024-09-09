@@ -193,11 +193,12 @@ const getImageUrls = (pictureUrl) => {
 .dz {
   animation: heart 1s;
 }
-
+[class*=van-hairline]:after{
+  border: none;
+}
 .LnformationDetail {
   height: 100%;
   padding-bottom: 60px;
-  background: #eff2f9;
   overflow: auto;
   scrollbar-width: none;
 }
@@ -218,8 +219,8 @@ const getImageUrls = (pictureUrl) => {
 }
 
 .Newslist {
-  background-color: #ffffff;
-  color: #000000;
+  background-color: $themebgColor;
+  color: #fff;
   margin: 10px;
   border-radius: 7px;
   font-size: 12px;
@@ -332,7 +333,7 @@ const getImageUrls = (pictureUrl) => {
         .content {
           padding: 5px 8px;
           border-radius: 15px;
-          background-color: #f0f2f5;
+          background-color: #333;
 
           .name {
             font-weight: 700;

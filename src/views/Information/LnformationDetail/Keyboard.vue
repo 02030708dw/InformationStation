@@ -3,12 +3,12 @@
     <div class="control">
       <div class="int-box">
         <input type="text" class="int" v-model="intValue" />
-        <van-icon name="smile-o" size="24px" @click="showSmile = !showSmile" />
+        <van-icon name="smile-o" size="24px" color="#fff" @click="showSmile = !showSmile" />
       </div>
 
       <div class="unfold">
-        <van-icon name="guide-o" v-if="intValue" @click="send" />
-        <van-icon name="add-o" v-else />
+        <van-icon name="guide-o" v-if="intValue" color="#fff" @click="send" />
+        <van-icon name="add-o" v-else color="#fff" />
       </div>
     </div>
 
@@ -56,7 +56,7 @@ const changeSmile = (value) => {
   width: 375px;
   position: fixed;
   bottom: 0;
-  background-color: #f2f2f2;
+  background-color: #333;
   z-index: 1002;
 
   .control {
@@ -73,9 +73,9 @@ const changeSmile = (value) => {
     position: relative;
 
     .int {
+      background-color: $themebgColor;
       box-sizing: border-box;
       padding: 0 40px 0 20px;
-
       width: 320px;
       height: 36px;
       border-radius: 32px;

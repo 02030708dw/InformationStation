@@ -41,12 +41,12 @@ const page = [
   }
   .active {
     position: relative;
-    color: #fff;
+    color: #FF9500;
     &::after {
       content: "";
       width: 22px;
       height: 4px;
-      background-color: #fff;
+      background-color: #FF9500;
       position: absolute;
       left: calc(50% - 11px);
       bottom: 6px;

@@ -1,10 +1,3 @@
-// https://doravnd.mvkbnb.com  // 越南
-// https://doraphp.mvkbnb.com  // 菲律宾
-// https://doraidn.mvkbnb.com  // 印度尼西亚
-// https://dorathb.mvkbnb.com  // 泰国
-// https://dorabettest.mvkbnb.com  // 测试
-
-// Domain and Currency Mappings
 const DomainMappings = {
     TH: {
       domain: ["thb.44dog.com","www.44dog.com","localhost",],
@@ -24,10 +17,7 @@ const DomainMappings = {
     },
   };
   
-  /**
-   * Function to get country and currency based on the current hostname
-   * @returns {Object} An object containing country and currency code, or null if not found
-   */
+
   export function getRegion() {
     const hostname = new URL(window.location).hostname;
   
@@ -37,6 +27,6 @@ const DomainMappings = {
       }
     }
   
-    return null; // Return null if no match found
+    return null; 
   }
   

@@ -1,64 +1,51 @@
 <template>
   <div class="forecast_box">
-    <Title text="Template" :showRight="false"></Title>
-    <ul class="template">
-      <li
-        v-for="item in gameList"
-        :key="item.id"
-        @click="selectTemplate(item)"
-        :class="{ selected: selectedTemplateId === item.id }"
-      >
-        <div>
-          <img :src="getImage(item.image)" alt="" />
-        </div>
-      </li>
-    </ul>
-
-    <Title text="Edit the title" :showRight="false"></Title>
-    <div class="input-group">
-      <label>Title：</label>
-      <input type="text" v-model="title" @input="debouncedDrawImage" />
+    <div class="card">
+      <Title text="Template" :showRight="false"></Title>
+      <ul class="template">
+        <li v-for="item in gameList" :key="item.id" @click="selectTemplate(item)"
+          :class="{ selected: selectedTemplateId === item.id }">
+          <div>
+            <img :src="getImage(item.image)" alt="" />
+          </div>
+        </li>
+      </ul>
     </div>
-    <div class="input-group">
-      <label>Period of award：</label>
-      <input type="text" v-model="issue" @input="debouncedDrawImage" />
-    </div>
-
-    <Title text="Edit prediction number" :showRight="false"></Title>
-    <div
-      v-for="(field, index) in predictionFields"
-      :key="index"
-      class="input-group"
-    >
-      <input
-        type="text"
-        v-model="field.text"
-        @input="debouncedDrawImage"
-        :maxlength="maxDigits"
-        class="number-input"
-      />
-      <button @click="removePredictionField(index)">-</button>
-      <button
-        v-if="index === predictionFields.length - 1"
-        @click="addPredictionField"
-      >
-        +
-      </button>
+    <div class="card">
+      <Title text="Edit the title" :showRight="false"></Title>
+      <div class="input-group">
+        <label>Title:</label>
+        <input type="text" v-model="title" @input="debouncedDrawImage" />
+      </div>
+      <div class="input-group">
+        <label>Period of award:</label>
+        <input type="text" v-model="issue" @input="debouncedDrawImage" />
+      </div>
     </div>
 
-    <Title text="Preview" :showRight="false"></Title>
-    <div class="btn">
-      <button style="padding: 5px" @click="randomizeFields">random</button>
-      <button style="padding: 5px" @click="clearAll">empty</button>
-      <button style="padding: 5px" @click="downloadImage">download</button>
+    <div class="card">
+
+      <Title text="Edit prediction number" :showRight="false"></Title>
+      <div v-for="(field, index) in predictionFields" :key="index" class="input-group">
+        <input type="text" v-model="field.text" @input="debouncedDrawImage" :maxlength="maxDigits"
+          class="number-input" />
+        <button @click="removePredictionField(index)">-</button>
+        <button v-if="index === predictionFields.length - 1" @click="addPredictionField">
+          +
+        </button>
+      </div>
     </div>
 
-    <canvas
-      class="canvas_box"
-      ref="imageCanvas"
-      width="355"
-      height="340"
-    ></canvas>
+    <div class="card">
+
+      <Title text="Preview" :showRight="false"></Title>
+      <div class="btn">
+        <button style="padding: 5px" @click="randomizeFields">random</button>
+        <button style="padding: 5px" @click="clearAll">empty</button>
+        <button style="padding: 5px" @click="downloadImage">download</button>
+      </div>
+    </div>
+      <canvas class="canvas_box" ref="imageCanvas" width="355" height="340"></canvas>
   </div>
 </template>
 

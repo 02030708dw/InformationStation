@@ -92,8 +92,9 @@ const changeTitle=(data)=>{
   }
 }
 .InforItem {
+  color: #fff;
     padding: 10px;
-    background-color: #fff;
+    background-color: $themebgColor;
     border-radius: 7px;
 
     .head {

@@ -17,14 +17,14 @@ const active=defineModel('modelValue')
         text-align: center;
         flex: 1;
         line-height: 30px;
-        color: #1989fa;
+        color: #FF9500;
         background-color: #fff;
-        border: 1px solid #1989fa;
+        border: 1px solid #FF9500;
         transition: all linear 0.2s;
     }
     .active{
         color: #fff;
-        background-color: #1989fa;
+        background-color: #FF9500;
     }
 }
 </style>

@@ -25,7 +25,7 @@ const active=defineModel('modelValue')
 
     .active {
         color: #fff;
-        background-color: #0256ff;
+        background-color: #FF9500;
     }
 }
 </style>

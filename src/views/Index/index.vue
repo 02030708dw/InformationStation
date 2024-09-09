@@ -1,19 +1,14 @@
 <template>
-  <div class="page-main">
-    <Menu/>
-    <div class="router-view">
-      <router-view></router-view>
-    </div>
-  </div>
+    <Menu />
+      <router-view v-slot="{ Component }">
+        <KeepAlive :include="['Information']">
+          <component :is="Component" />
+        </KeepAlive>
+      </router-view>
 </template>
 <script setup>
 import Menu from './Menu.vue';
 </script>
 <style scoped lang="scss">
-.page-main{
-  height: 100%;
-  .router-view{
-    overflow: auto;
-  }
-}
+
 </style>

@@ -7,25 +7,33 @@
                 <p class="time">{{ data.updatedAt }}</p>
             </div>
         </div>
-        <p class="text" @click="changeTitle(data)">{{ data.title }}</p>
+        <van-text-ellipsis rows="3" :content="data.title" :expand-text="'Expand'" :collapse-text="'Collapse'" @click="changeTitle(data)"/>
 
-        <div class="img-box" v-if="data.pictureUrl">
-            <template v-if="formatImg(data.pictureUrl).length == 1">
-                <div class="img-only" v-for="(item, index) in formatImg(data.pictureUrl)" @click="changeImg(index)">
+        <template v-if="data.pictureUrl">
+            <div :class="formatImg(data.pictureUrl).length==1?'img1-box':'img2-box'">
+                <div class="img" 
+                v-for="item,index in formatImg(data.pictureUrl).slice(0,4)"
+                :class="{ last: formatImg(data.pictureUrl).length > 4 && index === formatImg(data.pictureUrl).slice(0, 4).length - 1 }"
+                :data-content="formatImg(data.pictureUrl).length-4"
+                @click="changeImg(index)"
+                >
                     <img :src="item">
                 </div>
-            </template>
-            <template v-else>
-                <div class="slideshow">
-                    <div class="slideshow-item" v-for="(item, index) in formatImg(data.pictureUrl)"
-                        @click="changeImg(index)">
-                        <img :src="item">
-                    </div>
-                </div>
-            </template>
+            </div>
+        </template>
+        <div class="more">
+          <div><van-icon name="fire-o" color="#ee0a24" />254</div>
+          <div>107{{ 'Message' }}</div>
         </div>
-        <div class="video-box" v-if="data.videoUrl">
-          <iframe :src="data.videoUrl"></iframe>
+
+        <div class="bottom">
+          <div class="thumbsUp"  @click="data.status = !data.status">
+            <van-icon name="good-job-o" size="18" v-if="data.status" />
+            <van-icon name="good-job" class="dz" color="#ed6d4a" v-else size="18" /><span>{{ 'Like' }}</span>
+          </div>
+          <div class="message" @click="changeTitle">
+            <van-icon name="chat-o" size="18" /><span>{{ 'Comment' }}</span>
+          </div>
         </div>
     </div>
 </template>
@@ -35,7 +43,8 @@ import { showImagePreview } from 'vant'
 const router=useRouter()
 const props = defineProps(['data'])
 function formatImg(str) {
-    return str.replace(/\s|\[|\]/g, "").split(",")
+  const url = 'https://static.44dog.cc/';
+  return str.replace(/\s|\[|\]/g, "").split(",").map(item => item.includes('http') ? item : url + item);
 }
 const changeImg = (startPosition) => {
     showImagePreview({
@@ -49,9 +58,43 @@ const changeTitle=(data)=>{
 }
 </script>
 <style scoped lang="scss">
+@keyframes heart {
+  0% {
+    transform: scale(1) rotate(0deg);
+  }
+
+  12.5% {
+    transform: scale(1.3) rotate(-20deg);
+  }
+
+  25% {
+    transform: scale(1.3) rotate(-10deg);
+  }
+
+  37.5% {
+    transform: scale(1) rotate(0deg);
+  }
+
+  50% {
+    transform: scale(1.3) rotate(-10deg);
+  }
+
+  62.5% {
+    transform: scale(1.3) rotate(-10deg);
+  }
+
+  75% {
+    transform: scale(1) rotate(0deg);
+  }
+
+  100% {
+    transform: scale(1) rotate(0deg);
+  }
+}
 .InforItem {
     padding: 10px;
     background-color: #fff;
+    border-radius: 7px;
 
     .head {
         height: 50px;
@@ -71,58 +114,85 @@ const changeTitle=(data)=>{
             justify-content: flex-end;
 
             .account {
-                font-size: 20px;
+                font-size: 14px;
             }
 
         }
     }
 
-    .text {
+    .van-text-ellipsis {
         margin-top: 10px;
+        font-size: 14px;
+
     }
 
-    .img-box {
-        width: 100%;
-        margin: 10px 0;
+    .img1-box {
+        padding: 10px 0;
 
-        .img-only {
-            width: 100%;
-            aspect-ratio: 2/1;
-            background-size: cover;
+    }
 
-            img {
-                width: 100%;
-                object-fit: cover;
-            }
+    .img2-box {
+        padding: 10px 0;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        justify-content: space-between;
+
+        .img {
+            width: 48%;
+            position: relative;
         }
 
-        .slideshow {
-            width: 100%;
+        .last::after{
+            content:'+'attr(data-content);
             display: flex;
-            gap: 10px;
-            overflow-y: auto;
-
-            .slideshow-item {
-                border-radius: 6px;
-                flex-shrink: 0;
-                width: 50%;
-                aspect-ratio: 2/1;
-                background-size: cover;
-
-                img {
-                    object-fit: cover;
-                }
-            }
+            align-items: center;
+            justify-content: center;
+            background-color: rgba(0, 0, 0, 0.4);
+            border-radius: 6px;
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            top: 0;
+            left: 0;
+            font-size: 24px;
+            color: #fff;
         }
     }
-    .video-box{
-        margin: 10px 0;
-        iframe{
-            border: none;
-            width: 100%;
-            height: 200px;
-            scrollbar-width: none;
+
+    img {
+        width: 100%;
+        border-radius: 6px;
+    }
+
+    .more {
+        font-size: 14px;
+        display: flex;
+        justify-content: space-between;
+        color: #777;
+    }
+
+    .bottom {
+        display: flex;
+        padding: 5px 10px;
+        font-size: 14px;
+
+        .thumbsUp,
+        .message {
+            margin-right: 70px;
+            display: flex;
+            align-items: center;
+            line-height: 20px;
+            .dz {
+            animation: heart 1s;
+        }
+            span {
+                margin-left: 5px;
+            }
         }
     }
 }
+
+
+
 </style>

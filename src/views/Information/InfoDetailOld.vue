@@ -5,16 +5,17 @@
             <div class="text">详情</div>
             <div class="hidden"></div>
         </div>
-        <InfoItem :data="data"/>
+        <div class="content">
+            <InfoItem :data="data"/>
+        </div>
     </div>
 </template>
 <script setup>
-import {ref,reactive,onBeforeMount} from 'vue'
+import {ref,reactive,onActivated} from 'vue'
 import InfoItem from './InfoItem.vue';
 const data=reactive({})
-onBeforeMount(()=>{
+onActivated(()=>{
     Object.assign(data,JSON.parse(sessionStorage.getItem('InfoDetail')))
-    console.log(data)
 })
 </script>
 <style lang="scss" scoped>
@@ -47,6 +48,9 @@ onBeforeMount(()=>{
             visibility: hidden;
             width: 30px;
         }
+    }
+    .content{
+        padding: 10px;
     }
 }
 </style>

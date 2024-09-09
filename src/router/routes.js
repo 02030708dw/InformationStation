@@ -36,7 +36,7 @@ const routes = [
   {
     path: "/InfoDetail",
     name: "InfoDetail",
-    component: () => import("@/views/Information/InfoDetail.vue"),
+    component: () => import("@/views/Information/LnformationDetail/index.vue"),
   },
 ];
 export default routes;

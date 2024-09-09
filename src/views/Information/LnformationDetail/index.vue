@@ -208,11 +208,9 @@ const getImageUrls = (pictureUrl) => {
 }
 
 .News {
-
   &:deep(.van-nav-bar__content){
     background-color:$themebgColor;
   }
-
 
   &:deep(.van-nav-bar__title) {
     color: #fff;
@@ -222,18 +220,11 @@ const getImageUrls = (pictureUrl) => {
     top: 0;
   }
 
-  .return_box {
-    width: 20px;
-    height: 20px;
-    background: url('@/assets/register/return.png');
-    background-size: cover;
-  }
 }
 
 .Newslist {
   background-color: #ffffff;
   color: #000000;
-  // margin-bottom: 20px;
   margin: 10px;
   border-radius: 7px;
   font-size: 12px;

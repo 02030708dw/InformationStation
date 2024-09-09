@@ -369,6 +369,7 @@ const gameList = reactive([
   padding: 10px;
 
   .title {
+    color: #fff;
     box-sizing: border-box;
     padding: 10px;
     border-bottom: 1px dashed #fff;
@@ -395,6 +396,7 @@ const gameList = reactive([
   }
 
   .input-group {
+    color: #fff;
     display: flex;
     align-items: center;
     margin-bottom: 5px;
@@ -411,12 +413,11 @@ const gameList = reactive([
     }
 
     button {
+      width: 33px;
+      aspect-ratio: 1/1;
+      color: #000;
       padding: 5px 10px;
     }
-  }
-
-  .canvas_box {
-    // border: 1px solid red;
   }
 
   .btn {
@@ -429,5 +430,13 @@ const gameList = reactive([
       margin-left: 10px;
     }
   }
+}
+.card{
+  box-sizing: border-box;
+  padding: 10px;
+  width: 343px;
+  margin: 10px auto;
+  background-color: $themebgColor;
+  border-radius: 7px;
 }
 </style>

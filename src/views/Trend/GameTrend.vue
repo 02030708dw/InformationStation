@@ -6,9 +6,10 @@
         {{ info.type.replace(/^.*?_/, '') }}-{{ info.method.replace(/^.*?_/, '') }}
         {{ info.name }}
       </p>
-      <p class="continuous" v-if="data?.combo > 3 && data">
-        {{ data.combo }}连
-      </p>
+      <!-- <p class="continuous" v-if="data?.combo > 3 && data">{{ data.combo }}连</p> -->
+      <div class="continuous" v-if="data?.combo > 3 && data">
+        <span :class="currentColour">{{ currentColour }}</span> x {{ data.combo }}
+      </div>
     </div>
 
     <div class="GameTrend">
@@ -40,6 +41,7 @@ const props = defineProps({
 const emits = defineEmits(['digitSize', 'digitOE'])
 const trend = ref(null)//走势图容器
 const table = ref(null)//走势图
+const currentColour = ref("");
 
 onMounted(() => {
   createGrid()
@@ -77,6 +79,7 @@ function createGrid() {
     const cell = table.value.rows[rowIndex].cells[colIndex];
     cell.className = item.colour;
     cell.setAttribute("data-content", item.colour);
+    currentColour.value = item.colour;
   });
   nextTick(() => { trend.value.scrollLeft = trend.value.scrollWidth; });
 }
@@ -90,6 +93,32 @@ const changeChart = (index) => {
 }
 </script>
 <style lang="scss">
+  @keyframes flashText {
+    0% {
+      text-shadow:
+        1px 1px 2px black,
+        0 0 5px red,
+        0 0 5px orange,
+        0 0 5px yellow;
+      color: red;
+    }
+    50% {
+      text-shadow:
+        1px 1px 2px black,
+        0 0 5px orange,
+        0 0 5px yellow,
+        0 0 5px green;
+      color: orange;
+    }
+    100% {
+      text-shadow:
+        1px 1px 2px black,
+        0 0 5px yellow,
+        0 0 5px green,
+        0 0 5px blue;
+      color: yellow;
+    }
+  }
 .card {
   box-sizing: border-box;
   padding: 10px;
@@ -107,12 +136,47 @@ const changeChart = (index) => {
     justify-content: space-between;
 
     .continuous {
-      width: 60px;
+    margin-right: 20px;
+    font-size: 17px;
+    text-align: center;
+    color: red;
+    line-height: 30px;
+    text-shadow: 1px 1px 2px black;
+    animation: flashText 1.5s infinite alternate; /* 添加动画 */
+
+    span {
+      display: inline-block;
+      width: 16.5px;
+      height: 16.5px;
+      line-height: 17px;
+      font-size: 13px;
+      border-radius: 50px;
+      color: #fff;
+      font-weight: 300;
+      text-shadow: none;
       text-align: center;
-      color: red;
-      line-height: 30px;
-      text-shadow: 1px 1px 2px black;
+      vertical-align: middle;
     }
+    .A {
+      background-color: #1173eb;
+    }
+
+    .S {
+      background-color: #ebae43;
+    }
+
+    .B {
+      background-color: red;
+    }
+
+    .O {
+      background-color: #ebae43;
+    }
+
+    .E {
+      background-color: red;
+    }
+  }
   }
 
   .GameTrend {

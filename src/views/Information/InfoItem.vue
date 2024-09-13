@@ -7,7 +7,7 @@
                 <p class="time">{{ data.updatedAt }}</p>
             </div>
         </div>
-        <van-text-ellipsis rows="3" :content="data.title" :expand-text="'Expand'" :collapse-text="'Collapse'" @click="changeTitle(data)"/>
+        <van-text-ellipsis rows="3" :content="data.title" :expand-text="'Expand'" :collapse-text="'Collapse'" @click.self="changeTitle(data)"/>
 
         <template v-if="data.pictureUrl">
             <div :class="formatImg(data.pictureUrl).length==1?'img1-box':'img2-box'">
@@ -22,14 +22,14 @@
             </div>
         </template>
         <div class="more">
-          <div><van-icon name="fire-o" color="#ee0a24" />254</div>
-          <div>107{{ 'Message' }}</div>
+          <div><van-icon name="fire-o" color="#ee0a24" />{{ data.likeCount }}</div>
+          <div>{{ data.commentCount }} {{ 'Message' }}</div>
         </div>
 
         <div class="bottom">
-          <div class="thumbsUp"  @click="data.status = !data.status">
-            <van-icon name="good-job-o" size="18" v-if="data.status" />
-            <van-icon name="good-job" class="dz" color="#ed6d4a" v-else size="18" /><span>{{ 'Like' }}</span>
+          <div class="thumbsUp"  >
+            <van-icon name="good-job-o" size="18"  @click="skipAIA"/>
+            <span>{{ data.likeCount }}</span>
           </div>
           <div class="message" @click="changeTitle(data)">
             <van-icon name="chat-o" size="18" /><span>{{ 'Comment' }}</span>
@@ -40,6 +40,7 @@
 <script setup>
 import {useRouter} from 'vue-router'
 import { showImagePreview } from 'vant'
+import {skipAIA} from "@/util/getRegion.js"
 const router=useRouter()
 const props = defineProps(['data'])
 function formatImg(str) {
@@ -58,39 +59,39 @@ const changeTitle=(data)=>{
 }
 </script>
 <style scoped lang="scss">
-@keyframes heart {
-  0% {
-    transform: scale(1) rotate(0deg);
-  }
+// @keyframes heart {
+//   0% {
+//     transform: scale(1) rotate(0deg);
+//   }
 
-  12.5% {
-    transform: scale(1.3) rotate(-20deg);
-  }
+//   12.5% {
+//     transform: scale(1.3) rotate(-20deg);
+//   }
 
-  25% {
-    transform: scale(1.3) rotate(-10deg);
-  }
+//   25% {
+//     transform: scale(1.3) rotate(-10deg);
+//   }
 
-  37.5% {
-    transform: scale(1) rotate(0deg);
-  }
+//   37.5% {
+//     transform: scale(1) rotate(0deg);
+//   }
 
-  50% {
-    transform: scale(1.3) rotate(-10deg);
-  }
+//   50% {
+//     transform: scale(1.3) rotate(-10deg);
+//   }
 
-  62.5% {
-    transform: scale(1.3) rotate(-10deg);
-  }
+//   62.5% {
+//     transform: scale(1.3) rotate(-10deg);
+//   }
 
-  75% {
-    transform: scale(1) rotate(0deg);
-  }
+//   75% {
+//     transform: scale(1) rotate(0deg);
+//   }
 
-  100% {
-    transform: scale(1) rotate(0deg);
-  }
-}
+//   100% {
+//     transform: scale(1) rotate(0deg);
+//   }
+// }
 .InforItem {
   color: #fff;
     padding: 10px;
@@ -177,12 +178,11 @@ const changeTitle=(data)=>{
         display: flex;
         padding: 5px 10px;
         font-size: 14px;
-
+        align-items: center;
         .thumbsUp,
         .message {
             margin-right: 70px;
             display: flex;
-            align-items: center;
             line-height: 20px;
             .dz {
             animation: heart 1s;

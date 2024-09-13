@@ -29,6 +29,8 @@ const loading = ref(false);
 const finished = ref(false);
 
 const onLoad = async () => {
+
+    loading.value=true
     let {resultSet}=await getGameGodArticle(option)
     list.value.push(...resultSet.data)
     loading.value = false;
@@ -38,7 +40,8 @@ const onLoad = async () => {
 watch(()=>option.accountId,(newvalue)=>{
     option.pageNo=1
     list.value=[]
-    finished.value=false
+    finished.value = false
+    onLoad()
 })
 
 onBeforeMount(async ()=>{

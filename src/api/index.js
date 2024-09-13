@@ -7,6 +7,9 @@ export const getGameGodList=()=>get(`/material/collect/account/dropdownBox/clien
 
 export const getGameGodArticle=(data)=>post(`/material/collect/new/client/page`,data)//获取单个大神文章
 
+export const getCommentList=(data)=>get(`/material/collect/new/comment/page/main/client`,data)
+
+export const getChildCommentList=(data)=>get(`/material/collect/new/comment/page/secondary/client`,data)
 // 资讯站
 // =========================================================================================================
 

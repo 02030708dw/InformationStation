@@ -13,18 +13,24 @@ const active=defineModel('modelValue')
     font-size: 13px;
     display: flex;
     height: 30px;
+    gap:5px;
     .item{
         text-align: center;
         flex: 1;
         line-height: 30px;
-        color: #FF9500;
-        background-color: #fff;
-        border: 1px solid #FF9500;
+        // color: #FF9500;
+        // background-color: #fff;
+        // border: 1px solid #FF9500;
+        border-radius: 4px;
+        color: #c4a974;
+        border: 1px solid #c4a974;
         transition: all linear 0.2s;
     }
     .active{
         color: #fff;
-        background-color: #FF9500;
+        border: none;
+        background-image: linear-gradient(to bottom, #df2741, #8a012d);
+        // background-color: #FF9500;
     }
 }
 </style>

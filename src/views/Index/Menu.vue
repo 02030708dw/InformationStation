@@ -6,6 +6,7 @@
         {{ item.label }}
       </li>
     </ul>
+    <div class="line"></div>
   </div>
 </template>
 <script setup>
@@ -22,19 +23,19 @@ const page = [
   position: relative;
   &::before {
     content: '';
-    width: 375px;
+    width: 100%;
     position: absolute;
     top: 0;
-    height: 50%;
+    height: 20px;
     background-color: #333;
   }
 
   &::after {
     content: '';
-    width: 375px;
+    width: 100%;
     position: absolute;
     bottom: 0;
-    height: 50%;
+    height: 20px;
     background-color: #222;
   }
 
@@ -51,7 +52,7 @@ const page = [
 
     .menu-item {
       cursor: pointer;
-      line-height: 44px;
+      line-height: 40px;
       color: #ffffff80;
     }
 
@@ -70,6 +71,12 @@ const page = [
         border-radius: 10px;
       }
     }
+  }
+  .line{
+    position: relative;
+    z-index: 2;
+    height: 4px;
+    background-image: linear-gradient(to right, #be965d 0, #976f40 28%, #ffcb85 63%, #976f40);
   }
 }
 </style>

@@ -1,5 +1,5 @@
 <template>
-  <div class="card">
+  <!-- <div class="card"> -->
 
     <div class="title-trend">
       <p>
@@ -26,7 +26,7 @@
       </div>
 
     </div>
-  </div>
+  <!-- </div> -->
 
 
 </template>
@@ -119,13 +119,13 @@ const changeChart = (index) => {
       color: yellow;
     }
   }
-.card {
-  box-sizing: border-box;
-  padding: 10px;
-  width: 343px;
-  margin: 10px auto;
-  background-color: $themebgColor;
-  border-radius: 7px;
+// .card {
+//   box-sizing: border-box;
+//   padding: 10px;
+//   width: 343px;
+//   margin: 10px auto;
+//   background-color: $themebgColor;
+//   border-radius: 7px;
 
   .title-trend {
     color: #fff;
@@ -281,5 +281,5 @@ const changeChart = (index) => {
       }
     }
   }
-}
+// }
 </style>

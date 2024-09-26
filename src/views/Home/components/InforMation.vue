@@ -55,7 +55,7 @@ const getImageUrls =(pictureUrl)=> {
     background-color: $themebgColor;
     color:#fff;
     border-radius: 7px;
-    padding: 5px;
+    // padding: 5px;
     .info-list {
         display: flex;
         flex-direction: column;

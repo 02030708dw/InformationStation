@@ -116,7 +116,7 @@ async function getTrend() {
   background-color: $themebgColor;
   color: #fff;
   border-radius: 7px;
-  padding: 5px;
+  // padding: 5px;
   .trend-title{
     font-size: 12px;
     margin-bottom: 5px;

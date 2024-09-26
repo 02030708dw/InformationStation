@@ -16,7 +16,7 @@ import Title from './Title.vue';
     background-color: $themebgColor;
     color: #fff;
     border-radius: 7px;
-    padding: 5px;
+    // padding: 5px;
     .play {
         display: flex;
         gap: 10px;

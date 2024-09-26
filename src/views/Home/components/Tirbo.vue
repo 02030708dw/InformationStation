@@ -70,7 +70,7 @@ onUnmounted(() => {
     background-color: $themebgColor;
     color:#fff;
     border-radius: 7px;
-    padding: 5px;
+    // padding: 5px;
   .lotter-list {
     flex-wrap: wrap;
     display: flex;

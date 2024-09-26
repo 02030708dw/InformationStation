@@ -2,7 +2,9 @@
     <div class="trend-Page">
 
 
-        <div class="card" v-if="showTab">
+        <!-- <div class="card" > -->
+        <template v-if="showTab">
+
             <CircleTab :list="gameList.filter(item => item.countryName != 'Mini-Game')" viewField="countryName"
                 bindField="countryName" v-model="activeCountry" />
 
@@ -21,21 +23,22 @@
             <SquareTab :list="GamePlayList.find(item => item.gameName == mapactiveKind)
                 ?.gamePlayAndTypeListRespList.find(i => i.gamePlayTypeCode == activeType)
                 .gamePlayList" viewField="gamePlayName" bindField="gamePlayCode" v-model="activeMethod" />
-        </div>
+        </template>
+        <!-- </div> -->
 
 
 
 
 
         <template v-if="showTrend">
-            <div class="card">
+            <!-- <div class="card"> -->
                 <AwardNum 
                 :awardNum="awardNum" 
                 :countryName="activeCountry" 
                 :name="mapactiveKind" />
-            </div>
+            <!-- </div> -->
 
-            <div class="card">
+            <!-- <div class="card"> -->
                 <TrendNum 
                 :data="
                  corresponding[activeType][activeMethod].length == 2
@@ -44,7 +47,7 @@
                  " 
                  :digitData="corresponding[activeType][activeMethod]" :info="{ name: 'nums', type: activeType, method: activeMethod }"
                  :active="digitNum" @changeChart="(v) => digitNum = v" />
-            </div>
+            <!-- </div> -->
 
                 <GameTrend 
                 v-for="(info, index) in infoAry" 
@@ -336,16 +339,16 @@ onBeforeMount(async () => {
 </script>
 <style lang="scss" scoped>
 .trend-Page {
+    padding: 16px;
     padding-bottom: 20px;
-
-    .card {
-        box-sizing: border-box;
-        padding: 10px;
-        width: 343px;
-        margin: 10px auto;
-        background-color: $themebgColor;
-        border-radius: 7px;
-    }
+    // .card {
+    //     box-sizing: border-box;
+    //     padding: 10px;
+    //     width: 343px;
+    //     margin: 10px auto;
+    //     background-color: $themebgColor;
+    //     border-radius: 7px;
+    // }
 }
 
 .van-loading {

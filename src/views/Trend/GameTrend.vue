@@ -192,6 +192,7 @@ const changeChart = (index) => {
       gap: 10px;
 
       .chartbox-item {
+        border-radius: 4px;
         flex: 1;
         display: flex;
         align-items: center;
@@ -203,7 +204,7 @@ const changeChart = (index) => {
 
       .active {
         color: #fff;
-        background-color: #0256ff;
+        background-color: #f97f32;
       }
     }
 

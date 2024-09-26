@@ -56,6 +56,7 @@ console.log(props.data)
   gap: 10px;
 
   .chartbox-item {
+    border-radius: 4px;
     flex: 1;
     display: flex;
     align-items: center;
@@ -67,7 +68,7 @@ console.log(props.data)
 
   .active {
     color: #fff;
-    background-color: #0256ff;
+    background-color: #f97f32;
   }
 }
 .trend-num {
@@ -90,12 +91,15 @@ console.log(props.data)
 
   .num-item:nth-child(2n) {
     color: #333;
-    background-color: #e2e9fa;
+    // background-color: #e2e9fa;
+    background-color: #fff;
   }
 
   .num-item:nth-child(2n-1) {
     color: #333;
-    background-color: #d6deed;
+    // background-color: #d6deed;
+    background-color: #fef0e0;
+
   }
 
   .loading {

@@ -70,12 +70,14 @@ onMounted(() => initEvent(ul.value))
         white-space: nowrap;
         margin: 0 5px 0 0;
         height: 30px;
-        background-color: #e8efff;
+        // background-color: #e8efff;
+        border:1px solid #c4a974;
         border-radius: 5px;
         padding: 0 10px;
         display: flex;
         align-items: center;
-        color: #000;
+        // color: #000;
+        color: #c4a974;
         .img {
             border-radius: 25px;
             width: 25px;
@@ -90,7 +92,9 @@ onMounted(() => initEvent(ul.value))
     }
 
     .active {
-        background-color: #FF9500;
+        // background-color: #FF9500;
+        border: none;
+        background-image: linear-gradient(to bottom, #df2741, #8a012d);
         color: #fff;
     }
 

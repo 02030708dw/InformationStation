@@ -105,7 +105,7 @@ function mapByWeek(data) {
       line-height: 25px;
       background-color: #fff;
       height: 25px;
-      border: 1px solid #000;
+      border: 1px solid #666;
     }
 
     .week {

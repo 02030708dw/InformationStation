@@ -5,6 +5,15 @@
     </KeepAlive>
   </router-view>
 </template>
+<script setup>
+import { onBeforeMount } from 'vue';
+import { useUserState } from './stores/modules/userinfo';
+const userStore=useUserState()
+onBeforeMount(()=>{
+  let search=new URLSearchParams(window.location.search)
+  userStore.shareId=search.get('u')
+})
+</script>
 <style lang="scss">
 * {
   font-family: NotoSans-Regular, -apple-system, BlinkMacSystemFont, Roboto,

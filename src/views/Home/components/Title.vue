@@ -1,7 +1,7 @@
 <template>
   <div class="title">
     <div class="left">
-      <div class="left-icon"></div>
+      <!-- <div class="left-icon"></div> -->
       <span>{{ text }}</span>
     </div>
     <div class="right" @click="emits('changeMore')">

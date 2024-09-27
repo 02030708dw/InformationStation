@@ -2,9 +2,10 @@
   <div class="trend">
     <Title text="Trend" @changeMore="$router.push({ name: 'Trend' })" />
     <div class="trend-title">{{ matchingLottery.gameCode }}</div>
-    <div class="trendbox" ref="trend">
+    <div class="trendbox" ref="trend" v-if="trendData.length">
       <table ref="table" class="table"></table>
     </div>
+    <van-skeleton title :row="3" v-else/>
   </div>
 </template>
 <script setup>

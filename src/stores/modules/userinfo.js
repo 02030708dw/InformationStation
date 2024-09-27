@@ -1,8 +1,12 @@
-// import { defineStore } from "pinia";
-// import { ref } from "vue";
-// export const useUserInfo = defineStore("UserInfo",() => {
-//     const UserInfo = ref(null);
-//     const setUserInfo=(v)=>UserInfo.value=v
-//     return { UserInfo,setUserInfo };
-//   },{persist:true});
-
+import { defineStore } from "pinia";
+import { ref } from "vue";
+const option={
+    persist: {
+      enabled: true, //Store中数据持久化生效
+      storage:sessionStorage
+    },
+  }
+export const useUserState = defineStore("UserState",() => {
+    const shareId=ref('')
+    return { shareId };
+  },option);

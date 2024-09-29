@@ -19,6 +19,7 @@ const userStore=useUserState()
 const gameList=reactive([])
 
 const skip=(url)=>{
+    console.log(url)
     window.location.href=url
 }
 

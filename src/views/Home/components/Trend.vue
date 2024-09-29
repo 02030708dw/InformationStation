@@ -1,7 +1,7 @@
 <template>
   <div class="trend">
     <Title text="Trend" @changeMore="$router.push({ name: 'Trend' })" />
-    <div class="trend-title">{{ matchingLottery.gameCode }}</div>
+    <div class="trend-title">{{ ViewGameCode }}</div>
     <div class="trendbox" ref="trend" v-if="trendData.length">
       <table ref="table" class="table"></table>
     </div>
@@ -16,6 +16,7 @@ import { getRegion } from "@/util/getRegion.js"; // 引入获取地区信息的�
 const region = getRegion();
 const table = ref(null);
 const trend = ref(null);
+const ViewGameCode=ref('')
 onMounted(() => {
   getTrend()
 });
@@ -53,63 +54,67 @@ function createGrid(Data) {
     trend.value.scrollLeft = trend.value.scrollWidth;
   });
 }
-function resetCoordinates(Data) {
-  Data.forEach((entry) => {
-    // Generate random x between 1 and 14 (inclusive)
-    const newX = Math.floor(Math.random() * 14) + 1;
-    // Generate random y between -1 and -6 (inclusive)
-    const newY = -(Math.floor(Math.random() * 6) + 1);
-    entry.xy = [newX, newY];
-  });
-}
-const AreaOfFire = [{ TH: "Th" }, { VND: "Vnd" }, { INA: "My" }, { PH: "Ph" }];
 
-const foundArea = AreaOfFire.find((area) => area[region.country]);
-
-// 获取对应的值
-const areaValue = foundArea ? foundArea[region.country] : null;
 
 const trendData = ref([]);
-
 const areaLottery = reactive([
   {
     gameCode: "vndOneMinute",
     gameId: "44",
     country: "Vnd",
+    currency:['VND'],
     lottery: "eightSingleAndDoubleList",
   }, //越南1分彩2D头
   {
     gameCode: "thOneMinute",
     gameId: "73",
     country: "Th",
+    currency:['THB'],
     lottery: "head2SingleAndDoubleList",
   }, //泰国1分彩
   {
     gameCode: "phOneMinute_2d",
     gameId: "47",
     country: "Ph",
+    currency:['PHP'],
     lottery: "twoSizeList",
   }, //菲律宾1分彩2D
   {
     gameCode: "myOneMinute",
     gameId: "80",
     country: "My",
+    currency:['IDR'],
     lottery: "twoSizeList",
   }, //印尼1分彩
 ]);
-const matchingLottery = areaLottery.find((item) => item.country === areaValue);
+
+// const AreaOfFire = [{ TH: "Th" }, { VND: "Vnd" }, { INA: "My" }, { PH: "Ph" }];
+// const foundArea = AreaOfFire.find((area) => area[region.country]);
+// const areaValue = foundArea ? foundArea[region.country] : null;
+// const matchingLottery = areaLottery.find((item) => item.country === areaValue);
+
+
 async function getTrend() {
-  // 获取走势图
-  const data = {
-    gameCode: matchingLottery.gameCode,
-    gameId: matchingLottery.gameId,
-  };
-  const lottery = matchingLottery.lottery;
-  const res = await getGameTrend(data, areaValue);
-  trendData.value = res.resultSet[lottery].trendRespList;
+  const {currency}=region
+  const {gameCode,gameId,country,lottery}=areaLottery.find(item=>item.currency.some(i=>i==currency))
+  const {resultSet} = await getGameTrend({gameCode,gameId}, country);
+  ViewGameCode.value=gameCode
+  trendData.value = resultSet[lottery].trendRespList;
   await nextTick();
   createGrid(trendData.value);
-  resetCoordinates(trendData.value);
+
+
+
+
+  // const data = {
+  //   gameCode: matchingLottery.gameCode,
+  //   gameId: matchingLottery.gameId,
+  // };
+  // const lottery = matchingLottery.lottery;
+  // const {resultSet} = await getGameTrend(data, areaValue);
+  // trendData.value = resultSet[lottery].trendRespList;
+  // await nextTick();
+  // createGrid(trendData.value);
 }
 </script>
 <style lang="scss">

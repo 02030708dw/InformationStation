@@ -32,11 +32,13 @@
 <script setup>
 import { ref, reactive, onBeforeMount, onUnmounted } from "vue";
 import { getLongDraw } from "@/api/index.js";
+import {getRegion} from "@/util/getRegion.js"
 import Title from "./Title.vue";
 import BonusPeriod from "@/components/BonusPeriod.vue";
 const data = reactive([]);
 const getDraw = async () => {
-  let { resultSet } = await getLongDraw();
+  let {merchantCode}=getRegion()
+  let { resultSet } = await getLongDraw({merchantCode});
   Object.assign(
     data,
     resultSet.slice(0, 4).map((item) => item.awardNum)

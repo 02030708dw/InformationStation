@@ -42,17 +42,16 @@
 </template>
 <script setup>
 import { ref, reactive, onBeforeMount, onUnmounted } from "vue";
-import { getGameDraw } from "@/api/index.js";
+import { getShortDraw } from "@/api/index.js";
 import Title from "./Title.vue";
 import BonusPeriod from "@/components/BonusPeriod.vue";
+import {getRegion} from "@/util/getRegion.js"
 const data = reactive([]);
 
 const getDraw = async () => {
-  let { resultSet } = await getGameDraw();
-  Object.assign(
-    data,
-    resultSet.map((item) => item.awardNum)
-  );
+  let {merchantCode}=getRegion()
+  let { resultSet } = await getShortDraw({merchantCode});
+  Object.assign(data,resultSet.map((item) => item.awardNum));
 };
 
 let intervalT;

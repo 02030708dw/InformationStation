@@ -3,18 +3,22 @@ const DomainMappings = {
   TH: {
     domain: ["thb.44dog.com", "www.44dog.com", "localhost"],
     currency: "THB",
+    merchantCode:'NewGW_THB'
   },
   INA: {
     domain: ["idn.44dog.com"],
     currency: "IDR",
+    merchantCode:'NewGW_IDR'
   },
   VND: {
     domain: ["vnd.44dog.com"],
     currency: "VND",
+    merchantCode:'NewGW_VND'
   },
   PH: {
     domain: ["php.44dog.com"],
     currency: "PHP",
+    merchantCode:'NewGW_PHP'
   },
 };
 
@@ -28,11 +32,11 @@ const cityURL = {
 export function getRegion() {
   const hostname = new URL(window.location).hostname;
 
-  for (const [country, { domain, currency }] of Object.entries(
+  for (const [country, { domain, currency,merchantCode }] of Object.entries(
     DomainMappings
   )) {
     if (domain.some((d) => d.includes(hostname))) {
-      return { country, currency };
+      return { country, currency,merchantCode };
     }
   }
   return null;

@@ -1,10 +1,10 @@
 <template>
     <div class="home">
-        <!-- <FreePlay></FreePlay> -->
-        <!-- <Tirbo></Tirbo> -->
+        <FreePlay></FreePlay>
+        <Tirbo></Tirbo>
         <Trend></Trend>
-        <!-- <InforMation></InforMation> -->
-        <!-- <Saham></Saham> -->
+        <InforMation></InforMation>
+        <Saham></Saham>
     </div>
 </template>
 <script setup>

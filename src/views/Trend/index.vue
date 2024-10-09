@@ -330,6 +330,9 @@ onBeforeMount(async () => {
     );
     gameList[0]=obj
 
+
+
+    Object.assign(gameList,gameList.filter(item=>item.games.length))
     activeCountry.value = gameList[0].countryName//默认选择一个地区
     updataActiveFirst(3)
 

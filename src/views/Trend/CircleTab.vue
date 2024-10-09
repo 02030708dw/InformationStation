@@ -1,8 +1,7 @@
 <template>
-    <ul class='circle-tab' ref="ul">
-
-        <li class="tab-item" v-for="item in list" :class="{ active: item[bindField] == active }" @click="changeCircleTab(item)">
-            <img src="https://img-s-msn-com.akamaized.net/tenant/amp/entityid/BB1msB1Q.img" class="img" v-if="item.img">
+    <ul class='circle-tab' ref="ul" v-show="list.length > 1">
+        <li class="tab-item" v-for="item in list" :class="{ active: item[bindField] == active }" @click="changeCircleTab(item)" v-if="item.games.length > 1">
+            <!-- <img src="https://img-s-msn-com.akamaized.net/tenant/amp/entityid/BB1msB1Q.img" class="img" v-if="item.img"> -->
             <span class="text">{{ item[viewField] }}</span>
         </li>
     </ul>
@@ -12,13 +11,14 @@ import { onMounted, ref } from 'vue'
 const ul = ref(null)
 const props = defineProps({
     list: Array,
-    bindField:String,
-    viewField:String,
+    bindField: String,
+    viewField: String,
 })
-const emits=defineEmits(['change'])
+console.log(props.list)
+const emits = defineEmits(['change'])
 const active = defineModel('modelValue')
-const changeCircleTab=(item)=>{
-    active.value=item[props.bindField]
+const changeCircleTab = (item) => {
+    active.value = item[props.bindField]
     emits('change')
 }
 const cleanupEvents = [];
@@ -71,13 +71,14 @@ onMounted(() => initEvent(ul.value))
         margin: 0 5px 0 0;
         height: 30px;
         // background-color: #e8efff;
-        border:1px solid #c4a974;
+        border: 1px solid #c4a974;
         border-radius: 5px;
         padding: 0 10px;
         display: flex;
         align-items: center;
         // color: #000;
         color: #c4a974;
+
         .img {
             border-radius: 25px;
             width: 25px;

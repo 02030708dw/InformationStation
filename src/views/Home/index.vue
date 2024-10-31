@@ -19,6 +19,6 @@ import Saham from './components/Saham.vue';
     padding:0 16px 10px;
     display: flex;
     flex-direction:column;
-    // gap: 10px;
+    gap: 20px;
 }
 </style>

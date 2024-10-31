@@ -6,8 +6,8 @@
             <template v-if="List.length">
                 <li v-for="(item, index) in List" class="info-item">
                     <div class="left">
-                        <p class="text">{{ item.title }}</p>
                         <p class="time">{{ item.updatedAt }}</p>
+                        <p class="text">{{ item.title }}</p>
                     </div>
 
                     <div class="right" v-if="item.pictureUrl">
@@ -55,16 +55,13 @@ const getImageUrls =(pictureUrl)=> {
     background-color: $themebgColor;
     color:#fff;
     border-radius: 7px;
-    // padding: 5px;
     .info-list {
         display: flex;
         flex-direction: column;
-        gap: 8px;
+        gap: 10px;
 
         .info-item {
-            box-sizing: border-box;
-            padding: 12px;
-            height: 84px;
+            height: 60px;
             border-radius: 16px;
             display: flex;
 
@@ -72,8 +69,10 @@ const getImageUrls =(pictureUrl)=> {
                 flex: 1;
                 display: flex;
                 flex-direction: column;
-                justify-content: space-between;
-
+                .time{
+                    font-size: 12px;
+                    color: #838383;
+                }
                 .text {
                     font-size: 14px;
                     overflow: hidden;
@@ -83,18 +82,6 @@ const getImageUrls =(pictureUrl)=> {
                     -webkit-box-orient: vertical;
                     line-clamp: 2;
                     -webkit-line-clamp: 2;
-                }
-
-                .time {
-                    display: flex;
-                    align-items: center;
-                    color: #333;
-                    font-size: 12px;
-
-                    img {
-                        width: 14px;
-                        margin-left: 20px;
-                    }
                 }
             }
 

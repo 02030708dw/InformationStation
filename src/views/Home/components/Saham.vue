@@ -5,20 +5,29 @@
       <template v-if="data.length">
         <li class="saham-item" v-for="item in data">
           <div class="left">
-            <img
-              class="left-img"
-              src="https://images.b1511258.com:42666/VD/SEA/B1/H5/V2/Stock-2.png"
-            />
+            <img src="https://images.b1511258.com:42666/VD/SEA/B1/H5/V2/Stock-2.png" />
+          </div>
+          <div class="center">
+            <p>{{ item.area }}</p>
             <p>{{ item.gameCode }}</p>
           </div>
 
           <div class="right">
-            <BonusPeriod :awardNum="item"></BonusPeriod>
 
-            <p class="num">
-              <span class="icon">S</span>
-              <span class="draw">{{ item["0"] }}</span>
+            <p class="top"> 
+              <span class="lastAwardPeriod">{{ item.lastAwardPeriod }}</span>
+              <CountDown :awardNum="item" />
+              <div class="img-s" v-if="item.area == 'vnd' || item.area == 'th'">
+                <img src="@/assets/image/home/prize-s.svg">
+              </div>
             </p>
+
+            <p v-if="item.num" class="bottom"><span v-for="i in item.num.replaceAll(',', '')">{{ i }}</span></p>
+
+            <p v-else-if="item.area == 'th'" class="bottom"><span v-for="i in item['head']">{{ i }}</span></p>
+
+            <p v-else="item.area=='vnd'" class="bottom"><span v-for="i in item['0']">{{ i }}</span></p>
+
           </div>
         </li>
       </template>
@@ -32,16 +41,18 @@
 <script setup>
 import { ref, reactive, onBeforeMount, onUnmounted } from "vue";
 import { getLongDraw } from "@/api/index.js";
-import {getRegion} from "@/util/getRegion.js"
+import { getRegion } from "@/util/getRegion.js"
 import Title from "./Title.vue";
 import BonusPeriod from "@/components/BonusPeriod.vue";
+import CountDown from "@/components/CountDown.vue";
 const data = reactive([]);
 const getDraw = async () => {
-  let {merchantCode}=getRegion()
-  let { resultSet } = await getLongDraw({merchantCode});
+  let { merchantCode } = getRegion()
+  let { resultSet } = await getLongDraw({ merchantCode });
+  console.log(resultSet, 111111)
   Object.assign(
     data,
-    resultSet.slice(0, 4).map((item) => item.awardNum)
+    resultSet.slice(0, 5).map((item) => item.awardNum)
   );
 };
 
@@ -59,63 +70,89 @@ onUnmounted(() => {
 .saham {
   background-color: $themebgColor;
   color: #fff;
-  border-radius: 7px;
-  // padding: 5px;
+
   .saham-list {
     display: flex;
     flex-direction: column;
     gap: 10px;
 
     .saham-item {
-      padding: 16px 10px;
       height: 78px;
-      border-radius: 16px;
-      background-color: #fff;
+      // border: 1px solid #fff;
       display: flex;
+      align-items: center;
+      gap: 10px;
 
       .left {
-        font-size: 14px;
-        width: 50%;
-        height: 100%;
-        display: flex;
-        align-items: center;
-        gap: 10px;
-
         img {
-          height: 100%;
+          width: 44px;
         }
       }
 
+      .center {
+        font-size: 12px;
+        max-width: 100px;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        overflow: hidden;
+        display: flex;
+        gap: 10px;
+        flex-direction: column;
+
+      }
+
       .right {
-        width: 50%;
-        height: 50px;
+        flex: 1;
         display: flex;
         flex-direction: column;
-        justify-content: space-between;
+        gap: 10px;
 
-        .num {
-          height: 23px;
+        .top {
           display: flex;
-          justify-content: space-between;
-
-          .icon {
-            color: #fff;
-            width: 23px;
-            height: 23px;
-            line-height: 23px;
-            text-align: center;
-            background-size: 100%;
-            background-image: url("@/assets/image/home/prize-s.svg");
+          align-items: center;
+          justify-content: end;
+          .lastAwardPeriod{
+            color:#838383;
+          }
+          span {
+            font-size: 12px;
+            margin: 0 8px;
           }
 
-          .draw {
+          .img-s {
+            width: 20px;
+            position: relative;
+            img {
+              display: block;
+              width: 100%;
+            }
+
+            &::after {
+              content: 'S';
+              font-size: 12px;
+              position: absolute;
+              line-height: 20px;
+              text-align: center;
+              margin: auto;
+              inset: 0;
+            }
+          }
+
+        }
+
+        .bottom {
+          display: flex;
+          justify-content: end;
+          gap: 4px;
+
+          span {
+            font-size: 14px;
+            background: linear-gradient(to bottom, #4b4b4b, #626262);
+            border-radius: 24px;
+            line-height: 24px;
             text-align: center;
-            color: #c84747;
-            width: 112px;
-            height: 23px;
-            line-height: 23px;
-            border-radius: 23px;
-            background-color: #ececec;
+            width: 24px;
+            height: 24px;
           }
         }
       }

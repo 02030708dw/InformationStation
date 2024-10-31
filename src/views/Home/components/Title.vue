@@ -5,7 +5,7 @@
       <span>{{ text }}</span>
     </div>
     <div class="right" @click="emits('changeMore')">
-      <span>more</span>
+      <span class="more">more</span>
       <van-icon name="arrow" />
     </div>
   </div>
@@ -40,6 +40,9 @@ const emits = defineEmits(["changeMore"]);
     cursor: pointer;
     display: flex;
     align-items: center;
+    .more{
+      color: #838383;
+    }
     span {
       color: #fff;
       font-size: 14px;

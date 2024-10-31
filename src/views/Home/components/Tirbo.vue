@@ -4,38 +4,32 @@
     <ul class="lotter-list">
       <template v-if="data.length">
         <li class="list-item" v-for="item in data.slice(0, 4)">
-          <p class="title">
-            <img src="@/assets/image/home/ck.png" />
-            <span>{{ item.gameCode }}</span>
+          <p class="top">
+             <span>{{ item.gameCode }}</span> 
+             <span>{{ item.lastAwardPeriod }}</span> 
+            </p>
+
+          <p class="bottom"> 
+            <CountDown :awardNum="item"/>
+            <span class="globe" v-if="item.num"> 
+              <span v-for="i in item.num.replaceAll(',', '')">{{ i }}</span> 
+            </span> 
+
+            <span class="globe" v-else-if="item.area=='vnd'"> 
+              <span v-for="i in item['0']">{{ i }}</span> 
+            </span> 
+
+            <span class="globe" v-else="item.area=='th'"> 
+              <span v-for="i in item['head']">{{ i }}</span> 
+            </span> 
           </p>
 
-          <BonusPeriod :awardNum="item"></BonusPeriod>
 
-          <template v-if="!item.num">
-            <p class="num">
-              <span class="icon">S</span>
-              <span class="draw">{{ item["0"] }}</span>
-            </p>
-          </template>
-
-          <template v-else>
-            <ul class="draw-num">
-              <li class="draw-item" v-for="i in item.num.replaceAll(',', '')">
-                {{ i }}
-              </li>
-            </ul>
-          </template>
         </li>
       </template>
 
       <template v-else>
-        <van-skeleton
-          title
-          avatar
-          :row="1"
-          class="list-item"
-          v-for="item in 4"
-        />
+        <van-skeleton title :row="1" class="list-item" v-for="item in 4"/>
       </template>
     </ul>
   </div>
@@ -44,7 +38,8 @@
 import { ref, reactive, onBeforeMount, onUnmounted } from "vue";
 import { getShortDraw } from "@/api/index.js";
 import Title from "./Title.vue";
-import BonusPeriod from "@/components/BonusPeriod.vue";
+// import BonusPeriod from "@/components/BonusPeriod.vue";//修改样式已弃用
+import CountDown from "@/components/CountDown.vue";
 import {getRegion} from "@/util/getRegion.js"
 const data = reactive([]);
 
@@ -69,86 +64,37 @@ onUnmounted(() => {
     background-color: $themebgColor;
     color:#fff;
     border-radius: 7px;
-    // padding: 5px;
   .lotter-list {
-    flex-wrap: wrap;
     display: flex;
-    justify-content: space-between;
+    flex-direction: column;
+    font-size: 12px;
     gap: 10px;
-
-    .list-item {
-      width: 48%;
-      height: 118px;
-      padding: 10px;
-      background-color: #000;
-      border-radius: 20px;
-      box-shadow: 2px 4px 8px rgba(0, 0, 0, 0.1);
-      font-size: 14px;
+    .list-item{
       display: flex;
       flex-direction: column;
-      justify-content: space-around;
-
-      .title {
-        display: flex;
+      height: 70px;
+      border-bottom: 1px solid #717171;
+      p{
         align-items: center;
-        justify-content: space-between;
-        height: 30px;
-
-        img {
-          width: 30px;
-        }
-
-        span {
-          max-width: 105px;
-          white-space: nowrap;
-          text-overflow: ellipsis;
-          overflow: hidden;
-        }
-      }
-
-      .num {
-        height: 24px;
         display: flex;
         justify-content: space-between;
-
-        .icon {
-          color: #fff;
-          width: 24px;
-          height: 24px;
-          line-height: 24px;
-          text-align: center;
-          background-size: 100%;
-          background-image: url("@/assets/image/home/prize-s.svg");
-        }
-
-        .draw {
-          text-align: center;
-          color: #fff;
-          width: 112px;
-          height: 24px;
-          line-height: 24px;
-          border-radius: 24px;
-          background-color: #3b3e45;
-        }
-      }
-
-      .draw-num {
-        height: 32px;
-        display: flex;
-        gap: 5px;
-
-        .draw-item {
-          background-image: linear-gradient(0deg, #eeebeb 0%, #fffbfb 100%);
-          color: #6f6f6f;
-          font-size: 16px;
-          width: 32px;
-          height: 32px;
-          line-height: 32px;
-          border-radius: 32px;
-          text-align: center;
+        flex: 1;
+        .globe{
+          display: flex;
+          gap: 4px;
+          span{
+            font-size: 14px;
+            background: linear-gradient(to bottom, #4b4b4b, #626262);
+            border-radius: 24px;
+            line-height: 24px;
+            text-align: center;
+            width:24px;
+            height: 24px;
+          }
         }
       }
     }
+
   }
 }
 </style>

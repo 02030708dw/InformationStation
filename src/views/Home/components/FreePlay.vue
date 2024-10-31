@@ -14,6 +14,7 @@ import { onBeforeMount,reactive } from 'vue';
 import Title from './Title.vue';
 import { useUserState } from '@/stores/modules/userinfo.js';
 import {getTrialGameList,getshareGameList} from "@/api/index.js"
+import { getRegion } from '@/util/getRegion.js';
 const picurl='https://gwstatic.mvkbnb.com/'
 const userStore=useUserState()
 const gameList=reactive([])
@@ -24,11 +25,12 @@ const skip=(url)=>{
 }
 
 onBeforeMount(async ()=>{
+    const {trialMerchantCode}=getRegion()
     if(userStore.shareId){
         let {resultSet}=await getshareGameList({memberId:userStore.shareId})
         Object.assign(gameList,resultSet)
     }else{
-        let {resultSet}=await getTrialGameList()
+        let {resultSet}=await getTrialGameList({trialMerchantCode})
         Object.assign(gameList,resultSet)
     }
     console.log(gameList)

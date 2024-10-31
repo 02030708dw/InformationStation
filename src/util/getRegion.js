@@ -1,24 +1,28 @@
 import { showDialog } from "vant";
 const DomainMappings = {
   TH: {
-    domain: ["thb.44dog.com", "www.44dog.com", "localhost"],
+    domain: ["thb.44dog.com", "www.44dog.com","localhost","192.168.124.6:8888" ],
     currency: "THB",
-    merchantCode:'NewGW_THB'
+    merchantCode:'NewGW_THB',
+    trialMerchantCode:'NewGW_THB_trial'
   },
   INA: {
-    domain: ["idn.44dog.com"],
+    domain: ["idn.44dog.com",],
     currency: "IDR",
-    merchantCode:'NewGW_IDR'
+    merchantCode:'NewGW_IDR',
+    trialMerchantCode:'NewGW_IDR_trial'
   },
   VND: {
     domain: ["vnd.44dog.com"],
     currency: "VND",
-    merchantCode:'NewGW_VND'
+    merchantCode:'NewGW_VND',
+    trialMerchantCode:'NewGW_VND_trial'
   },
   PH: {
     domain: ["php.44dog.com"],
     currency: "PHP",
-    merchantCode:'NewGW_PHP'
+    merchantCode:'NewGW_PHP',
+    trialMerchantCode:'NewGW_PHP_trial'
   },
 };
 
@@ -32,11 +36,11 @@ const cityURL = {
 export function getRegion() {
   const hostname = new URL(window.location).hostname;
 
-  for (const [country, { domain, currency,merchantCode }] of Object.entries(
+  for (const [country, { domain, currency,merchantCode,trialMerchantCode }] of Object.entries(
     DomainMappings
   )) {
     if (domain.some((d) => d.includes(hostname))) {
-      return { country, currency,merchantCode };
+      return { country, currency,merchantCode,trialMerchantCode };
     }
   }
   return null;

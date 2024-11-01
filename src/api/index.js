@@ -38,3 +38,10 @@ export const getPhAward=(data)=>getG(`/material/getAwardNum/ph?gameCode=${data.c
 export const getTrialGameList=(data)=>getG(`/aia/trial/gameList`,data) //游戏试玩列表 未携带分享id
 
 export const getshareGameList=(data)=>getG(`/aia/share/gameList`,data) //分享游戏试玩列表 携带分享id
+
+
+
+
+
+// AIA
+export const getTransferInfo=(data)=>post(`https://admin3.dorathb.com/promotion/gw/transfer/info`,data)//获取中转信息地区等

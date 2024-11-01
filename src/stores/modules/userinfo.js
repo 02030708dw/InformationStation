@@ -7,6 +7,9 @@ const option={
     },
   }
 export const useUserState = defineStore("UserState",() => {
-    const shareId=ref('')
-    return { shareId };
+    const memberId=ref('')//aia用户id
+    const currency=ref('')//地区
+    const registerUrl=ref('')//aia注册地址
+    const freeGameList=ref([])
+    return { memberId,currency,registerUrl,freeGameList };
   },option);

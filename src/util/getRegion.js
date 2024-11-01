@@ -1,30 +1,35 @@
 import { showDialog } from "vant";
-const DomainMappings = {
-  TH: {
-    domain: ["thb.44dog.com", "www.44dog.com","localhost","192.168.124.6:8888" ],
+import { useUserState } from "@/stores/modules/userinfo";
+const DomainMappings = [
+  {
+    country: "TH",
+    domain: ["thb.44dog.com", "www.44dog.com", "localhost", "192.168.124.6:8888"],
     currency: "THB",
-    merchantCode:'NewGW_THB',
-    trialMerchantCode:'NewGW_THB_trial'
+    merchantCode: 'NewGW_THB',
+    trialMerchantCode: 'NewGW_THB_trial'
   },
-  INA: {
-    domain: ["idn.44dog.com",],
+  {
+    country: "INA",
+    domain: ["idn.44dog.com"],
     currency: "IDR",
-    merchantCode:'NewGW_IDR',
-    trialMerchantCode:'NewGW_IDR_trial'
+    merchantCode: 'NewGW_IDR',
+    trialMerchantCode: 'NewGW_IDR_trial'
   },
-  VND: {
+  {
+    country: "VND",
     domain: ["vnd.44dog.com"],
     currency: "VND",
-    merchantCode:'NewGW_VND',
-    trialMerchantCode:'NewGW_VND_trial'
+    merchantCode: 'NewGW_VND',
+    trialMerchantCode: 'NewGW_VND_trial'
   },
-  PH: {
+  {
+    country: "PH",
     domain: ["php.44dog.com"],
     currency: "PHP",
-    merchantCode:'NewGW_PHP',
-    trialMerchantCode:'NewGW_PHP_trial'
-  },
-};
+    merchantCode: 'NewGW_PHP',
+    trialMerchantCode: 'NewGW_PHP_trial'
+  }
+];
 
 const cityURL = {
   PHP: "https://www.doraphp.com/register",
@@ -34,21 +39,30 @@ const cityURL = {
   test: "https://dorabettest.mvkbnb.com/register",
 };
 export function getRegion() {
-  const hostname = new URL(window.location).hostname;
+  const userStore = useUserState();
+  if (userStore.currency) {
+    let obj=DomainMappings.find(item=>item.currency==userStore.currency)
+    return obj
+  }
 
-  for (const [country, { domain, currency,merchantCode,trialMerchantCode }] of Object.entries(
-    DomainMappings
-  )) {
-    if (domain.some((d) => d.includes(hostname))) {
-      return { country, currency,merchantCode,trialMerchantCode };
+  const hostname = new URL(window.location.href).hostname;
+
+  for (const obj of DomainMappings) {
+    if (obj.domain.some((d) => hostname.includes(d))) {
+      return obj;
     }
   }
   return null;
 }
 
 export function skipUrl() {
-  let { currency } = getRegion();
-  return cityURL["test"];
+  const userStore = useUserState();
+  if(userStore.registerUrl){
+    return userStore.registerUrl
+  }else{
+    let { currency } = getRegion();
+    return cityURL[currency];
+  }
 }
 
 export async function skipAIA(){

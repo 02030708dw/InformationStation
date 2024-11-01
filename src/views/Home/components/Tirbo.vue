@@ -38,7 +38,6 @@
 import { ref, reactive, onBeforeMount, onUnmounted } from "vue";
 import { getShortDraw } from "@/api/index.js";
 import Title from "./Title.vue";
-// import BonusPeriod from "@/components/BonusPeriod.vue";//修改样式已弃用
 import CountDown from "@/components/CountDown.vue";
 import {getRegion} from "@/util/getRegion.js"
 const data = reactive([]);

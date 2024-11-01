@@ -83,12 +83,12 @@ const conceal = () => {
 .comment-item {
     display: flex;
     gap: 10px;
-
+    padding: 10px 0;
+    font-size: 10px;
     .left {
         width: 30px;
         height: 30px;
         flex-shrink: 0;
-
         img {
             border-radius: 30px;
             width: 100%;
@@ -98,21 +98,20 @@ const conceal = () => {
 
     .right {
         flex: 1;
-        font-size: 12px;
         color: #fff;
         word-wrap: break-word;
         word-break: break-all;
-        padding: 10px 0;
+        // padding: 10px 0;
         &>p{
             cursor: pointer;
         }
         .text {
-            padding: 6px 8px;
-            background-color: #000;
+            // padding: 6px 8px;
+            // background-color: #000;
             border-radius: 15px;
 
             .name {
-                font-weight: 600;
+                font-weight: 700;
             }
         }
 

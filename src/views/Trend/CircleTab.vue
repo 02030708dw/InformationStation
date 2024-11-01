@@ -1,9 +1,11 @@
 <template>
     <ul class='circle-tab' ref="ul" v-show="list.length > 1">
-        <li class="tab-item" v-for="item in list" :class="{ active: item[bindField] == active }" @click="changeCircleTab(item)" v-if="item.games.length > 1">
-            <!-- <img src="https://img-s-msn-com.akamaized.net/tenant/amp/entityid/BB1msB1Q.img" class="img" v-if="item.img"> -->
+        <template v-for="item in list">
+        <li class="tab-item"  :class="{ active: item[bindField] == active }" @click="changeCircleTab(item)" v-if="item.games.length > 1">
             <span class="text">{{ item[viewField] }}</span>
         </li>
+    </template>
+
     </ul>
 </template>
 <script setup>

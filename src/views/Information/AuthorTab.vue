@@ -9,17 +9,23 @@ const active=defineModel('modelValue')
 </script>
 <style scoped lang="scss">
 .author {
+    position: sticky;
+    top:0;
+    z-index: 10;
+    background-color: $themebgColor;
     display: flex;
     align-items: center;
     gap: 10px;
     overflow-x: auto;
-    padding: 16px;
+    height: 40px;
+    padding: 0 10px;
     .author-item {
+        font-size: 12px;
         flex-shrink: 0;
-        height: 30px;
-        line-height: 30px;
-        border-radius: 30px;
-        padding: 0 10px;
+        height: 26px;
+        line-height: 26px;
+        border-radius: 26px;
+        padding: 0 16px;
         background-color: #e8efff;
     }
 

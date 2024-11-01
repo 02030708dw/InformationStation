@@ -70,7 +70,7 @@ onBeforeRouteLeave((to,from,next)=>{
     height:calc(100% - 44px);
     overflow: auto;
     .van-list{
-        padding: 16px;
+        padding:10px 16px 16px;
         display: flex;
         flex-direction: column;
         gap: 20px;

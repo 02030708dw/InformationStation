@@ -17,8 +17,8 @@
 
         <div class="bottom">
 
-          <p @click="skipAIA"><van-icon name="good-job-o" size="18" /><span>{{ ' '+ InfoDetail.likeCount }}</span></p>
-          <p><van-icon name="chat-o" size="18" /><span>{{ ' '+ InfoDetail.commentCount }}</span></p>
+          <p @click="skipAIA"><van-icon name="good-job-o" size="18" /> <span>{{  InfoDetail.likeCount||0}}</span></p>
+          <p><van-icon name="chat-o" size="18" /> <span>{{ InfoDetail.commentCount }}</span></p>
         </div>
 
 
@@ -85,7 +85,6 @@ const getImageUrls = (pictureUrl) => {
     .main {
       padding: 10px;
       border-radius: 6px;
-      min-height: 1000px;
       background-color: $themebgColor;
 
       .top {

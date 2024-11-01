@@ -22,14 +22,14 @@
             </div>
         </template>
         <div class="more">
-          <div><van-icon name="fire-o" color="#ee0a24" />{{ data.likeCount }}</div>
+          <div><van-icon name="fire-o" color="#ee0a24" size="18"/>{{ data.likeCount||0 }}</div>
           <div>{{ data.commentCount }} {{ 'Message' }}</div>
         </div>
 
         <div class="bottom">
           <div class="thumbsUp"  >
             <van-icon name="good-job-o" size="18"  @click="skipAIA"/>
-            <span>{{ data.likeCount }}</span>
+            <span>点赞</span>
           </div>
           <div class="message" @click="changeTitle(data)">
             <van-icon name="chat-o" size="18" /><span>{{ 'Comment' }}</span>
@@ -59,44 +59,11 @@ const changeTitle=(data)=>{
 }
 </script>
 <style scoped lang="scss">
-// @keyframes heart {
-//   0% {
-//     transform: scale(1) rotate(0deg);
-//   }
-
-//   12.5% {
-//     transform: scale(1.3) rotate(-20deg);
-//   }
-
-//   25% {
-//     transform: scale(1.3) rotate(-10deg);
-//   }
-
-//   37.5% {
-//     transform: scale(1) rotate(0deg);
-//   }
-
-//   50% {
-//     transform: scale(1.3) rotate(-10deg);
-//   }
-
-//   62.5% {
-//     transform: scale(1.3) rotate(-10deg);
-//   }
-
-//   75% {
-//     transform: scale(1) rotate(0deg);
-//   }
-
-//   100% {
-//     transform: scale(1) rotate(0deg);
-//   }
-// }
 .InforItem {
-  color: #fff;
-    // padding: 10px;
+    border-bottom: 1px solid #717171;
+    font-size: 12px;
+    color: #fff;
     background-color: $themebgColor;
-    border-radius: 7px;
 
     .head {
         height: 50px;
@@ -113,18 +80,18 @@ const changeTitle=(data)=>{
             flex: 1;
             display: flex;
             flex-direction: column;
-            justify-content: flex-end;
-
-            .account {
-                font-size: 14px;
+            justify-content:center;
+            gap: 4px;
+ 
+            .time{
+                font-size: 10px;
             }
-
         }
     }
 
     .van-text-ellipsis {
         margin-top: 10px;
-        font-size: 14px;
+        font-size: 10px;
 
     }
 
@@ -141,8 +108,13 @@ const changeTitle=(data)=>{
         justify-content: space-between;
 
         .img {
+
             width: 48%;
             position: relative;
+            img{
+                object-fit: cover;
+                height: 100%;
+            }
         }
 
         .last::after{
@@ -172,28 +144,22 @@ const changeTitle=(data)=>{
         display: flex;
         justify-content: space-between;
         color: #777;
+        padding: 0 10px;
     }
 
     .bottom {
         display: flex;
         padding: 5px 10px;
-        font-size: 14px;
         align-items: center;
         .thumbsUp,
         .message {
             margin-right: 70px;
             display: flex;
             line-height: 20px;
-            .dz {
-            animation: heart 1s;
-        }
             span {
                 margin-left: 5px;
             }
         }
     }
 }
-
-
-
 </style>

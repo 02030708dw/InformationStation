@@ -1,11 +1,16 @@
 <template>
   <div class="menu">
-    <ul class="menu-list">
+    <div class="back" v-if="pageState.isBack" @click="changeBack($router)">
+        <img src="../../assets/image/icon/back.png">
+    </div>
+    
+    <ul class="menu-list" v-else>
       <li v-for="(item, i) in page" :key="i" :class="{ 'menu-item': true, active: item.name == $route.name }"
         @click="$router.push({ name: item.name })">
         {{ item.label }}
       </li>
     </ul>
+
     <div class="line"></div>
   </div>
 </template>
@@ -13,6 +18,8 @@
 import { onBeforeMount } from "vue";
 import { useRouter } from "vue-router";
 import {useUserState} from "@/stores/modules/userinfo.js"
+import { usePageStore } from "@/stores/modules/pageState.js";
+const pageState=usePageStore()
 const userStore =useUserState()
 const router=useRouter()
 const page = [
@@ -21,6 +28,13 @@ const page = [
   { label: "Trend", name: "Trend" },
   { label: "Forecast", name: "Forecast" },
 ];
+
+const changeBack=(router)=>{
+  router.back()
+  pageState.isBack=false
+}
+
+
 onBeforeMount(()=>{
   if(userStore.memberId) {
     page.unshift({label: "Game", name: "Game"})
@@ -32,7 +46,7 @@ onBeforeMount(()=>{
 .menu {
   position: sticky;
   top: 0;
-  z-index: 10;
+  z-index: 999;
   &::before {
     z-index: 10;
     content: '';
@@ -52,7 +66,18 @@ onBeforeMount(()=>{
     height: 50%;
     background-color: #222;
   }
-
+  .back{
+    height: 40px;
+    position: relative;
+    z-index: 999;
+    display: flex;
+    align-items: center;
+    padding-left: 10px;
+    img{
+      width: 20px;
+      height: 20px;
+    }
+  }
   .menu-list {
     display: flex;
     align-items: center;

@@ -16,9 +16,12 @@ import Saham from './components/Saham.vue';
 </script>
 <style scoped lang="scss">
 .home{
+    height: calc(100% - 44px);
+    overflow: auto;
     padding:0 16px 10px;
     display: flex;
     flex-direction:column;
     gap: 20px;
+    scrollbar-width: none;
 }
 </style>

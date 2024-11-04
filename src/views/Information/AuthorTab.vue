@@ -9,8 +9,9 @@ const active=defineModel('modelValue')
 </script>
 <style scoped lang="scss">
 .author {
+    width: 100%;
     position: sticky;
-    top:44px;
+    top:0;
     z-index: 10;
     background-color: $themebgColor;
     display: flex;

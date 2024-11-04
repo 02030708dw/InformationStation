@@ -71,7 +71,7 @@ function preClick() {
 pre.onclick = preClick;
 
 //自动轮播
-var timerSwiper = setInterval(nextClick, 5000);
+window.timerSwiper = setInterval(nextClick, 5000);
 
 //小圆点的点击事件
 for (var i = 0; i < spans.length; i++) {

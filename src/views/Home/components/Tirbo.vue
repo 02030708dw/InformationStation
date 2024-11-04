@@ -1,57 +1,44 @@
 <template>
   <div class="tirbo">
-    <Title text="Tirbo" @changeMore="$router.push({ name: 'Draw' })" />
+    <Title text="Tirbo" @changeMore="changeMore($router)" />
     <ul class="lotter-list">
+
       <template v-if="data.length">
-        <li class="list-item" v-for="item in data.slice(0, 4)">
-          <p class="top">
-             <span>{{ item.gameCode }}</span> 
-             <span>{{ item.lastAwardPeriod }}</span> 
-            </p>
-
-          <p class="bottom"> 
-            <CountDown :awardNum="item"/>
-            <span class="globe" v-if="item.num"> 
-              <span v-for="i in item.num.replaceAll(',', '')">{{ i }}</span> 
-            </span> 
-
-            <span class="globe" v-else-if="item.area=='vnd'"> 
-              <span v-for="i in item['0']">{{ i }}</span> 
-            </span> 
-
-            <span class="globe" v-else="item.area=='th'"> 
-              <span v-for="i in item['head']">{{ i }}</span> 
-            </span> 
-          </p>
-
-
-        </li>
+        <DrawShort :item="item" v-for="item in data"/>
       </template>
 
       <template v-else>
         <van-skeleton title :row="1" class="list-item" v-for="item in 4"/>
       </template>
+      
     </ul>
   </div>
 </template>
 <script setup>
-import { ref, reactive, onBeforeMount, onUnmounted } from "vue";
+import {  reactive, onBeforeMount, onUnmounted } from "vue";
 import { getShortDraw } from "@/api/index.js";
 import Title from "./Title.vue";
-import CountDown from "@/components/CountDown.vue";
+import DrawShort from "@/components/DrawShort.vue";
+import { usePageStore } from "@/stores/modules/pageState.js";
 import {getRegion} from "@/util/getRegion.js"
+const pageState=usePageStore()
 const data = reactive([]);
 
 const getDraw = async () => {
   let {merchantCode}=getRegion()
   let { resultSet } = await getShortDraw({merchantCode});
-  Object.assign(data,resultSet.map((item) => item.awardNum));
+  Object.assign(data,resultSet.slice(0,4).map((item) => item.awardNum));
 };
+
+const changeMore=(router)=>{
+  pageState.isBack=true
+  router.push({ name: 'Draw',query:{type:'short'} })
+}
 
 let intervalT;
 onBeforeMount(() => {
   getDraw();
-  intervalT = setInterval(getDraw, 10000);
+  intervalT = setInterval(getDraw,  60 * 1000);
 });
 
 onUnmounted(() => {
@@ -66,34 +53,7 @@ onUnmounted(() => {
   .lotter-list {
     display: flex;
     flex-direction: column;
-    font-size: 12px;
     gap: 10px;
-    .list-item{
-      display: flex;
-      flex-direction: column;
-      height: 70px;
-      border-bottom: 1px solid #717171;
-      p{
-        align-items: center;
-        display: flex;
-        justify-content: space-between;
-        flex: 1;
-        .globe{
-          display: flex;
-          gap: 4px;
-          span{
-            font-size: 14px;
-            background: linear-gradient(to bottom, #4b4b4b, #626262);
-            border-radius: 24px;
-            line-height: 24px;
-            text-align: center;
-            width:24px;
-            height: 24px;
-          }
-        }
-      }
-    }
-
   }
 }
 </style>

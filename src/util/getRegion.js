@@ -1,6 +1,6 @@
 import { showDialog } from "vant";
 import { useUserState } from "@/stores/modules/userinfo";
-const DomainMappings = [
+export const DomainMappings = [
   {
     country: "TH",
     domain: ["thb.44dog.com", "www.44dog.com", "localhost", "192.168.124.6:8888"],

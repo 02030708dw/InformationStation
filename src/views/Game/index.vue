@@ -65,18 +65,14 @@ onBeforeMount(()=>{
     if(!storeUser.memberId)router.replace({name:'Home'})
 })
 onUnmounted(()=>{
-    window.clearInterval(timerSwiper)
+    if(window.timerSwiper) window.clearInterval(timerSwiper)
 })
 </script>
 <style scoped lang="scss">
 @import url("./index.css");
 @import url("./swiper.css");
 .game{
-//   z-index: 1;
-//   will-change: transform;
-//   background-image: url('@/assets/image/transit/banner.png');
-//   background-repeat: no-repeat;
-//   background-position: center;
-//   background-size: cover; 
+    height: calc(100% - 44px);
+    overflow: auto;
 }
 </style>

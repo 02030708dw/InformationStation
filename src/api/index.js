@@ -29,9 +29,9 @@ export const getGamePlay=()=>getG(`/aia/gamePlay/trend`)// 获取所有玩法按
 
 export const getTime=()=>getG(`/api/time/baidu`)//获取时间用于定位越南地区
 
-export const getShortDraw=(data)=>getG(`/aia/shortTicket?merchantCode=${data.merchantCode}`)//获取部分开奖号码
+export const getShortDraw=(data)=>getG(`/aia/shortTicket?merchantCode=${data.merchantCode}`)//获取短频开奖号码
 
-export const getLongDraw=(data)=>getG(`aia/longTicket`,data)//获取全部开奖号码
+export const getLongDraw=(data)=>getG(`aia/longTicket`,data)//获取长频
 
 export const getPhAward=(data)=>getG(`/material/getAwardNum/ph?gameCode=${data.code}&gameId=${data.gameId}`)//获取菲律宾往期奖期信息
 

@@ -344,6 +344,8 @@ onBeforeMount(async () => {
 .trend-Page {
     padding: 16px;
     padding-bottom: 20px;
+    height: calc(100% - 44px);
+    overflow: auto;
     // .card {
     //     box-sizing: border-box;
     //     padding: 10px;

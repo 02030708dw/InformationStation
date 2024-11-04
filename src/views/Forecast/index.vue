@@ -363,6 +363,8 @@ const gameList = reactive([
 
 <style scoped lang="scss">
 .forecast_box {
+  height: calc(100% - 44px);
+  overflow: auto;
   box-sizing: border-box;
   padding: 10px;
   .title {

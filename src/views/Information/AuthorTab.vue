@@ -10,7 +10,7 @@ const active=defineModel('modelValue')
 <style scoped lang="scss">
 .author {
     position: sticky;
-    top:0;
+    top:44px;
     z-index: 10;
     background-color: $themebgColor;
     display: flex;

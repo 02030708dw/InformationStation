@@ -68,7 +68,6 @@ onBeforeRouteLeave((to,from,next)=>{
 <style scoped lang="scss">
 .information{
     height:calc(100% - 44px);
-    overflow: auto;
     .van-list{
         padding:10px 16px 16px;
         display: flex;

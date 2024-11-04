@@ -10,32 +10,46 @@
   </div>
 </template>
 <script setup>
+import { onBeforeMount } from "vue";
+import { useRouter } from "vue-router";
+import {useUserState} from "@/stores/modules/userinfo.js"
+const userStore =useUserState()
+const router=useRouter()
 const page = [
   { label: "Home", name: "Home" },
   { label: "Information", name: "Information" },
   { label: "Trend", name: "Trend" },
-  { label: "Draw", name: "Draw" },
   { label: "Forecast", name: "Forecast" },
 ];
+onBeforeMount(()=>{
+  if(userStore.memberId) {
+    page.unshift({label: "Game", name: "Game"})
+    router.replace({name:'Game'})
+  }
+})
 </script>
 <style scoped lang="scss">
 .menu {
-  position: relative;
+  position: sticky;
+  top: 0;
+  z-index: 10;
   &::before {
+    z-index: 10;
     content: '';
     width: 100%;
     position: absolute;
     top: 0;
-    height: 20px;
+    height:50%;
     background-color: #333;
   }
 
   &::after {
+    z-index: 10;
     content: '';
     width: 100%;
     position: absolute;
     bottom: 0;
-    height: 20px;
+    height: 50%;
     background-color: #222;
   }
 
@@ -74,7 +88,7 @@ const page = [
   }
   .line{
     position: relative;
-    z-index: 2;
+    z-index: 12;
     height: 4px;
     background-image: linear-gradient(to right, #be965d 0, #976f40 28%, #ffcb85 63%, #976f40);
   }

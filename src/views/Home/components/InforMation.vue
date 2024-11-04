@@ -29,10 +29,6 @@ import { getGameGodList, getGameGodArticle } from "@/api/index.js"
 import Title from "./Title.vue"
 const List = reactive([])
 
-
-
-
-
 onBeforeMount(async () => {
     let res1 = await getGameGodList()
     let res2 = await getGameGodArticle({
@@ -42,8 +38,6 @@ onBeforeMount(async () => {
     })
     Object.assign(List, res2.resultSet.data.slice(0, 2))
 })
-
-
 
 
 const getImageUrls =(pictureUrl)=> {

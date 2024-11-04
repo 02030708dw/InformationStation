@@ -21,6 +21,7 @@ onMounted(() => {
   getTrend()
 });
 function createGrid(Data) {
+  if(!table.value) return
   table.value.innerHTML = "";
   const minColumns = 20;
   const minRows = 6; // 最小行数

@@ -13,7 +13,6 @@ import Menu from './Menu.vue';
 const randomTransition = () => {
   const ary = ['scale', 'fade']
   const random = Math.floor(Math.random() * ary.length)
-  console.log(ary[random])
   return ary[random]
 }
 </script>

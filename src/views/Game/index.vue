@@ -24,7 +24,7 @@
                             <img src="@/assets/image/transit/free.gif" alt="" />
                         </div>
                         <div class="grid">
-                            <div class="grid-item" v-for="item in storeUser.freeGameList">
+                            <div class="grid-item" v-for="item in userState.freeGameList">
                                 <a :href="item.shareUrl" target="_blank">
                                     <img :src="'https://static.44dog.cc/' + item.pictureUrl">
                                     <div class="btn">play</div>
@@ -50,10 +50,10 @@
 </template>
 <script setup>
 import { ref, onMounted, onBeforeMount, onUnmounted } from 'vue';
-import { useUserState } from "@/stores/modules/userinfo.js"
+import { useUserStore } from "@/stores/modules/userinfo.js"
 import { useRouter } from 'vue-router';
 const router = useRouter()
-const storeUser = useUserState()
+const userState = useUserStore()
 const image = ['1001.png', '1002.png', '1003.png', '1004.png', '1005.png']
 const url = (name) => new URL(`../../assets/image/transit/${name}`, import.meta.url).href
 const count = ref(0);
@@ -66,7 +66,7 @@ const swiperAuto=()=>{
 }
 onBeforeMount(() => {
     // 可优化为路由守卫
-    if (!storeUser.memberId) router.replace({ name: 'Home' })
+    if (!userState.memberId) router.replace({ name: 'Home' })
 })
 onMounted(()=>{
     timer=setInterval(swiperAuto,3000)

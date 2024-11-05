@@ -1,8 +1,8 @@
 <template>
     <div class="free-play">
         <Title text="Free Play" />
-        <ul class="play scrollbar" v-if="userStore.freeGameList?.length">
-            <li class="play-item" v-for="item in userStore.freeGameList" @click="skip(item.shareUrl || item.trialUrl)">
+        <ul class="play scrollbar" v-if="userState.freeGameList?.length">
+            <li class="play-item" v-for="item in userState.freeGameList" @click="skip(item.shareUrl || item.trialUrl)">
                 <img :src="picurl + JSON.parse(item.pictureUrl)[0].pictureUrl">
             </li>
         </ul>
@@ -12,19 +12,19 @@
 <script setup>
 import { onBeforeMount } from 'vue';
 import Title from './Title.vue';
-import { useUserState } from '@/stores/modules/userinfo.js';
+import { useUserStore } from '@/stores/modules/userinfo.js';
 import { getTrialGameList,getshareGameList } from "@/api/index.js"
 import { getRegion } from '@/util/getRegion.js';
 const picurl = 'https://gwstatic.mvkbnb.com/'
-const userStore = useUserState()
+const userState = useUserStore()
 const skip = (url) => window.location.href = url
 onBeforeMount(async () => {
     const { trialMerchantCode,merchantCode } = getRegion()
-    if (!userStore.memberId) {
+    if (!userState.memberId) {
         let { resultSet } = await getTrialGameList({ trialMerchantCode })
-        userStore.freeGameList = resultSet
+        userState.freeGameList = resultSet
     }else{
-        // let { resultSet }=await getshareGameList({merchantCode:merchantCode,thirdPartyUid:userStore.memberId,trailMerchantCode:trialMerchantCode})
+        // let { resultSet }=await getshareGameList({merchantCode:merchantCode,thirdPartyUid:userState.memberId,trailMerchantCode:trialMerchantCode})
         // console.log(resultSet)
     }
 })

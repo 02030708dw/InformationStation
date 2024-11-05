@@ -16,12 +16,10 @@
 </template>
 <script setup>
 import { onBeforeMount } from "vue";
-import { useRouter } from "vue-router";
-import {useUserState} from "@/stores/modules/userinfo.js"
+import {useUserStore} from "@/stores/modules/userinfo.js"
 import { usePageStore } from "@/stores/modules/pageState.js";
 const pageState=usePageStore()
-const userStore =useUserState()
-const router=useRouter()
+const userState =useUserStore()
 const page = [
   { label: "Home", name: "Home" },
   { label: "Information", name: "Information" },
@@ -36,7 +34,7 @@ const changeBack=(router)=>{
 
 
 onBeforeMount(()=>{
-  if(userStore.memberId) page.unshift({label: "Game", name: "Game"})
+  if(userState.memberId) page.unshift({label: "Game", name: "Game"})
 })
 </script>
 <style scoped lang="scss">

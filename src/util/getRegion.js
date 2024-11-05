@@ -1,5 +1,5 @@
 import { showDialog } from "vant";
-import { useUserState } from "@/stores/modules/userinfo";
+import { useUserStore } from "@/stores/modules/userinfo";
 export const DomainMappings = [
   {
     country: "TH",
@@ -39,9 +39,9 @@ const cityURL = {
   test: "https://dorabettest.mvkbnb.com/register",
 };
 export function getRegion() {
-  const userStore = useUserState();
-  if (userStore.currency) {
-    let obj=DomainMappings.find(item=>item.currency==userStore.currency)
+  const userState = useUserStore();
+  if (userState.currency) {
+    let obj=DomainMappings.find(item=>item.currency==userState.currency)
     return obj
   }
 
@@ -56,9 +56,9 @@ export function getRegion() {
 }
 
 export function skipUrl() {
-  const userStore = useUserState();
-  if(userStore.registerUrl){
-    return userStore.registerUrl
+  const userState = useUserStore();
+  if(userState.registerUrl){
+    return userState.registerUrl
   }else{
     let { currency } = getRegion();
     return cityURL[currency];

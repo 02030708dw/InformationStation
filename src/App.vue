@@ -7,26 +7,26 @@
 </template>
 <script setup>
 import { onBeforeMount } from 'vue';
-import { useUserState } from './stores/modules/userinfo';
+import { useUserStore } from './stores/modules/userinfo';
 import { getTransferInfo } from '@/api/index.js'
 import { getRegion,DomainMappings } from './util/getRegion';
-const userStore = useUserState()
+const userState = useUserStore()
 onBeforeMount(async () => {
   let search = new URLSearchParams(window.location.search)
-  userStore.memberId = search.get('u')||userStore.memberId
-  if (userStore.memberId) {
-    let { resultSet } = await getTransferInfo({ memberId: userStore.memberId })
-    userStore.registerUrl=resultSet.url//分享注册地址
-    userStore.freeGameList=resultSet.memberShareLinksResp//游戏列表
-    userStore.currency=resultSet.currency//地区
-    userStore.country=DomainMappings.find(i=>i.currency==resultSet.currency).country//地区
+  userState.memberId = search.get('u')||userState.memberId
+  if (userState.memberId) {
+    let { resultSet } = await getTransferInfo({ memberId: userState.memberId })
+    userState.registerUrl=resultSet.url//分享注册地址
+    userState.freeGameList=resultSet.memberShareLinksResp//游戏列表
+    userState.currency=resultSet.currency//地区
+    userState.country=DomainMappings.find(i=>i.currency==resultSet.currency).country//地区
   }else{
     //域名 设置地区
     const { country, currency,merchantCode,trialMerchantCode }=getRegion()
-    userStore.currency=currency//地区
-    userStore.country=country//地区
-    userStore.merchantCode=merchantCode//商户code
-    userStore.trialMerchantCode=trialMerchantCode//商户code
+    userState.currency=currency//地区
+    userState.country=country//地区
+    userState.merchantCode=merchantCode//商户code
+    userState.trialMerchantCode=trialMerchantCode//商户code
   }
 })
 </script>

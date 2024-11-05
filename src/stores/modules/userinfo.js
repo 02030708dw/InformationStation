@@ -6,7 +6,7 @@ const option={
       storage:sessionStorage
     },
   }
-export const useUserState = defineStore("UserState",() => {
+export const useUserStore = defineStore("UserState",() => {
     const memberId=ref('')//aia用户id
     const currency=ref('')//地区
     const country=ref('')//地区

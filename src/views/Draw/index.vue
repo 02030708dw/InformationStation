@@ -1,8 +1,9 @@
 <template>
     <div class="draw">
-        <ul class="draw-list">
-            <component :is="viewComponent[$route.query.type]" :item="item" v-for="item in DrawList"/>
+        <ul class="draw-list" v-if="DrawList.length">
+            <component :is="view[type].component" :item="item" v-for="item in DrawList"/>
         </ul>
+        <van-loading v-else />
     </div>
 </template>
 <script setup>
@@ -12,22 +13,25 @@ import { getLongDraw,getShortDraw } from "@/api/index.js"
 import { getRegion } from "@/util/getRegion.js"
 import DrawLong from "@/components/DrawLong.vue"
 import DrawShort from "@/components/DrawShort.vue"
-const route=useRoute()
-const viewComponent= {
-    long:DrawLong,
-    short:DrawShort
-}
-const { merchantCode } = getRegion()
-const DrawList = reactive([])
-onBeforeMount(async () => {
-    if(route.query.type=='long'){
-        const { resultSet } = await getLongDraw({ merchantCode })
-        Object.assign(DrawList,resultSet.map((i)=>i.awardNum))
-    }else{
-        const { resultSet } = await getShortDraw({merchantCode})
-        Object.assign(DrawList,resultSet.map((i)=>i.awardNum))
+const route = useRoute();
+const type = route.params.type;
+const { merchantCode } = getRegion();
+const DrawList = reactive([]);
+const view = {
+    long: {
+        component: DrawLong,
+        getData: () => getLongDraw({ merchantCode })
+    },
+    short: {
+        component: DrawShort,
+        getData: () => getShortDraw({ merchantCode })
     }
-})
+};
+
+onBeforeMount(async () => {
+    const { resultSet } = await view[type].getData();
+    Object.assign(DrawList, resultSet.map((i) => i.awardNum));
+});
 </script>
 <style scoped lang="scss">
 .draw {
@@ -40,6 +44,12 @@ onBeforeMount(async () => {
         display: flex;
         flex-direction: column;
         gap: 10px;
+    }
+    .van-loading{
+        height: 300px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
     }
 }
 </style>

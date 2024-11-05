@@ -32,7 +32,7 @@ const getDraw = async () => {
 
 const changeMore=(router)=>{
   pageState.isBack=true
-  router.push({ name: 'Draw',query:{type:'short'} })
+  router.push({ name: 'Draw',params:{type:'short'} })
 }
 
 let intervalT;

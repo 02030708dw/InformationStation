@@ -36,7 +36,7 @@ const getDraw = async () => {
 
 const changeMore=(router)=>{
   pageState.isBack=true
-  router.push({name:'Draw',query:{type:'long'}})
+  router.push({name:'Draw',params:{type:'long'}})
 }
 
 

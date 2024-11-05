@@ -36,10 +36,7 @@ const changeBack=(router)=>{
 
 
 onBeforeMount(()=>{
-  if(userStore.memberId) {
-    page.unshift({label: "Game", name: "Game"})
-    router.replace({name:'Game'})
-  }
+  if(userStore.memberId) page.unshift({label: "Game", name: "Game"})
 })
 </script>
 <style scoped lang="scss">

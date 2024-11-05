@@ -65,6 +65,7 @@ const swiperAuto=()=>{
     if(count.value==image.length) count.value=0
 }
 onBeforeMount(() => {
+    // 可优化为路由守卫
     if (!storeUser.memberId) router.replace({ name: 'Home' })
 })
 onMounted(()=>{

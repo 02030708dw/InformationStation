@@ -3,7 +3,7 @@
         <Title text="Free Play" />
         <ul class="play scrollbar" v-if="userStore.freeGameList?.length">
             <li class="play-item" v-for="item in userStore.freeGameList" @click="skip(item.shareUrl || item.trialUrl)">
-                <!-- <img :src="picurl + JSON.parse(item.pictureUrl)[0].pictureUrl"> -->
+                <img :src="picurl + JSON.parse(item.pictureUrl)[0].pictureUrl">
             </li>
         </ul>
         <van-skeleton title :row="2" v-else />

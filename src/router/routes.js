@@ -1,17 +1,21 @@
+let search = new URLSearchParams(window.location.search)
+let memberId = search.get('u')||JSON.parse(sessionStorage.getItem("UserState"))?.memberId
+console.log(memberId)
+
 const routes = [
   {
     path: "/",
     name: "index",
     component: () => import("@/views/Index/index.vue"),
-    redirect: { name: "Home" },
+    redirect: { name: memberId ? 'Game' : 'Home' },
     children: [
       {
-        path: "/",
+        path: memberId ? "Home" : "/",
         name: "Home",
         component: () => import("@/views/Home/index.vue"),
       },
       {
-        path: "Game",
+        path: memberId ? "/" : "Game",
         name: "Game",
         component: () => import("@/views/Game/index.vue"),
       },
@@ -20,20 +24,19 @@ const routes = [
         name: "Information",
         component: () => import("@/views/Information/index.vue"),
       },
-
       {
         path: "Trend",
         name: "Trend",
         component: () => import("@/views/Trend/index.vue"),
       },
       {
-        path:"Draw",
-        name:"Draw",
+        path: ":type",
+        name: "Draw",
         component: () => import("@/views/Draw/index.vue"),
       },
       {
-        path:"Forecast",
-        name:"Forecast",
+        path: "Forecast",
+        name: "Forecast",
         component: () => import("@/views/Forecast/index.vue"),
       }
     ],
@@ -43,5 +46,12 @@ const routes = [
     name: "InfoDetail",
     component: () => import("@/views/Information/LnformationDetail/index.vue"),
   },
+  // 捕获所有未匹配的路径并重定向到首页
+  {
+    path: "/:pathMatch(.*)*",
+    redirect: "/",
+  }
 ];
+
+
 export default routes;

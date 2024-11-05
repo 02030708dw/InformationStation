@@ -1,6 +1,6 @@
 <template>
     <div class="home">
-        <FreePlay></FreePlay>
+        <FreePlay v-if="!userStore.memberId"></FreePlay>
         <Tirbo></Tirbo>
         <Trend></Trend>
         <InforMation></InforMation>
@@ -8,11 +8,13 @@
     </div>
 </template>
 <script setup>
+import {useUserState} from "@/stores/modules/userinfo.js"
 import FreePlay from "./components/FreePlay.vue"
 import Tirbo from './components/Tirbo.vue';
 import Trend from './components/Trend.vue';
 import InforMation from './components/InforMation.vue';
 import Saham from './components/Saham.vue';
+const userStore=useUserState()
 </script>
 <style scoped lang="scss">
 .home{

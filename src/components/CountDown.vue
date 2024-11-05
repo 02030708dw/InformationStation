@@ -41,6 +41,3 @@ function formatTime(seconds) {
     return `${formattedHours}:${formattedMinutes}:${formattedSeconds}`;
 }
 </script>
-<style>
-.countdown {}
-</style>

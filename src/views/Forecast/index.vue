@@ -1,6 +1,5 @@
 <template>
   <div class="forecast_box">
-    <!-- <div class="card"> -->
       <Title text="Template" :showRight="false"></Title>
       <ul class="template">
         <li v-for="item in gameList" :key="item.id" @click="selectTemplate(item)"
@@ -10,8 +9,6 @@
           </div>
         </li>
       </ul>
-    <!-- </div> -->
-    <!-- <div class="card"> -->
       <Title text="Edit the title" :showRight="false"></Title>
       <div class="input-group">
         <label>Title:</label>
@@ -21,9 +18,7 @@
         <label>Period of award:</label>
         <input type="text" v-model="issue" @input="debouncedDrawImage" />
       </div>
-    <!-- </div> -->
 
-    <!-- <div class="card"> -->
       <Title text="Edit prediction number" :showRight="false"></Title>
       <div v-for="(field, index) in predictionFields" :key="index" class="input-group">
         <input type="text" v-model="field.text" @input="debouncedDrawImage" :maxlength="maxDigits"
@@ -33,16 +28,13 @@
           +
         </button>
       </div>
-    <!-- </div> -->
 
-    <!-- <div class="card"> -->
       <Title text="Preview" :showRight="false"></Title>
       <div class="btn">
         <button style="padding: 5px" @click="randomizeFields">random</button>
         <button style="padding: 5px" @click="clearAll">empty</button>
         <button style="padding: 5px" @click="downloadImage">download</button>
       </div>
-    <!-- </div> -->
       <canvas class="canvas_box" ref="imageCanvas" width="355" height="340"></canvas>
   </div>
 </template>
@@ -431,12 +423,4 @@ const gameList = reactive([
     }
   }
 }
-// .card{
-//   box-sizing: border-box;
-//   padding: 10px;
-//   width: 343px;
-//   margin: 10px auto;
-//   background-color: $themebgColor;
-//   border-radius: 7px;
-// }
 </style>

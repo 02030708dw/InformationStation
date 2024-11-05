@@ -23,11 +23,9 @@ onBeforeMount(async () => {
     if(route.query.type=='long'){
         const { resultSet } = await getLongDraw({ merchantCode })
         Object.assign(DrawList,resultSet.map((i)=>i.awardNum))
-        console.log(DrawList)
     }else{
         const { resultSet } = await getShortDraw({merchantCode})
         Object.assign(DrawList,resultSet.map((i)=>i.awardNum))
-        console.log(DrawList)
     }
 })
 </script>

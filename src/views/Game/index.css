@@ -1,42 +1,12 @@
-@media (max-width: 600px) {
-  .content {
-    max-width: 520px;
-    min-width: calc(100% - 40px);
-  }
-}
-.background {
-  position: fixed;
-  top: 0;
-  left: 0;
-  display: block;
-  width: 100%;
-  height: 100vh;
-  z-index: 1;
-  -webkit-transform: translateZ(0);
-  -moz-transform: translateZ(0);
-  -ms-transform: translateZ(0);
-  -o-transform: translateZ(0);
-  transform: translateZ(0);
-  will-change: transform;
-  background-image: url('@/assets/image/transit/banner.png');
-  background-repeat: no-repeat;
-  background-position: center;
-  background-size: cover;
-}
-
 .content {
-  position: relative;
   margin: auto;
-  max-width: 600px;
   padding: 0 20px;
-  height: 100%;
   z-index: 2;
 }
 
 .content .wrapper {
   margin: auto;
   width: 100%;
-  min-height: calc(100vh - 50px) !important;
 }
 
 .info {
@@ -45,12 +15,7 @@
 
 .info .cover {
   margin-top: 20px;
-  -webkit-border-radius: 10px;
-  -moz-border-radius: 10px;
-  -ms-border-radius: 10px;
   border-radius: 10px;
-  -webkit-box-sizing: border-box;
-  -moz-box-sizing: border-box;
   box-sizing: border-box;
   padding: 50%;
   background-size: cover;

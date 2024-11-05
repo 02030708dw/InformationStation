@@ -4,12 +4,9 @@
         <img src="../../assets/image/icon/back.png">
     </div>
     
-    <ul class="menu-list" v-else>
-      <li v-for="(item, i) in page" :key="i" :class="{ 'menu-item': true, active: item.name == $route.name }"
-        @click="$router.push({ name: item.name })">
-        {{ item.label }}
-      </li>
-    </ul>
+    <div class="menu-list" v-else>
+        <router-link class="menu-item" :to="{name:item.name}"  v-for="(item, i) in page" :key="i">{{ item.label }}</router-link>
+    </div>
 
     <div class="line"></div>
   </div>
@@ -90,7 +87,7 @@ onBeforeMount(()=>{
       color: #ffffff80;
     }
 
-    .active {
+    .router-link-exact-active {
       position: relative;
       color: #FF9500;
 

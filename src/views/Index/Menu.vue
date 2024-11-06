@@ -4,11 +4,12 @@
     <transition>
       <div class="back" v-if="pageState.isBack" @click="changeBack($router)">
         <img src="../../assets/image/icon/back.png">
+        {{ $route.meta }}
       </div>
 
       <div class="menu-list" v-else>
         <router-link class="menu-item" :to="{ name: item.name }" v-for="(item, i) in page" :key="i">
-          {{ item.label }}
+          {{ $t(item.label) }}
         </router-link>
       </div>
     </transition>
@@ -24,10 +25,10 @@ import { usePageStore } from "@/stores/modules/pageState.js";
 const pageState = usePageStore()
 const userState = useUserStore()
 const page = [
-  { label: "Home", name: "Home" },
-  { label: "Information", name: "Information" },
-  { label: "Trend", name: "Trend" },
-  { label: "Forecast", name: "Forecast" },
+  { label: "首页", name: "Home" },
+  { label: "资讯", name: "Information" },
+  { label: "走势", name: "Trend" },
+  { label: "预测", name: "Forecast" },
 ];
 
 const changeBack = (router) => {
@@ -37,7 +38,7 @@ const changeBack = (router) => {
 
 
 onBeforeMount(() => {
-  if (userState.memberId) page.unshift({ label: "Game", name: "Game" })
+  if (userState.memberId) page.unshift({ label: "游戏", name: "Game" })
 })
 </script>
 <style scoped lang="scss">
@@ -77,6 +78,9 @@ onBeforeMount(() => {
   }
 
   .back {
+    width: 100%;
+    text-align: center;
+    color: #fff;
     height: 40px;
     position: absolute;
     top: 0;
@@ -84,9 +88,11 @@ onBeforeMount(() => {
     z-index: 999;
     display: flex;
     align-items: center;
-    padding-left: 10px;
+    justify-content: center;
 
     img {
+      position: absolute;
+      left: 10px;
       width: 20px;
       height: 20px;
     }

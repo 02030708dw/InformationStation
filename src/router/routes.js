@@ -1,7 +1,7 @@
 let search = new URLSearchParams(window.location.search)
 let memberId = search.get('u')||JSON.parse(sessionStorage.getItem("UserState"))?.memberId
-console.log(memberId)
-
+import Home from "@/views/Game/index.vue"
+import Game from "@/views/Game/index.vue"
 const routes = [
   {
     path: "/",
@@ -12,12 +12,14 @@ const routes = [
       {
         path: memberId ? "Home" : "/",
         name: "Home",
-        component: () => import("@/views/Home/index.vue"),
+        // component: () => import("@/views/Home/index.vue"),
+        component:Home
       },
       {
         path: memberId ? "/" : "Game",
         name: "Game",
-        component: () => import("@/views/Game/index.vue"),
+        // component: () => import("@/views/Game/index.vue"),
+        component:Game
       },
       {
         path: "Information",

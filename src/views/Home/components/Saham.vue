@@ -19,9 +19,9 @@ import { ref, reactive, onBeforeMount, onUnmounted } from "vue";
 import { getLongDraw } from "@/api/index.js";
 import { getRegion } from "@/util/getRegion.js"
 import Title from "./Title.vue";
-import CountDown from "@/components/CountDown.vue";
 import DrawLong from "@/components/DrawLong.vue";
 import { usePageStore } from "@/stores/modules/pageState.js";
+import routes from "@/router/routes.js";
 const pageState=usePageStore()
 const data = reactive([]);
 const getDraw = async () => {
@@ -35,6 +35,9 @@ const getDraw = async () => {
 
 
 const changeMore=(router)=>{
+  console.log(
+    routes[0].children.find(i=>i.name=='Draw').meta='长频开奖'
+  )
   pageState.isBack=true
   router.push({name:'Draw',params:{type:'long'}})
 }

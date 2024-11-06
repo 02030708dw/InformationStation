@@ -1,6 +1,6 @@
 let search = new URLSearchParams(window.location.search)
 let memberId = search.get('u')||JSON.parse(sessionStorage.getItem("UserState"))?.memberId
-import Home from "@/views/Game/index.vue"
+import Home from "@/views/Home/index.vue"
 import Game from "@/views/Game/index.vue"
 const routes = [
   {

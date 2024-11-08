@@ -342,7 +342,7 @@ const downloadImage = () => {
 };
 
 const getImage = (i) => {
-  return new URL(`../../assets/image/gameList/${i}.jpg`, import.meta.url).href;
+  return new URL(`../../assets/image/forecast/${i}.jpg`, import.meta.url).href;
 };
 
 const gameList = reactive([

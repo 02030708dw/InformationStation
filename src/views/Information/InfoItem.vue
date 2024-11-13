@@ -7,7 +7,12 @@
                 <p class="time">{{ data.updatedAt }}</p>
             </div>
         </div>
-        <van-text-ellipsis rows="3" :content="data.title" :expand-text="'Expand'" :collapse-text="'Collapse'" @click.self="changeTitle(data)"/>
+        <van-text-ellipsis rows="3" 
+        :content="data.title" 
+        :expand-text="$t('展开')" 
+        :collapse-text="$t('折叠')"
+        @click.self="changeTitle(data,$router)"
+        />
 
         <template v-if="data.pictureUrl">
             <div :class="formatImg(data.pictureUrl).length==1?'img1-box':'img2-box'">
@@ -31,17 +36,17 @@
             <van-icon name="good-job-o" size="18"  @click="skipAIA"/>
             <span>{{ $t('点赞') }}</span>
           </div>
-          <div class="message" @click="changeTitle(data)">
+          <div class="message" @click="changeTitle(data,$router)">
             <van-icon name="chat-o" size="18" /><span>{{ $t('评论') }}</span>
           </div>
         </div>
     </div>
 </template>
 <script setup>
-import {useRouter} from 'vue-router'
 import { showImagePreview } from 'vant'
+import {usePageStore} from '@/stores/modules/pageState.js'
 import {skipAIA} from "@/util/getRegion.js"
-const router=useRouter()
+const pageState=usePageStore()
 const props = defineProps(['data'])
 function formatImg(str) {
   const url = 'https://static.44dog.cc/';
@@ -53,8 +58,10 @@ const changeImg = (startPosition) => {
         startPosition
     });
 }
-const changeTitle=(data)=>{
+const changeTitle=(data,router)=>{
     sessionStorage.setItem('InfoDetail',JSON.stringify(data))
+    pageState.isBack=true
+    pageState.MenuTitle='详情'
     router.push({name:'InfoDetail'})
 }
 </script>

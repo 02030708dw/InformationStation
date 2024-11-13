@@ -1,6 +1,5 @@
 <template>
   <div class="detail">
-    <NavBar />
     <div class="content">
       <div class="main">
 
@@ -23,7 +22,7 @@
 
 
 
-        <van-list v-model:loading="loading" :finished="finished" @load="onLoad" finished-text="没有更多" >
+        <van-list v-model:loading="loading" :finished="finished" @load="onLoad" :finished-text="$t('没有更多')" :loading-text="$t('加载中')" >
           <CommentItem :data="{...item,collectNewId:Option.collectNewId}" v-for="item in list"/>
         </van-list>
 
@@ -35,7 +34,6 @@
 <script setup>
 import { ref, reactive, onBeforeMount, defineOptions } from 'vue'
 import {skipAIA} from "@/util/getRegion.js"
-import NavBar from './NavBar.vue';
 import TabBar from './TabBar.vue';
 import {getCommentList} from "@/api/index.js"
 import CommentItem from './CommentItem.vue';
@@ -74,10 +72,9 @@ const getImageUrls = (pictureUrl) => {
 </script>
 <style scoped lang="scss">
 .detail {
-  height: 100%;
-
+height: calc(100% - 44px);
   .content {
-    height: calc(100% - 106px);
+    height:100%;
     padding: 10px;
     overflow: auto;
     scrollbar-width: none;

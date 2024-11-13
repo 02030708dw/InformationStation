@@ -1,5 +1,6 @@
 import { showDialog } from "vant";
 import { useUserStore } from "@/stores/modules/userinfo";
+import i18n from "@/lang/index";
 export const DomainMappings = [
   {
     country: "TH",
@@ -67,7 +68,12 @@ export function skipUrl() {
 
 export async function skipAIA(){
   try{
-      await showDialog({ message: '是否去注册',showCancelButton:true })
+      await showDialog({ 
+        message: i18n.global.t('是否去注册'),
+        showCancelButton:true,
+        confirmButtonText:i18n.global.t('确定'),
+        cancelButtonText:i18n.global.t('取消')
+      })
       window.open(skipUrl())
   }
   catch(e){console.log('取消')}

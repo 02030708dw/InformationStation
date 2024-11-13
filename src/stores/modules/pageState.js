@@ -8,5 +8,6 @@ const option={
   }
 export const usePageStore = defineStore("PageStore",() => {
     const isBack=ref(false)
-    return { isBack };
+    const MenuTitle=ref('')
+    return { isBack,MenuTitle };
   },option);

@@ -44,14 +44,15 @@ const routes = [
         path: "Forecast",
         name: "Forecast",
         component: () => import("@/views/Forecast/index.vue"),
-      }
+      },
+      {
+        path: "/InfoDetail",
+        name: "InfoDetail",
+        component: () => import("@/views/Information/LnformationDetail/index.vue"),
+      },
     ],
   },
-  {
-    path: "/InfoDetail",
-    name: "InfoDetail",
-    component: () => import("@/views/Information/LnformationDetail/index.vue"),
-  },
+
   // 捕获所有未匹配的路径并重定向到首页
   {
     path: "/:pathMatch(.*)*",

@@ -2,7 +2,7 @@
         <div class="information" ref="scrollRef">
             <AuthorTab :list="author.authorList" v-model="author.activeAuthor" v-if="author.authorList.length"></AuthorTab>
             <van-loading v-else></van-loading>
-            <van-list v-model:loading="loading" :finished="finished" @load="onLoad" finished-text="没有更多" v-if="show">
+            <van-list v-model:loading="loading" :finished="finished" @load="onLoad" :finished-text="$t('没有更多')" :loading-text="$t('加载中')" v-if="show">
                 <InfoItem v-for="item in list" :data="item"></InfoItem>
             </van-list>
         </div>

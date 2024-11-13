@@ -2,9 +2,9 @@
   <div class="menu">
 
     <transition>
-      <div class="back" v-if="pageState.isBack" @click="changeBack($router)">
-        <img src="../../assets/image/icon/back.png">
-        {{ $route.meta }}
+      <div class="back" v-if="pageState.isBack">
+        <img src="../../assets/image/icon/back.png" @click="changeBack($router)">
+        {{ $t(pageState.MenuTitle) }}
       </div>
 
       <div class="menu-list" v-else>

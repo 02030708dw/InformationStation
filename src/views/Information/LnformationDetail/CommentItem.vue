@@ -7,16 +7,19 @@
 
             <div class="text">
                 <p class="name">{{ data.userAccount }}</p>
-                <van-text-ellipsis rows="3" :content="data.content" :expand-text="'展开'" :collapse-text="'折叠'" />
+                <van-text-ellipsis rows="3" :content="data.content" :expand-text="$t('展开')" :collapse-text="$t('折叠')" />
             </div>
 
             <div class="bottom">
                 <p @click="skipAIA"><van-icon name="good-job-o" size="18" /><span> {{ data.likeCount }}</span></p>
-                <p @click="skipAIA">回复</p>
+                <p @click="skipAIA">{{ $t('回复') }}</p>
             </div>
 
-            <p v-if="data.isMoreComment && !isMoreState" @click="getChlidList" class="icon">查看其他{{ data.moreCommentCount }}则回复</p>
-            <p v-if="isMoreState && !isMoreLoading" @click="conceal">隐藏回复</p>
+            <p v-if="data.isMoreComment && !isMoreState" @click="getChlidList" class="icon" >
+            {{$t('查看其它') + data.moreCommentCount +$t('则回复')}}
+            </p>
+
+            <p v-if="isMoreState && !isMoreLoading" @click="conceal">{{ $t('隐藏回复') }}</p>
 
 
             <ul class="child-list" v-if="list.length">
@@ -28,17 +31,16 @@
                         <div class="text">
                             <p class="name">{{ item.userAccount }}</p>
                             <span class="to">@{{ item.repliedToUserAccount }}:</span>
-                            <van-text-ellipsis rows="3" :content="item.content" :expand-text="'展开'"
-                                :collapse-text="'折叠'" />
+                            <van-text-ellipsis rows="3" :content="item.content" :expand-text="$t('展开')" :collapse-text="$t('折叠')" />
                         </div>
 
                         <div class="bottom">
                             <p><van-icon name="good-job-o" size="18" /><span> {{ item.likeCount }}</span></p>
-                            <p>回复</p>
+                            <p>{{ $t('回复') }}</p>
                         </div>
                     </div>
                 </li>
-                <p v-if="!finished && !isMoreLoading" class="look-more" @click="getChlidList">查看更多</p>
+                <p v-if="!finished && !isMoreLoading" class="look-more" @click="getChlidList">{{ $t('更多') }}</p>
             </ul>
 
             <van-loading size="20" style="text-align: center;" v-if="isMoreLoading" />

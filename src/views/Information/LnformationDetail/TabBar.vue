@@ -1,6 +1,6 @@
 <template>
     <div class="footer">
-        <p class="text" @click="change">去登录注册才能评论</p>
+        <p class="text" @click="change">{{ $t('去登录注册才能评论') }}</p>
     </div>
 </template>
 <script setup>

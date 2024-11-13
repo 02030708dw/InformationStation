@@ -35,6 +35,7 @@ const getDraw = async () => {
 
 const changeMore=(router)=>{
   pageState.isBack=true
+  pageState.MenuTitle='长频'
   router.push({name:'Draw',params:{type:'long'}})
 }
 

@@ -3,6 +3,8 @@
 </template>
 <script setup>
 import { ref, watch,onUnmounted } from 'vue'
+import { useI18n } from 'vue-i18n';
+const {t}=useI18n()
 const props=defineProps(['awardNum'])
 const countDownTime = ref('00:00:00')//显示的倒计时
 const countTime = ref('')//后端开奖秒数
@@ -14,7 +16,7 @@ const startCountDown = () => {
     intervalB = setInterval(() => {
 
         if (countTime.value <= 0) {
-            countDownTime.value = '开奖'
+            countDownTime.value = t('开奖')
         } else {
             countTime.value--
             countDownTime.value = formatTime(countTime.value)

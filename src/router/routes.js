@@ -4,6 +4,9 @@ import Home from "@/views/Home/index.vue"
 import Game from "@/views/Game/index.vue"
 import Information from "@/views/Information/index.vue"
 import Trend from "@/views/Trend/index.vue"
+import Draw from "@/views/Draw/index.vue"
+import Forecast from "@/views/Forecast/index.vue"
+import InfoDetail from "@/views/Information/LnformationDetail/index.vue"
 const routes = [
   {
     path: "/",
@@ -38,17 +41,20 @@ const routes = [
       {
         path: ":type",
         name: "Draw",
-        component: () => import("@/views/Draw/index.vue"),
+        // component: () => import("@/views/Draw/index.vue"),
+        component:Draw
       },
       {
         path: "Forecast",
         name: "Forecast",
-        component: () => import("@/views/Forecast/index.vue"),
+        // component: () => import("@/views/Forecast/index.vue"),
+        component:Forecast
       },
       {
         path: "/InfoDetail",
         name: "InfoDetail",
-        component: () => import("@/views/Information/LnformationDetail/index.vue"),
+        // component: () => import("@/views/Information/LnformationDetail/index.vue"),
+        component:InfoDetail
       },
     ],
   },

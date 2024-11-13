@@ -1,6 +1,6 @@
 <template>
   <div class="forecast_box">
-      <Title text="Template" :showRight="false"></Title>
+      <Title :text="$t('模板')" :showRight="false"></Title>
       <ul class="template">
         <li v-for="item in gameList" :key="item.id" @click="selectTemplate(item)"
           :class="{ selected: selectedTemplateId === item.id }">
@@ -9,17 +9,17 @@
           </div>
         </li>
       </ul>
-      <Title text="Edit the title" :showRight="false"></Title>
+      <Title :text="$t('编辑')" :showRight="false"></Title>
       <div class="input-group">
-        <label>Title:</label>
+        <label>{{ $t('标题') }}:</label>
         <input type="text" v-model="title" @input="debouncedDrawImage" />
       </div>
       <div class="input-group">
-        <label>Period of award:</label>
+        <label>{{ $t('奖期') }}:</label>
         <input type="text" v-model="issue" @input="debouncedDrawImage" />
       </div>
 
-      <Title text="Edit prediction number" :showRight="false"></Title>
+      <Title :text="$t('预测号码')" :showRight="false"></Title>
       <div v-for="(field, index) in predictionFields" :key="index" class="input-group">
         <input type="text" v-model="field.text" @input="debouncedDrawImage" :maxlength="maxDigits"
           class="number-input" />
@@ -29,11 +29,11 @@
         </button>
       </div>
 
-      <Title text="Preview" :showRight="false"></Title>
+      <Title :text="$t('预览')" :showRight="false"></Title>
       <div class="btn">
-        <button style="padding: 5px" @click="randomizeFields">random</button>
-        <button style="padding: 5px" @click="clearAll">empty</button>
-        <button style="padding: 5px" @click="downloadImage">download</button>
+        <button style="padding: 5px" @click="randomizeFields">{{ $t('随机') }}</button>
+        <button style="padding: 5px" @click="clearAll">{{ $t('清空') }}</button>
+        <button style="padding: 5px" @click="downloadImage">{{ $t('清空') }}</button>
       </div>
       <canvas class="canvas_box" ref="imageCanvas" width="355" height="340"></canvas>
   </div>

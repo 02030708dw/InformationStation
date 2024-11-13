@@ -5,7 +5,7 @@
       <span>{{ text }}</span>
     </div>
     <div class="right" @click="emits('changeMore')">
-      <span class="more">more</span>
+      <span class="more">{{ $t('更多') }}</span>
       <van-icon name="arrow" />
     </div>
   </div>

@@ -2,7 +2,7 @@
     <li class="draw-short">
 
         <p class="top">
-            <span>{{ item.gameCode }}</span>
+            <span>{{ $t(item.gameCode) }}</span>
             <span>{{ item.lastAwardPeriod }}</span>
         </p>
 

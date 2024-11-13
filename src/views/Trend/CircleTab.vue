@@ -2,7 +2,7 @@
     <ul class='circle-tab' ref="ul" v-show="list.length > 1">
         <template v-for="item in list">
         <li class="tab-item"  :class="{ active: item[bindField] == active }" @click="changeCircleTab(item)" v-if="item.games.length > 1">
-            <span class="text">{{ item[viewField] }}</span>
+            <span class="text">{{ $t(item[viewField]) }}</span>
         </li>
     </template>
 

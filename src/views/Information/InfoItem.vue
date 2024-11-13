@@ -23,16 +23,16 @@
         </template>
         <div class="more">
           <div><van-icon name="fire-o" color="#ee0a24" size="18"/>{{ data.likeCount||0 }}</div>
-          <div>{{ data.commentCount }} {{ 'Message' }}</div>
+          <div>{{ data.commentCount }} {{ $t('消息') }}</div>
         </div>
 
         <div class="bottom">
           <div class="thumbsUp"  >
             <van-icon name="good-job-o" size="18"  @click="skipAIA"/>
-            <span>点赞</span>
+            <span>{{ $t('点赞') }}</span>
           </div>
           <div class="message" @click="changeTitle(data)">
-            <van-icon name="chat-o" size="18" /><span>{{ 'Comment' }}</span>
+            <van-icon name="chat-o" size="18" /><span>{{ $t('评论') }}</span>
           </div>
         </div>
     </div>

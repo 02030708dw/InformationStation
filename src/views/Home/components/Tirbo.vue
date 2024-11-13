@@ -1,6 +1,6 @@
 <template>
   <div class="tirbo">
-    <Title text="Tirbo" @changeMore="changeMore($router)" />
+    <Title :text="$t('短频')" @changeMore="changeMore($router)" />
     <ul class="lotter-list">
 
       <template v-if="data.length">
@@ -28,6 +28,7 @@ const getDraw = async () => {
   let {merchantCode}=getRegion()
   let { resultSet } = await getShortDraw({merchantCode});
   Object.assign(data,resultSet.slice(0,4).map((item) => item.awardNum));
+  console.log(data)
 };
 
 const changeMore=(router)=>{

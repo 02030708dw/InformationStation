@@ -7,7 +7,7 @@
 
         <div class="center">
             <p>{{ item.area }}</p>
-            <p>{{ item.gameCode }}</p>
+            <p>{{ $t(item.gameCode) }}</p>
         </div>
 
         <div class="right">

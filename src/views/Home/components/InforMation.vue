@@ -1,6 +1,6 @@
 <template>
     <div class="infor-mation">
-        <Title text="InforMation" @changeMore="$router.push({ name: 'Information' })" />
+        <Title :text="$t('资讯')" @changeMore="$router.push({ name: 'Information' })" />
         <ul class="info-list">
 
             <template v-if="List.length">

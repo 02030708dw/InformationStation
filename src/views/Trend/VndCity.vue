@@ -4,7 +4,7 @@
       <li class="item week">{{ obj[index] }} ({{ index }})</li>
       <li class="item" v-for="i, n in item" @click="changeCity(i)"
         :class="{ active: i.id == activeId, itemb: maxNum == n + 1 }">
-        {{ i.code }}
+        {{ $t(i.code) }}
       </li>
       <li v-for="i in maxNum-item.length" class="item"></li>
     </ul>

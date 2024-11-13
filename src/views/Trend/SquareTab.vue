@@ -1,7 +1,7 @@
 <template>
     <ul class='circle-tab' ref="ul">
         <li class="tab-item" v-for="item in list.filter(i=>i.gamePlayTypeName!='physical')" :class="{ active: item[bindField] == active }" @click="changeSquareTab(item)">
-            <span class="text">{{ item[viewField] }}</span>
+            <span class="text">{{ $t(item[viewField]) }}</span>
         </li>
     </ul>
 </template>

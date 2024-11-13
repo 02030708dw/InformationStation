@@ -1,7 +1,7 @@
 <template>
   <div class="trend">
-    <Title text="Trend" @changeMore="$router.push({ name: 'Trend' })" />
-    <div class="trend-title">{{ ViewGameCode }}</div>
+    <Title :text="$t('走势')" @changeMore="$router.push({ name: 'Trend' })" />
+    <div class="trend-title">{{ $t(ViewGameCode) }}</div>
     <div class="trendbox" ref="trend" v-if="trendData.length">
       <table ref="table" class="table"></table>
     </div>

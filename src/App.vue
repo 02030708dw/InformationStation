@@ -4,12 +4,18 @@
       <component :is="Component" />
     </KeepAlive>
   </router-view>
+  <div class="lang">
+    <button @click="locale='cn'">中文</button>
+    <button @click="locale='th'">泰文</button>
+  </div>
 </template>
 <script setup>
 import { onBeforeMount } from 'vue';
 import { useUserStore } from './stores/modules/userinfo';
 import { getTransferInfo } from '@/api/index.js'
 import { getRegion,DomainMappings } from './util/getRegion';
+import { useI18n } from 'vue-i18n';
+const {locale} =useI18n()
 const userState = useUserStore()
 onBeforeMount(async () => {
   let search = new URLSearchParams(window.location.search)
@@ -31,5 +37,10 @@ onBeforeMount(async () => {
 })
 </script>
 <style lang="scss">
-
+.lang{
+  position: fixed;
+  z-index: 999999;
+  top: 0;
+  right:0;
+}
 </style>

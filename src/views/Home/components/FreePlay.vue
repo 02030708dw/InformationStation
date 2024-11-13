@@ -1,6 +1,6 @@
 <template>
     <div class="free-play">
-        <Title text="Free Play" />
+        <Title :text="$t('试玩')" />
         <ul class="play scrollbar" v-if="userState.freeGameList?.length">
             <li class="play-item" v-for="item in userState.freeGameList" @click="skip(item.shareUrl || item.trialUrl)">
                 <img :src="picurl + JSON.parse(item.pictureUrl)[0].pictureUrl">
